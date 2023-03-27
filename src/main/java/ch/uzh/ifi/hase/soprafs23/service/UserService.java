@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -52,7 +53,23 @@ public class UserService {
     return newUser;
   }
 
-  /**
+    public User getUserById(Long id) {
+        Optional<User> OptionalUser = userRepository.findById(id);
+        User user = OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                String.format("user with userid " + id + " was not found")));
+        return user;
+    }
+
+    private void authenticateUser(String token, long idCurrentUser) {
+        User user = getUserById(idCurrentUser);
+        if (!user.getToken().equals(token)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    String.format("You are not authorized to perform this action"));
+        }
+    }
+
+
+    /**
    * This is a helper method that will check the uniqueness criteria of the
    * username and the name
    * defined in the User entity. The method will do nothing if the input is unique
