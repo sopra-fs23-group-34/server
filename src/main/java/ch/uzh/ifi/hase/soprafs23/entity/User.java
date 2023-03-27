@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Internal User Representation
@@ -26,7 +27,7 @@ public class User implements Serializable {
   private Long id;
 
   @Column(nullable = false)
-  private String name;
+  private String password;
 
   @Column(nullable = false, unique = true)
   private String username;
@@ -37,6 +38,15 @@ public class User implements Serializable {
   @Column(nullable = false)
   private UserStatus status;
 
+  @Column(nullable = false)
+  private String bio;
+
+  @Column(nullable = false, unique = true)
+  private String stats;
+
+  @Column(nullable = false)
+  private boolean host;
+
   public Long getId() {
     return id;
   }
@@ -45,12 +55,12 @@ public class User implements Serializable {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public String getPassword() {
+    return password;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setPassword(String name) {
+    this.password = name;
   }
 
   public String getUsername() {
@@ -76,4 +86,24 @@ public class User implements Serializable {
   public void setStatus(UserStatus status) {
     this.status = status;
   }
+
+  public String getBio(){ return bio;}
+
+  public void setBio(String bio) {
+      this.bio = bio;
+  }
+  public String stats(){
+      return stats;
+  }
+
+  public void setStats(String stats){
+      this.stats = stats;
+  }
+  public boolean getHost(){return host;}
+
+  public void setHost(boolean host){
+      this.host = host;
+  }
+
+
 }

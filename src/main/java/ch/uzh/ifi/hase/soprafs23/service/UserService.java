@@ -42,7 +42,7 @@ public class UserService {
 
   public User createUser(User newUser) {
     newUser.setToken(UUID.randomUUID().toString());
-    newUser.setStatus(UserStatus.OFFLINE);
+    newUser.setStatus(UserStatus.ONLINE);
     checkIfUserExists(newUser);
     // saves the given entity but data is only persisted in the database once
     // flush() is called
@@ -52,6 +52,34 @@ public class UserService {
     log.debug("Created Information for User: {}", newUser);
     return newUser;
   }
+    public User loginUser(User loginUser) {
+      User userDatabase = getUserById(loginUser.getId());
+      if(userDatabase == null){
+          throw new ResponseStatusException(HttpStatus.valueOf(401), "Username is not registered");
+      }
+      if(!(userDatabase.getPassword().equals(loginUser.getPassword()))){
+          throw new ResponseStatusException(HttpStatus.valueOf(401), "Wrong Password");
+      }
+        loginUser.setStatus(UserStatus.ONLINE);
+        // saves the given entity but data is only persisted in the database once
+        // flush() is called
+        loginUser = userRepository.save(loginUser);
+        userRepository.flush();
+
+        log.debug("Created Information for User: {}", loginUser);
+        return loginUser;
+    }
+    public void logoutUser(User logoutUser) {
+
+        logoutUser.setStatus(UserStatus.OFFLINE);
+        // saves the given entity but data is only persisted in the database once
+        // flush() is called
+        logoutUser = userRepository.save(logoutUser);
+        userRepository.flush();
+
+        log.debug("Logged out user: {}", logoutUser);
+
+    }
 
     public User getUserById(Long id) {
         Optional<User> OptionalUser = userRepository.findById(id);
@@ -66,6 +94,14 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
                     String.format("You are not authorized to perform this action"));
         }
+    }
+
+    public void verifyUser(String token, long idCurrentUser){
+      try {
+          authenticateUser(token,idCurrentUser);
+      }catch (ResponseStatusException){
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"You are not allowed to logout with somebody elses accoung");
+      }
     }
 
 
@@ -85,12 +121,12 @@ public class UserService {
 
     String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
     if (userByUsername != null && userByName != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+      throw new ResponseStatusException(HttpStatus.CONFLICT,
           String.format(baseErrorMessage, "username and the name", "are"));
     } else if (userByUsername != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "username", "is"));
+      throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage, "username", "is"));
     } else if (userByName != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
+      throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage, "name", "is"));
     }
   }
 }
