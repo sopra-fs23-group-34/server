@@ -81,20 +81,20 @@ public class UserService {
 
     }
 
-    public User getUserById(Long id) {
-        Optional<User> OptionalUser = userRepository.findById(id);
-        User user = OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                String.format("user with userid " + id + " was not found")));
-        return user;
-    }
+  public User getUserById(Long id) {
+    Optional<User> OptionalUser = userRepository.findById(id);
+    User user = OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+        String.format("user with userid " + id + " was not found")));
+    return user;
+  }
 
-    private void authenticateUser(String token, long idCurrentUser) {
-        User user = getUserById(idCurrentUser);
-        if (!user.getToken().equals(token)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
-                    String.format("You are not authorized to perform this action"));
-        }
+  private void authenticateUser(String token, long idCurrentUser) {
+    User user = getUserById(idCurrentUser);
+    if (!user.getToken().equals(token)) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+          String.format("You are not authorized to perform this action"));
     }
+  }
 
     public void verifyUser(String token, long idCurrentUser){
       try {
@@ -115,18 +115,12 @@ public class UserService {
    * @throws org.springframework.web.server.ResponseStatusException
    * @see User
    */
+
   private void checkIfUserExists(User userToBeCreated) {
     User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
-    User userByName = userRepository.findByName(userToBeCreated.getName());
-
-    String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
-    if (userByUsername != null && userByName != null) {
+    if (userByUsername != null) {
       throw new ResponseStatusException(HttpStatus.CONFLICT,
-          String.format(baseErrorMessage, "username and the name", "are"));
-    } else if (userByUsername != null) {
-      throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage, "username", "is"));
-    } else if (userByName != null) {
-      throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage, "name", "is"));
+          String.format("add User failed because username already exists"));
     }
   }
 }
