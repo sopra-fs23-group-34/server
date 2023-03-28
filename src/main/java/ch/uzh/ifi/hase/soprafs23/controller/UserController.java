@@ -72,7 +72,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void logoutUser(@RequestHeader("token") String token,
-                                 @RequestHeader("id") long idCurrentUser) {
+                           @PathVariable Long idCurrentUser) {
 
         //Check, if user is authorised to logout
         userService.verifyUser(token, idCurrentUser);
@@ -89,7 +89,7 @@ public class UserController {
     @ResponseBody
     public UserGetDTO updateUserInformation(@RequestBody UserPutDTO userPutDTO,
                                             @RequestHeader("token") String token,
-                                            @RequestParam("id") long idCurrentUser){
+                                            @PathVariable Long idCurrentUser){
         // convert API user to internal user representation
         User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
 
@@ -104,7 +104,7 @@ public class UserController {
     @GetMapping("/users/getUser/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserGetDTO getUser(@RequestParam("id") long idRequestedUser) {
+    public UserGetDTO getUser(@PathVariable Long idRequestedUser) {
       User user = userService.getUserById(idRequestedUser);
       return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
     }
@@ -119,7 +119,7 @@ public class UserController {
     @PostMapping("/lobby/create")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public void createLobby(@RequestHeader("id") long idRequestedUser) {
+    public void createLobby(@RequestHeader("id") Long idRequestedUser) {
         // get User from DB with ID
         // create Lobby
         // assign Lobby to User
@@ -129,7 +129,7 @@ public class UserController {
     @PostMapping("/lobby/join/{gameKey}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void createLobby(@RequestParam("gameKey") String lobbyKey) {
+    public void createLobby(@PathVariable String lobbyKey) {
         // check if Lobby exists
         // add Player to Lobby
         // return WebSocket
