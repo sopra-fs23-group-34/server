@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Internal User Representation
@@ -47,6 +48,9 @@ public class User implements Serializable {
   private String stats;
 
   @Column(nullable = false)
+  private Date creationDate;
+
+  @Column
   private boolean host;
 
   public Long getId() {
@@ -115,5 +119,7 @@ public class User implements Serializable {
       this.host = host;
   }
 
+    public void setCreationDate(Date creationDate) { this.creationDate = creationDate; }
 
+    public Date getCreationDate() { return creationDate; }
 }

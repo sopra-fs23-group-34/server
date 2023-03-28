@@ -78,10 +78,10 @@ public class UserController {
         userService.verifyUser(token, idCurrentUser);
 
         // convert API user to internal representation
-        User userInput = DTOMapper.INSTANCE.convertUserPostLogoutDTOtoEntity(idCurrentUser);
+        //User userInput = DTOMapper.INSTANCE.convertUserPostLogoutDTOtoEntity(idCurrentUser);
 
         //logout user
-        userService.logoutUser(userInput);
+        //userService.logoutUser(userInput);
     }
 
     @PutMapping("/users/update/{id}")

@@ -1,6 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
-public class UserLogoutDTO {
+public class UserPostLogoutDTO {
         private Long id;
 
         public Long getId() {
