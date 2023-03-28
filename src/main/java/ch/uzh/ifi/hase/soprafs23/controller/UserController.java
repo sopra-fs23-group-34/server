@@ -89,7 +89,7 @@ public class UserController {
     @ResponseBody
     public UserGetDTO updateUserInformation(@RequestBody UserPutDTO userPutDTO,
                                             @RequestHeader("token") String token,
-                                            @RequestHeader("id") long idCurrentUser){
+                                            @RequestParam("id") long idCurrentUser){
         // convert API user to internal user representation
         User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
 
@@ -100,4 +100,39 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
 
     }
+
+    @GetMapping("/users/getUser/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public UserGetDTO getUser(@RequestParam("id") long idRequestedUser) {
+      User user = userService.getUserById(idRequestedUser);
+      return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
+    }
+
+    @GetMapping("/users/ranking")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void getGlobalRanking() {
+        // get global leaderboard from db
+    }
+
+    @PostMapping("/lobby/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public void createLobby(@RequestHeader("id") long idRequestedUser) {
+        // get User from DB with ID
+        // create Lobby
+        // assign Lobby to User
+        // return WebSocket/ Lobby
+    }
+
+    @PostMapping("/lobby/join/{gameKey}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void createLobby(@RequestParam("gameKey") String lobbyKey) {
+        // check if Lobby exists
+        // add Player to Lobby
+        // return WebSocket
+    }
+
 }

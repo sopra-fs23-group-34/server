@@ -34,6 +34,9 @@ public class User implements Serializable {
   @Column(nullable = false, unique = true)
   private String token;
 
+  @Column(nullable = false, unique = true)
+  private String email;
+
   @Column(nullable = false)
   private UserStatus status;
 
@@ -77,6 +80,14 @@ public class User implements Serializable {
   public void setToken(String token) {
     this.token = token;
   }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
   public UserStatus getStatus() {
     return status;

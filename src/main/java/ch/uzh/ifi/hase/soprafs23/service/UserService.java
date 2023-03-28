@@ -138,9 +138,14 @@ public class UserService {
 
   private void checkIfUserExists(User userToBeCreated) {
     User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
+    User userByEmail = userRepository.findByEmail(userToBeCreated.getEmail());
     if (userByUsername != null) {
       throw new ResponseStatusException(HttpStatus.CONFLICT,
-          String.format("add User failed because username already exists"));
+          String.format("add User failed because username is already used"));
     }
+    if (userByEmail != null) {
+        throw new ResponseStatusException(HttpStatus.CONFLICT,
+                String.format("add User failed because email is already used"));
+      }
   }
 }
