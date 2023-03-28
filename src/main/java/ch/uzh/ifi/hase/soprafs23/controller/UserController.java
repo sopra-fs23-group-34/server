@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -67,7 +68,7 @@ public class UserController {
         // convert internal representation of user back to API
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
     }
-    @PostMapping("/users/logout{id}")
+    @PostMapping("/users/logout/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void logoutUser(@RequestHeader("token") String token,
@@ -81,5 +82,22 @@ public class UserController {
 
         //logout user
         userService.logoutUser(userInput);
+    }
+
+    @PutMapping("/users/update/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public UserGetDTO updateUserInformation(@RequestBody UserPutDTO userPutDTO,
+                                            @RequestHeader("token") String token,
+                                            @RequestHeader("id") long idCurrentUser){
+        // convert API user to internal user representation
+        User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
+
+        //update user
+        User updatedUser = userService.updateUser(userWithUpdateInformation, token, idCurrentUser);
+
+        // return updated user
+        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
+
     }
 }

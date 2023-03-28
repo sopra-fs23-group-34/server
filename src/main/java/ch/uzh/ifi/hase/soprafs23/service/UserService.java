@@ -27,39 +27,40 @@ import java.util.UUID;
 @Transactional
 public class UserService {
 
-  private final Logger log = LoggerFactory.getLogger(UserService.class);
+    private final Logger log = LoggerFactory.getLogger(UserService.class);
 
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-  @Autowired
-  public UserService(@Qualifier("userRepository") UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
+    @Autowired
+    public UserService(@Qualifier("userRepository") UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-  public List<User> getUsers() {
-    return this.userRepository.findAll();
-  }
+    public List<User> getUsers() {
+        return this.userRepository.findAll();
+    }
 
-  public User createUser(User newUser) {
-    newUser.setToken(UUID.randomUUID().toString());
-    newUser.setStatus(UserStatus.ONLINE);
-    checkIfUserExists(newUser);
-    // saves the given entity but data is only persisted in the database once
-    // flush() is called
-    newUser = userRepository.save(newUser);
-    userRepository.flush();
+    public User createUser(User newUser) {
+        newUser.setToken(UUID.randomUUID().toString());
+        newUser.setStatus(UserStatus.ONLINE);
+        checkIfUserExists(newUser);
+        // saves the given entity but data is only persisted in the database once
+        // flush() is called
+        newUser = userRepository.save(newUser);
+        userRepository.flush();
 
-    log.debug("Created Information for User: {}", newUser);
-    return newUser;
-  }
+        log.debug("Created Information for User: {}", newUser);
+        return newUser;
+    }
+
     public User loginUser(User loginUser) {
-      User userDatabase = getUserById(loginUser.getId());
-      if(userDatabase == null){
-          throw new ResponseStatusException(HttpStatus.valueOf(401), "Username is not registered");
-      }
-      if(!(userDatabase.getPassword().equals(loginUser.getPassword()))){
-          throw new ResponseStatusException(HttpStatus.valueOf(401), "Wrong Password");
-      }
+        User userDatabase = getUserById(loginUser.getId());
+        if (userDatabase == null) {
+            throw new ResponseStatusException(HttpStatus.valueOf(401), "Username is not registered");
+        }
+        if (!(userDatabase.getPassword().equals(loginUser.getPassword()))) {
+            throw new ResponseStatusException(HttpStatus.valueOf(401), "Wrong Password");
+        }
         loginUser.setStatus(UserStatus.ONLINE);
         // saves the given entity but data is only persisted in the database once
         // flush() is called
@@ -69,6 +70,7 @@ public class UserService {
         log.debug("Created Information for User: {}", loginUser);
         return loginUser;
     }
+
     public void logoutUser(User logoutUser) {
 
         logoutUser.setStatus(UserStatus.OFFLINE);
@@ -81,27 +83,45 @@ public class UserService {
 
     }
 
-  public User getUserById(Long id) {
-    Optional<User> OptionalUser = userRepository.findById(id);
-    User user = OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-        String.format("user with userid " + id + " was not found")));
-    return user;
-  }
-
-  private void authenticateUser(String token, long idCurrentUser) {
-    User user = getUserById(idCurrentUser);
-    if (!user.getToken().equals(token)) {
-      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
-          String.format("You are not authorized to perform this action"));
+    public User getUserById(Long id) {
+        Optional<User> OptionalUser = userRepository.findById(id);
+        User user = OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                String.format("user with userid " + id + " was not found")));
+        return user;
     }
-  }
 
-    public void verifyUser(String token, long idCurrentUser){
-      try {
-          authenticateUser(token,idCurrentUser);
-      }catch (ResponseStatusException){
-          throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"You are not allowed to logout with somebody elses accoung");
-      }
+    private void authenticateUser(String token, long idCurrentUser) {
+        User user = getUserById(idCurrentUser);
+        if (!user.getToken().equals(token)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    String.format("You are not authorized to perform this action"));
+        }
+    }
+
+    public void verifyUser(String token, long idCurrentUser) {
+        try {
+            authenticateUser(token, idCurrentUser);
+        }
+        catch(ResponseStatusException){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not allowed to logout with somebody elses accoung");
+        }
+    }
+
+
+    //Todo
+    //implement updateUser function
+    public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser) {
+        // check if user is authorized to change its data
+        authenticateUser(token, idCurrentUser);
+
+        // get User by Username
+        // update Data
+        // safe new user in DB
+
+
+        User updatedUser = new User();
+
+        return updatedUser;
     }
 
 
