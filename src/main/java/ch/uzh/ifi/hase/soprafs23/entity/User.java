@@ -41,11 +41,8 @@ public class User implements Serializable {
   @Column(nullable = false)
   private UserStatus status;
 
-  @Column(nullable = false)
+  @Column
   private String bio;
-
-  @Column(nullable = false, unique = true)
-  private String stats;
 
   @Column(nullable = false)
   private Date creationDate;
@@ -106,20 +103,15 @@ public class User implements Serializable {
   public void setBio(String bio) {
       this.bio = bio;
   }
-  public String stats(){
-      return stats;
-  }
 
-  public void setStats(String stats){
-      this.stats = stats;
-  }
+
   public boolean getHost(){return host;}
 
   public void setHost(boolean host){
       this.host = host;
   }
 
-    public void setCreationDate(Date creationDate) { this.creationDate = creationDate; }
+public void setCreationDate(Date creationDate) { this.creationDate = creationDate; }
 
-    public Date getCreationDate() { return creationDate; }
+public Date getCreationDate() { return creationDate; }
 }
