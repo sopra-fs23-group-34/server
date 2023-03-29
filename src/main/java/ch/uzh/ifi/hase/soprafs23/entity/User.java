@@ -54,4 +54,5 @@ public class User implements Serializable {
     @Column
     private boolean host;
 
+    
 }
