@@ -9,10 +9,12 @@ import java.util.Date;
 @Getter
 @Setter
 public class UserGetDTO {
+
   private Long id;
   private String username;
   private UserStatus status;
   private String email;
   private String bio;
   private Date creationDate;
+
 }
