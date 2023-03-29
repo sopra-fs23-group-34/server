@@ -1,53 +1,18 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
+@Setter
 public class UserGetDTO {
-
   private Long id;
   private String username;
   private UserStatus status;
-
   private String email;
-
   private String bio;
-
   private Date creationDate;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public UserStatus getStatus() {
-    return status;
-  }
-
-  public void setStatus(UserStatus status) {
-    this.status = status;
-  }
-
-  public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getBio() { return bio; }
-
-    public void setBio(String bio) { this.bio = bio;}
-
-    public Date getCreationDate() { return creationDate; }
-
-    public void setCreationDate(Date creationDate) { this.creationDate = creationDate; }
 }
