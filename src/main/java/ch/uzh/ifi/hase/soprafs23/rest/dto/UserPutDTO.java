@@ -14,5 +14,5 @@ public class UserPutDTO {
     private String email;
     private String bio;
     private UserStatus status;
-
+    //private String oldPassword;
 }

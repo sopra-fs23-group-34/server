@@ -105,10 +105,25 @@ public class UserService {
     }
 
 
-    //Todo
-    //implement updateUser function
+
     public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser) {
+
         User user = userRepository.findById(idCurrentUser);
+        // make sure, that no information is null
+        if (userWithUpdateInformation.getPassword()== null){
+            userWithUpdateInformation.setPassword(user.getPassword());
+        }
+
+        if (userWithUpdateInformation.getEmail()==null){
+            userWithUpdateInformation.setEmail(user.getEmail());
+        }
+
+        if (userWithUpdateInformation.getUsername() == null){
+            userWithUpdateInformation.setUsername(user.getUsername());
+        }
+        if(userWithUpdateInformation.getBio()==null){
+            userWithUpdateInformation.setBio(user.getBio());
+        }
         // check if user is authorized to change its data
         authenticateUser(token, idCurrentUser);
         User userSameName = userRepository.findByUsername(userWithUpdateInformation.getUsername());
