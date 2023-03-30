@@ -123,6 +123,10 @@ public class UserService {
         return updatedUser;
     }
 
+    public User getUserWithId(Long id) {
+        return getUserById(id);
+    }
+
 
     /**
    * This is a helper method that will check the uniqueness criteria of the

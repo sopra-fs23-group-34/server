@@ -115,23 +115,6 @@ public class UserController {
         // get global leaderboard from db
     }
 
-    @PostMapping("/lobby/create")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public void createLobby(@RequestHeader("id") Long id) {
-        // get User from DB with ID
-        // create Lobby
-        // assign Lobby to User
-        // return WebSocket/ Lobby
-    }
 
-    @PostMapping("/lobby/join/{gameKey}")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public void createLobby(@PathVariable String lobbyKey) {
-        // check if Lobby exists
-        // add Player to Lobby
-        // return WebSocket
-    }
 
 }
