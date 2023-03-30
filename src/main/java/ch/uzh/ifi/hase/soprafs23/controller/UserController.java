@@ -63,10 +63,10 @@ public class UserController {
         // convert API user to internal representation
         User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
 
-        // create user
-        User createdUser = userService.loginUser(userInput);
+        // login user
+        User loginUser = userService.loginUser(userInput);
         // convert internal representation of user back to API
-        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
+        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
     }
     @PutMapping("/users/logout/{userId}")
     @ResponseStatus(HttpStatus.OK)
