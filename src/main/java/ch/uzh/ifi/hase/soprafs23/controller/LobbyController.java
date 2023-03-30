@@ -36,6 +36,7 @@ public class LobbyController {
         User hostUser = userService.getUserWithId(id);
         // create Lobby and assign Lobby to User
         Lobby lobby = new Lobby(hostUser);
+        // save Lobby to DB?
         // return WebSocket/ Lobby
     }
 
