@@ -62,6 +62,7 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Wrong Password");
         }
         userDatabase.setStatus(UserStatus.ONLINE);
+        System.out.println(userDatabase.getStatus().toString());
         // saves the given entity but data is only persisted in the database once
         // flush() is called
         userRepository.save(userDatabase);
@@ -129,9 +130,7 @@ public class UserService {
         userRepository.save(user);
         userRepository.flush();
 
-        User updatedUser = new User();
-
-        return updatedUser;
+        return user;
     }
 
     public User getUserWithId(Long id) {
