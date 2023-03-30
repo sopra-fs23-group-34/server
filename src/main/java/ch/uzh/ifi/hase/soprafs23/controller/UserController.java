@@ -89,8 +89,7 @@ public class UserController {
                                             @RequestHeader("token") String token,
                                             @PathVariable Long id){
         // convert API user to internal user representation
-        User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
-
+        User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutUpdateDTOtoEntity(userPutDTO);
         //update user
         User updatedUser = userService.updateUser(userWithUpdateInformation, token, id);
 
