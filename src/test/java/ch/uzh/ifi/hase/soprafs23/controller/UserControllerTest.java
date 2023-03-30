@@ -68,43 +68,85 @@ public class UserControllerTest {
         .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())));
   }
 
-    @Test
-    public void createUser_validInput_userCreated() throws Exception {
-        // given
-        User user = new User();
-        user.setId(1L);
-        user.setPassword("Test User");
-        user.setUsername("testUsername");
-        user.setEmail("test@mail.ch");
-        user.setToken("1");
-        user.setStatus(UserStatus.ONLINE);
-        user.setCreationDate(new Date());
+  @Test
+  public void createUser_validInput_userCreated() throws Exception {
+    // given
+    User user = new User();
+    user.setId(1L);
+    user.setPassword("Test User");
+    user.setUsername("testUsername");
+    user.setEmail("test@mail.ch");
+    user.setToken("1");
+    user.setStatus(UserStatus.ONLINE);
+    user.setCreationDate(new Date());
 
-        UserPostDTO userPostDTO = new UserPostDTO();
-        userPostDTO.setPassword("Test User");
-        userPostDTO.setUsername("testUsername");
-        userPostDTO.setEmail("test@mail.ch");
+    UserPostDTO userPostDTO = new UserPostDTO();
+    userPostDTO.setPassword("Test User");
+    userPostDTO.setUsername("testUsername");
+    userPostDTO.setEmail("test@mail.ch");
 
-        given(userService.createUser(Mockito.any())).willReturn(user);
+    given(userService.createUser(Mockito.any())).willReturn(user);
 
-        // when/then -> do the request + validate the result
-        MockHttpServletRequestBuilder postRequest = post("/users/create")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(userPostDTO));
+    // when/then -> do the request + validate the result
+    MockHttpServletRequestBuilder postRequest = post("/users/create")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(asJsonString(userPostDTO));
 
         // then
-        mockMvc.perform(postRequest)
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", is(user.getId().intValue())))
-                .andExpect(jsonPath("$.token", is(user.getToken())))
-                .andExpect(jsonPath("$.username", is(user.getUsername())))
-                .andExpect(jsonPath("$.email", is(user.getEmail())))
-                .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
+    mockMvc.perform(postRequest)
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.id", is(user.getId().intValue())))
+        .andExpect(jsonPath("$.token", is(user.getToken())))
+        .andExpect(jsonPath("$.username", is(user.getUsername())))
+        .andExpect(jsonPath("$.email", is(user.getEmail())))
+        .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
+    }
+
+  @Test
+  public void createUser_unsuccessful_EmailAlreadyUsed() throws Exception {
+
+    UserPostDTO userPostDTO = new UserPostDTO();
+    userPostDTO.setPassword("Test User");
+    userPostDTO.setUsername("testUsername");
+    userPostDTO.setEmail("test@mail.ch");
+
+    given(userService.createUser(Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.CONFLICT, "add User failed because email is already used"));
+
+    // when/then -> do the request + validate the result
+    MockHttpServletRequestBuilder postRequest = post("/users/create")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(asJsonString(userPostDTO));
+
+    // then
+    mockMvc.perform(postRequest)
+       .andExpect(status().isConflict())
+       .andExpect(status().reason("add User failed because email is already used"));
+    }
+
+  @Test
+  public void createUser_unsuccessful_UsernameAlreadyUsed() throws Exception {
+
+    UserPostDTO userPostDTO = new UserPostDTO();
+    userPostDTO.setPassword("Test User");
+    userPostDTO.setUsername("testUsername");
+    userPostDTO.setEmail("test@mail.ch");
+
+    given(userService.createUser(Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.CONFLICT, "add User failed because username is already used"));
+
+    // when/then -> do the request + validate the result
+    MockHttpServletRequestBuilder postRequest = post("/users/create")
+       .contentType(MediaType.APPLICATION_JSON)
+       .content(asJsonString(userPostDTO));
+
+    // then
+    mockMvc.perform(postRequest)
+       .andExpect(status().isConflict())
+       .andExpect(status().reason("add User failed because username is already used"));
     }
 
 
-    @Test
-    public void loginUser_successful() throws Exception {
+  @Test
+  public void loginUser_successful() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -137,8 +179,8 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
     }
 
-    @Test
-    public void loginUser_unsuccessful_invalidUsername() throws Exception {
+  @Test
+  public void loginUser_unsuccessful_invalidUsername() throws Exception {
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
         userPostDTO.setUsername("testUsernameInvalid");
@@ -156,8 +198,8 @@ public class UserControllerTest {
                 .andExpect(status().reason("Username is not registered"));
     }
 
-    @Test
-    public void loginUser_unsuccessful_invalidPassword() throws Exception {
+  @Test
+  public void loginUser_unsuccessful_invalidPassword() throws Exception {
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
         userPostDTO.setUsername("testUsernameInvalid");
@@ -175,8 +217,8 @@ public class UserControllerTest {
                 .andExpect(status().reason("Wrong Password"));
     }
 
-    @Test
-    public void logout_successful() throws Exception {
+  @Test
+  public void logout_successful() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -199,8 +241,8 @@ public class UserControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-    @Test
-    public void logout_successful_invalidToken() throws Exception {
+  @Test
+  public void logout_successful_invalidToken() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
