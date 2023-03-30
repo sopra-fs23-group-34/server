@@ -110,13 +110,27 @@ public class UserService {
     //Todo
     //implement updateUser function
     public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser) {
+        User user = userRepository.findById(idCurrentUser);
         // check if user is authorized to change its data
         authenticateUser(token, idCurrentUser);
-
-        // get User by Username
-        // update Data
-        // safe new user in DB
-
+        User userSameName = userRepository.findByUsername(userWithUpdateInformation.getUsername());
+        if(userSameName != null){
+            if(!user.getId().equals(userSameName.getId())){
+                throw new ResponseStatusException(HttpStatus.valueOf(404),"You can't pick the same username as somebody else!");
+            }
+        }
+        User userSameEmail = userRepository.findByEmail(userWithUpdateInformation.getEmail());
+        if(userSameEmail != null){
+            if(!user.getId().equals(userSameEmail.getId())){
+                throw new ResponseStatusException(HttpStatus.valueOf(404),"You can't pick the same mail as somebody else!");
+            }
+        }
+        user.setUsername(userWithUpdateInformation.getUsername());
+        user.setEmail(userWithUpdateInformation.getEmail());
+        user.setBio(userWithUpdateInformation.getBio());
+        user.setPassword(userWithUpdateInformation.getPassword());
+        userRepository.save(user);
+        userRepository.flush();
 
         User updatedUser = new User();
 
