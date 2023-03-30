@@ -54,21 +54,23 @@ public class UserService {
     }
 
     public User loginUser(User loginUser) {
-        User userDatabase = getUserById(loginUser.getId());
+        User userDatabase = userRepository.findByUsername(loginUser.getUsername());
         if (userDatabase == null) {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Username is not registered");
         }
         if (!(userDatabase.getPassword().equals(loginUser.getPassword()))) {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Wrong Password");
         }
-        loginUser.setStatus(UserStatus.ONLINE);
+        userDatabase.setStatus(UserStatus.ONLINE);
         // saves the given entity but data is only persisted in the database once
         // flush() is called
-        loginUser = userRepository.save(loginUser);
+        userRepository.save(userDatabase);
         userRepository.flush();
 
+
+
         log.debug("Logged-in User: {}", loginUser);
-        return loginUser;
+        return userDatabase;
     }
 
     public void logoutUser(User logoutUser) {
