@@ -145,8 +145,8 @@ public class UserControllerTest {
     }
 
 
-    @Test
-    public void loginUser_successful() throws Exception {
+  @Test
+  public void loginUser_successful() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -179,8 +179,8 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
     }
 
-    @Test
-    public void loginUser_unsuccessful_invalidUsername() throws Exception {
+  @Test
+  public void loginUser_unsuccessful_invalidUsername() throws Exception {
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
         userPostDTO.setUsername("testUsernameInvalid");
@@ -198,8 +198,8 @@ public class UserControllerTest {
                 .andExpect(status().reason("Username is not registered"));
     }
 
-    @Test
-    public void loginUser_unsuccessful_invalidPassword() throws Exception {
+  @Test
+  public void loginUser_unsuccessful_invalidPassword() throws Exception {
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
         userPostDTO.setUsername("testUsernameInvalid");
@@ -217,8 +217,8 @@ public class UserControllerTest {
                 .andExpect(status().reason("Wrong Password"));
     }
 
-    @Test
-    public void logout_successful() throws Exception {
+  @Test
+  public void logout_successful() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -241,8 +241,8 @@ public class UserControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-    @Test
-    public void logout_successful_invalidToken() throws Exception {
+  @Test
+  public void logout_successful_invalidToken() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
