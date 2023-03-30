@@ -25,6 +25,7 @@ public class Lobby {
         CodeGenerator codeGenerator = new CodeGenerator();
         gameCode = codeGenerator.nextCode();
         host = hostUser;
+        players.add(hostUser);
     }
 
     public void addPlayer(User user){
