@@ -73,15 +73,17 @@ public class UserService {
         return userDatabase;
     }
 
-    public void logoutUser(User logoutUser) {
+    public User logoutUser(Long id) {
 
-        logoutUser.setStatus(UserStatus.OFFLINE);
+        User loggedOutUser = getUserById(id);
+        loggedOutUser.setStatus(UserStatus.OFFLINE);
         // saves the given entity but data is only persisted in the database once
         // flush() is called
-        logoutUser = userRepository.save(logoutUser);
+        userRepository.save(loggedOutUser);
         userRepository.flush();
 
-        log.debug("Logged out user: {}", logoutUser);
+        log.debug("Logged out user: {}", loggedOutUser);
+        return loggedOutUser;
 
     }
 

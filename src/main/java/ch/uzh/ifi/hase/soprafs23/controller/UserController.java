@@ -71,17 +71,16 @@ public class UserController {
     @PutMapping("/users/logout/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void logoutUser(@RequestHeader("token") String token,
+    public UserGetDTO logoutUser(@RequestHeader("token") String token,
                            @PathVariable Long userId) {
-        System.out.println("here");
         //Check, if user is authorised to logout
         userService.verifyUser(token, userId);
 
-        // convert API user to internal representation
-        User userInput = DTOMapper.INSTANCE.convertUserPostLogoutDTOtoEntity(userId);
-
         //logout user
-        userService.logoutUser(userInput);
+        User loggedOutUser = userService.logoutUser(userId);
+
+        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loggedOutUser);
+
     }
 
     @PutMapping("/users/update/{id}")
