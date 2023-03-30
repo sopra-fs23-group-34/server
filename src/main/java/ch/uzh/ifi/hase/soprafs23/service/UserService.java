@@ -66,9 +66,6 @@ public class UserService {
         // flush() is called
         userRepository.save(userDatabase);
         userRepository.flush();
-
-
-
         log.debug("Logged-in User: {}", loginUser);
         return userDatabase;
     }

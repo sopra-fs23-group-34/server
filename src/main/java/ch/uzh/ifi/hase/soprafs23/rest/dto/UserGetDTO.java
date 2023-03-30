@@ -16,5 +16,6 @@ public class UserGetDTO {
   private String email;
   private String bio;
   private Date creationDate;
+  private String token;
 
 }

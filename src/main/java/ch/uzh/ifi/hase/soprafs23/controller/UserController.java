@@ -79,7 +79,6 @@ public class UserController {
         User loggedOutUser = userService.logoutUser(userId);
 
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loggedOutUser);
-
     }
 
     @PutMapping("/users/update/{id}")
