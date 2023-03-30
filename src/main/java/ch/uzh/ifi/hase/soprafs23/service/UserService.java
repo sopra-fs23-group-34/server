@@ -121,6 +121,9 @@ public class UserService {
         if (userWithUpdateInformation.getUsername() == null){
             userWithUpdateInformation.setUsername(user.getUsername());
         }
+        if(userWithUpdateInformation.getBio()==null){
+            userWithUpdateInformation.setBio(user.getBio());
+        }
         // check if user is authorized to change its data
         authenticateUser(token, idCurrentUser);
         User userSameName = userRepository.findByUsername(userWithUpdateInformation.getUsername());
