@@ -31,7 +31,7 @@ public interface DTOMapper {
   User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
   @Mapping(source = "id", target = "id")
-  User convertUserPostLogoutDTOtoEntity(UserPostLogoutDTO userPostLogoutDTO);
+  User convertUserPostLogoutDTOtoEntity(Long id);
 
   @Mapping(source = "id", target = "id")
   @Mapping(source = "username", target = "username")

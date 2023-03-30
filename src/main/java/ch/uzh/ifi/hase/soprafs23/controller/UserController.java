@@ -49,7 +49,7 @@ public class UserController {
   public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
     // convert API user to internal representation
     User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-
+    System.out.println("hi, I am here");
     // create user
     User createdUser = userService.createUser(userInput);
     // convert internal representation of user back to API
@@ -68,20 +68,20 @@ public class UserController {
         // convert internal representation of user back to API
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
     }
-    @PostMapping("/users/logout/{id}")
+    @PutMapping("/users/logout/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void logoutUser(@RequestHeader("token") String token,
-                           @PathVariable Long idCurrentUser) {
-
+                           @PathVariable Long userId) {
+        System.out.println("here");
         //Check, if user is authorised to logout
-        userService.verifyUser(token, idCurrentUser);
+        userService.verifyUser(token, userId);
 
         // convert API user to internal representation
-        //User userInput = DTOMapper.INSTANCE.convertUserPostLogoutDTOtoEntity(idCurrentUser);
+        User userInput = DTOMapper.INSTANCE.convertUserPostLogoutDTOtoEntity(userId);
 
         //logout user
-        //userService.logoutUser(userInput);
+        userService.logoutUser(userInput);
     }
 
     @PutMapping("/users/update/{id}")
@@ -89,12 +89,12 @@ public class UserController {
     @ResponseBody
     public UserGetDTO updateUserInformation(@RequestBody UserPutDTO userPutDTO,
                                             @RequestHeader("token") String token,
-                                            @PathVariable Long idCurrentUser){
+                                            @PathVariable Long id){
         // convert API user to internal user representation
         User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
 
         //update user
-        User updatedUser = userService.updateUser(userWithUpdateInformation, token, idCurrentUser);
+        User updatedUser = userService.updateUser(userWithUpdateInformation, token, id);
 
         // return updated user
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
@@ -104,8 +104,8 @@ public class UserController {
     @GetMapping("/users/getUser/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserGetDTO getUser(@PathVariable Long idRequestedUser) {
-      User user = userService.getUserById(idRequestedUser);
+    public UserGetDTO getUser(@PathVariable Long id) {
+      User user = userService.getUserById(id);
       return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
     }
 
@@ -119,7 +119,7 @@ public class UserController {
     @PostMapping("/lobby/create")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public void createLobby(@RequestHeader("id") Long idRequestedUser) {
+    public void createLobby(@RequestHeader("id") Long id) {
         // get User from DB with ID
         // create Lobby
         // assign Lobby to User
