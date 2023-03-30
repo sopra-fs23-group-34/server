@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
+import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
@@ -16,24 +17,24 @@ import java.util.ArrayList;
 public class Lobby {
     private String user_name;
     private final String gameCode;
-    private final User host;
+    private final LobbyPlayer host;
     private Integer roundLimit;
     private FoodCategory foodCategory;
-    private ArrayList<User> players;
+    private ArrayList<LobbyPlayer> players;
 
-    public Lobby(User hostUser) {
+    public Lobby(LobbyPlayer hostUser) {
         CodeGenerator codeGenerator = new CodeGenerator();
         gameCode = codeGenerator.nextCode();
         host = hostUser;
         players.add(hostUser);
     }
 
-    public void addPlayer(User user){
-        players.add(user);
+    public void addPlayer(LobbyPlayer lobbyPlayer){
+        players.add(lobbyPlayer);
     }
 
-    public void removePlayer(User user) {
-        players.remove(user);
+    public void removePlayer(LobbyPlayer lobbyPlayer) {
+        players.remove(lobbyPlayer);
     }
 
     public void playGame(){

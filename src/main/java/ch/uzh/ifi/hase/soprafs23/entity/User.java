@@ -22,7 +22,7 @@ import java.util.Date;
 @Table(name = "users")
 @Getter
 @Setter
-public class User implements Serializable {
+public class User implements Serializable, LobbyPlayer{
 
     private static final long serialVersionUID = 1L;
 
