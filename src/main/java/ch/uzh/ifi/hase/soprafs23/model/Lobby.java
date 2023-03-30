@@ -6,8 +6,7 @@ import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.util.ArrayList;
 
@@ -20,11 +19,17 @@ public class Lobby {
     private final LobbyPlayer host;
     private Integer roundLimit;
     private FoodCategory foodCategory;
+    @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    private Notifier notifier;
+
+    @Setter(AccessLevel.NONE)
     private ArrayList<LobbyPlayer> players;
 
     public Lobby(LobbyPlayer hostUser) {
         CodeGenerator codeGenerator = new CodeGenerator();
         gameCode = codeGenerator.nextCode();
+        this.notifier = new Notifier(gameCode);
         host = hostUser;
         players.add(hostUser);
     }
@@ -37,8 +42,10 @@ public class Lobby {
         players.remove(lobbyPlayer);
     }
 
-    public void playGame(){
-
+    public boolean playGame(){
+        Game game = new Game(players, roundLimit, foodCategory, notifier);
+        game.run();
+        return true;
     }
 
 

@@ -10,18 +10,15 @@ import java.util.Map;
 @Repository
 public class LobbyRepository {
     private Map<String, Lobby> lobbies = new HashMap<>();
-    /*
-    public Lobby createLobby(){
-        //create Lobby
+
+    public void addLobby(Lobby lob){
+        lobbies.put(lob.getGameCode(), lob);
     }
-    */
 
     public void addPlayerToLobby(LobbyPlayer player, String id){
         Lobby lobby = findById(id);
         lobby.addPlayer(player);
     }
-
-
 
     public Lobby findById(String id) {
         return lobbies.get(id);
