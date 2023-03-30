@@ -7,6 +7,7 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -67,18 +68,18 @@ public class UserController {
         // convert internal representation of user back to API
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
     }
-    @PutMapping("/users/logout/{userId}")
-    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/users/logout/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public UserGetDTO logoutUser(@RequestHeader("token") String token,
+    public void logoutUser(@RequestHeader("token") String token,
                            @PathVariable Long userId) {
         //Check, if user is authorised to logout
-        userService.verifyUser(token, userId);
+        //userService.verifyUser(token, userId);
 
         //logout user
-        User loggedOutUser = userService.logoutUser(userId);
+        User loggedOutUser = userService.logoutUser(token, userId);
 
-        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loggedOutUser);
+        //return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loggedOutUser);
     }
 
     @PutMapping("/users/update/{id}")

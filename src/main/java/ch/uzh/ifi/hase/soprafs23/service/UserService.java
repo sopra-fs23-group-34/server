@@ -70,8 +70,8 @@ public class UserService {
         return userDatabase;
     }
 
-    public User logoutUser(Long id) {
-
+    public User logoutUser(String token, Long id) {
+        authenticateUser(token, id);
         User loggedOutUser = getUserById(id);
         loggedOutUser.setStatus(UserStatus.OFFLINE);
         // saves the given entity but data is only persisted in the database once
