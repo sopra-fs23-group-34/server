@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * User Service
@@ -40,6 +37,7 @@ public class UserService {
     public List<User> getUsers() {
         return this.userRepository.findAll();
     }
+
 
     public User createUser(User newUser) {
         newUser.setToken(UUID.randomUUID().toString());
