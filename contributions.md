@@ -4,8 +4,10 @@ Nico
 
 
 Elias
+- [ ] sopra-fs23-group-34/server#52
 
 André
+- [ ] sopra-fs23-group-34/client#7
 
 Nataell
 - [ ] sopra-fs23-group-34/server#25
