@@ -1,17 +1,25 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.entity.Food;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.FoodGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User Controller
@@ -87,6 +95,7 @@ public class UserController {
     @ResponseBody
     public UserGetDTO updateUserInformation(@RequestBody UserPutDTO userPutDTO,
                                             @RequestHeader("token") String token,
+                                            @RequestHeader(required = false, value = "password") String password,
                                             @PathVariable Long id){
         // convert API user to internal user representation
         User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutUpdateDTOtoEntity(userPutDTO);
@@ -112,6 +121,29 @@ public class UserController {
     @ResponseBody
     public void getGlobalRanking() {
         // get global leaderboard from db
+    }
+    @GetMapping("users/banana")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public FoodGetDTO getBanana(){
+      System.out.println("getBanana");
+      Food myBanana = new Food();
+      myBanana.setName("Banana");
+      myBanana.setFat("0.3");
+      myBanana.setProtein("1.1");
+      myBanana.setCarbs("23");
+      myBanana.setPicture("Butiful Banana");
+      return DTOMapper.INSTANCE.convertEntityToFoodGetDTO(myBanana);
+
+      /*URL url = UserController.class.getResource("banana.png");
+        ImageIcon image = new ImageIcon(url);
+
+        JSONObject obj=new JSONObject();
+        obj.put("name","sonoo");
+        obj.put("age",new Integer(27));
+        obj.put("salary",new Double(600000));
+        System.out.print(obj);
+*/
     }
 
 
