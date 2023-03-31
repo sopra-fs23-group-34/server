@@ -48,7 +48,6 @@ public class UserService {
         // flush() is called
         newUser = userRepository.save(newUser);
         userRepository.flush();
-
         log.debug("Created Information for User: {}", newUser);
         return newUser;
     }

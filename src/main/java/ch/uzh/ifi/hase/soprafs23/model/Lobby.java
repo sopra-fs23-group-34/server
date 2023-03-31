@@ -29,6 +29,7 @@ public class Lobby {
     public Lobby(String gameCode) {
         this.gameCode = gameCode;
         this.notifier = new Notifier(gameCode);
+        this.players = new ArrayList<>();
     }
 
     public void addPlayer(LobbyPlayer lobbyPlayer){

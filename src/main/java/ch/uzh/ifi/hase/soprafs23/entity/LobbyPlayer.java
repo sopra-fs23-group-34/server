@@ -7,6 +7,6 @@ public interface LobbyPlayer {
 
     public Long getId();
 
-
+    public String getUsername();
 
 }

@@ -32,14 +32,12 @@ public class LobbyController {
         this.lobbyService = lobbyService;
     }
 
-
-
     @PostMapping("/lobbys/create")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public String createLobby(@RequestHeader("id") Long id) {
-        String lobby_id = lobbyService.createLobby();
-        return lobby_id;
+        String gameCode = lobbyService.createLobby();
+        return gameCode;
         // get User from DB with ID
         //LobbyPlayer hostUser = userService.getUserWithId(id);
         // create Lobby and assign Lobby to User
