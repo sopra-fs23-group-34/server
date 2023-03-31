@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 @Controller
 public class LobbyController {
-
+    @Autowired
     private final UserService userService;
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
@@ -61,7 +61,7 @@ public class LobbyController {
     @PostMapping("/lobby/join/{gameKey}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void createLobby(@PathVariable String lobbyKey) {
+    public void joinLobby(@PathVariable String lobbyKey) {
         // check if Lobby exists
         // add Player to Lobby
         // return WebSocket

@@ -42,7 +42,7 @@ public class Lobby {
         players.remove(lobbyPlayer);
     }
 
-    public boolean playGame(){
+    public boolean playGame() throws InterruptedException {
         Game game = new Game(players, roundLimit, foodCategory, notifier);
         game.run();
         return true;

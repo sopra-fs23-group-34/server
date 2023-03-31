@@ -11,28 +11,21 @@ public class Game {
     private FoodCategory foodCategory;
     private Notifier notifier;
 
-
     public Game(ArrayList<LobbyPlayer> players, int roundLimit, FoodCategory foodCategory, Notifier notifier){
         this.player = players;
         this.roundLimit = roundLimit;
         this.foodCategory = foodCategory;
     }
 
-    public void run(){
+    public void run() throws InterruptedException {
         Scores scores = new Scores();
         for (int round=0; round < roundLimit; round ++){
-            Round gameRound = new Round(foodCategory);
+            Round gameRound = new Round(foodCategory, notifier);
             gameRound.run();
             scores.computeRoundScores(gameRound.getPoints());
         }
         scores.getFinalScores();
         //notification, also when the food is selected
     }
-
-
-
-
-
-
 
 }
