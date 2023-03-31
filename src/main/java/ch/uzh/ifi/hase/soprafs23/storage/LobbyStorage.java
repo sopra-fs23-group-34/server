@@ -1,0 +1,31 @@
+package ch.uzh.ifi.hase.soprafs23.storage;
+import ch.uzh.ifi.hase.soprafs23.model.Lobby;
+import java.io.Serializable;
+import java.util.Map;
+
+public class LobbyStorage implements Serializable {
+    private Map<String, Lobby> lobbies;
+    private static LobbyStorage lobbyStorage;
+    private LobbyStorage(){
+        this.lobbyStorage = new LobbyStorage();
+    }
+    public static LobbyStorage createLobbyStorage(){
+        if (lobbyStorage == null){
+            lobbyStorage = new LobbyStorage();
+        }
+        return lobbyStorage;
+    }
+    public Lobby getLobby(String lobbyCode){
+            return lobbies.get(lobbyCode);
+        }
+    public void addLobby(String gameCode, Lobby lobby){
+        lobbies.put(gameCode,lobby);
+    }
+    public void removeLobby(String gameCode){
+        lobbies.remove(gameCode);
+    }
+}
+
+
+
+

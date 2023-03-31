@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Lobby {
     private String user_name;
     private final String gameCode;
-    private final LobbyPlayer host;
+
     private Integer roundLimit;
     private FoodCategory foodCategory;
     @Setter(AccessLevel.NONE)
@@ -26,12 +26,9 @@ public class Lobby {
     @Setter(AccessLevel.NONE)
     private ArrayList<LobbyPlayer> players;
 
-    public Lobby(LobbyPlayer hostUser) {
-        CodeGenerator codeGenerator = new CodeGenerator();
-        gameCode = codeGenerator.nextCode();
+    public Lobby(String gameCode) {
+        this.gameCode = gameCode;
         this.notifier = new Notifier(gameCode);
-        host = hostUser;
-        players.add(hostUser);
     }
 
     public void addPlayer(LobbyPlayer lobbyPlayer){
