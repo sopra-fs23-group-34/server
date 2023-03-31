@@ -18,41 +18,23 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.util.concurrent.TimeUnit;
 
-@Controller
+@RestController
 public class LobbyController {
 
     private final UserService userService;
 
     private final LobbyService lobbyService;
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
+
 
     LobbyController(UserService userService, LobbyService lobbyService) {
         this.userService = userService;
         this.lobbyService = lobbyService;
     }
 
-    @MessageMapping("/testMessage")
-    @SendTo("/lobby/messages")
-    public PlayerMessage playerMessage(PlayerMessage plm) throws Exception {
-        System.out.println(HtmlUtils.htmlEscape(plm.getContent()));
-        return plm;
-    }
-
-    @MessageMapping("/startGame")
-    @SendTo("/lobby/messages")
-    public PlayerMessage hostStartsGame(PlayerMessage plm) throws Exception {
-        for(int counter = 5; counter  > 0 ; counter --){
-            messagingTemplate.convertAndSend("/topic/messages", counter);
-            Thread.sleep(500);
-        }
-        lobbyService.startGame("asdf",1L,"asdf");
-        return plm;
-    }
 
 
-    @PostMapping("/lobby/create")
+    @PostMapping("/lobbys/create")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public String createLobby(@RequestHeader("id") Long id) {
@@ -66,14 +48,18 @@ public class LobbyController {
         // return WebSocket/ Lobby
     }
 
-    @PostMapping("/lobby/join/{gameKey}")
-    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/lobbys/join")
+    @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public void joinLobby(@PathVariable String gameCode) {
-        lobbyService.joinLobby(gameCode, 1L);
-        // check if Lobby exists
-        // add Player to Lobby
-        // return WebSocket
+    public void joinLobby(@RequestHeader("id") Long id, @RequestParam("arg") String arg) {
+        lobbyService.joinLobby(arg, 1L);
+        // get User from DB with ID
+        //LobbyPlayer hostUser = userService.getUserWithId(id);
+        // create Lobby and assign Lobby to User
+        //Lobby lobby = new Lobby(hostUser);
+        // save Lobby to DB?
+        // return WebSocket/ Lobby
     }
+
 
 }

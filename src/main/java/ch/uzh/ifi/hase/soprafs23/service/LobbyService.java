@@ -41,6 +41,7 @@ public class LobbyService {
     }
 
     public void joinLobby(String gameCode, Long user_id){
+        System.out.println("successfull Joined Lobby");
         checkIfLobbyExists(gameCode);
         LobbyPlayer lobbyPlayer = userService.getUserById(user_id);
         lobbyStorage.getLobby(gameCode).addPlayer(lobbyPlayer);

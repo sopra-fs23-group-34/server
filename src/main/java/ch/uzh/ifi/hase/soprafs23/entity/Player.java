@@ -6,7 +6,6 @@ public class Player {
     private boolean isHost;
     private Integer place;
 
-
     public Player(LobbyPlayer user) {
 
     }
