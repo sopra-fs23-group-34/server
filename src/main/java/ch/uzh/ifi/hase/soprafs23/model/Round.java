@@ -22,7 +22,8 @@ public class Round {
 
     private Food getRandomFood(FoodCategory foodCategory){
         // api request here
-        Food food = new Food();
+        Map<String, Integer> nutritionValues = new HashMap<String, Integer>();
+        Food food = new Food("Apfel", nutritionValues,"image");
         return food;
     }
 
