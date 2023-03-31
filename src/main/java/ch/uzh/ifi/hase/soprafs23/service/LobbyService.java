@@ -5,6 +5,7 @@ import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 import ch.uzh.ifi.hase.soprafs23.model.CodeGenerator;
 import ch.uzh.ifi.hase.soprafs23.model.Lobby;
 import ch.uzh.ifi.hase.soprafs23.storage.LobbyStorage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,14 +17,13 @@ public class LobbyService {
 
     private final UserService userService;
 
-    private final CodeGenerator codeGenerator;
+    private final CodeGenerator codeGenerator = new CodeGenerator();;
 
-    private final LobbyStorage lobbyStorage;
+    private final LobbyStorage lobbyStorage = LobbyStorage.createLobbyStorage();;
 
     public LobbyService(UserService userService){
         this.userService = userService;
-        this.codeGenerator = new CodeGenerator();
-        this.lobbyStorage = LobbyStorage.createLobbyStorage();
+
     }
 
     private void checkIfLobbyExists(String id){
@@ -36,6 +36,7 @@ public class LobbyService {
     public String createLobby(){
         String gameCode = codeGenerator.nextCode();
         lobbyStorage.addLobby(gameCode, new Lobby(gameCode));
+        System.out.println(gameCode);
         return gameCode;
     }
 
