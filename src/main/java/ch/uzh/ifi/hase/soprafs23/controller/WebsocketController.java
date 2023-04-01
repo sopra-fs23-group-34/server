@@ -55,12 +55,10 @@ public class WebsocketController {
         // return WebSocket/ Lobby
     }
 
-
     @MessageMapping("/players/response/{player_id}")
     public void playerResponse(PlayerMessage plm) throws Exception {
         System.out.println(HtmlUtils.htmlEscape(plm.getContent()));
     }
-
 
     @MessageMapping("/startGame/{gameCode}")
     @SendTo("/lobbys/messages")

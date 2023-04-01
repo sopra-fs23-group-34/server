@@ -2,12 +2,10 @@ package ch.uzh.ifi.hase.soprafs23.service;
 
 
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
-import ch.uzh.ifi.hase.soprafs23.entity.TestPlayer;
+import ch.uzh.ifi.hase.soprafs23.model.TestPlayer;
 import ch.uzh.ifi.hase.soprafs23.model.CodeGenerator;
 import ch.uzh.ifi.hase.soprafs23.model.Lobby;
-import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import ch.uzh.ifi.hase.soprafs23.storage.LobbyStorage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

@@ -1,41 +1,13 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 
-import lombok.AllArgsConstructor;
+public interface Notifier {
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+    public void publishTurnScores();
 
-@AllArgsConstructor
-public class Notifier {
+    public void publishGameScores();
 
-    private final String lobbyId;
+    public void publishFood(Food food);
 
-    public void publishTurnScores(){
-        //send turn scores
-    }
-
-    public void publishGameScores(){
-        //send final scores
-    }
-
-    public void publishFood(Food food){
-        System.out.println("aosdfoaijs");
-    }
-
-    public void publishTimer(int timer){
-        System.out.println(timer);
-    }
-
-
-    public ArrayList<Result> getResult(){
-        Map<String, Integer> guesses = new HashMap<>();
-        guesses.put("carbs",3);
-        Result res = new Result(1L,guesses);
-        ArrayList<Result> results = new ArrayList<>();
-        results.add(res);
-        return results;
-    }
-
+    public void publishTimer(int timer);
 
 }

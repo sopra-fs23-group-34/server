@@ -1,9 +1,10 @@
-package ch.uzh.ifi.hase.soprafs23.entity;
+package ch.uzh.ifi.hase.soprafs23.model;
 
+import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class TestPlayer implements  LobbyPlayer{
+public class TestPlayer implements LobbyPlayer {
 
     @Override
     public Long getId() {
