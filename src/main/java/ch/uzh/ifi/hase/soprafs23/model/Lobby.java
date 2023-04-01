@@ -8,6 +8,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @Data
 public class Lobby {
-    private String user_name;
+
     private final String gameCode;
     private Integer roundLimit;
     private FoodCategory foodCategory;
@@ -29,9 +30,9 @@ public class Lobby {
     @Setter(AccessLevel.NONE)
     private ArrayList<LobbyPlayer> players;
 
-    public Lobby(String gameCode) {
+    public Lobby(String gameCode, SimpMessagingTemplate simpMessagingTemplate) {
         this.gameCode = gameCode;
-        this.notifier = new Notifier(gameCode);
+        this.notifier = new WebsocketNotifier(simpMessagingTemplate, gameCode);
         this.players = new ArrayList<>();
         this.gameStarted = false;
     }

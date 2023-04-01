@@ -6,22 +6,32 @@ import ch.uzh.ifi.hase.soprafs23.model.TestPlayer;
 import ch.uzh.ifi.hase.soprafs23.model.CodeGenerator;
 import ch.uzh.ifi.hase.soprafs23.model.Lobby;
 import ch.uzh.ifi.hase.soprafs23.storage.LobbyStorage;
+import lombok.AllArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.SimpleTimeZone;
 
-
+@AllArgsConstructor
 @Service
 @Transactional
 public class LobbyService {
     private final UserService userService;
-    private final CodeGenerator codeGenerator = new CodeGenerator();
-    private final LobbyStorage lobbyStorage = LobbyStorage.createLobbyStorage();;
+    private final CodeGenerator codeGenerator;
+    private final LobbyStorage lobbyStorage;;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
-    public LobbyService(UserService userService){
+    /*
+    public LobbyService(UserService userService, SimpMessagingTemplate simpMessagingTemplate){
         this.userService = userService;
+        this.simpMessagingTemplate = simpMessagingTemplate;
+        this.codeGenerator = new CodeGenerator();
+        this.lobbyStorage = LobbyStorage.createLobbyStorage();
     }
+    */
+
 
     private void checkIfLobbyExists(String id){
         Lobby lob = lobbyStorage.getLobby(id);
@@ -34,7 +44,7 @@ public class LobbyService {
         //String gameCode = codeGenerator.nextCode();
         String gameCode = "test";
         //change to gamecode
-        lobbyStorage.addLobby("test", new Lobby(gameCode));
+        lobbyStorage.addLobby("test", new Lobby(gameCode, simpMessagingTemplate));
         return gameCode;
     }
 

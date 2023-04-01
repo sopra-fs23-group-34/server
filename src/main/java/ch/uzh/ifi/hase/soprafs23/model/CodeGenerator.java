@@ -1,10 +1,12 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 
+import org.springframework.stereotype.Component;
+
 import java.security.SecureRandom;
 import java.util.Objects;
 import java.util.Random;
 
-
+@Component
 public class CodeGenerator {
     private static final String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String digits = "0123456789";

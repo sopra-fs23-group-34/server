@@ -27,14 +27,15 @@ public class Round {
         return food;
     }
 
-    public ArrayList<Result> run() throws InterruptedException {
+    public void run() throws InterruptedException {
+        //ArrayList<Result>
         Food food = getRandomFood(foodCategory);
         notifier.publishFood(food);
         for (int tick = 10; tick > 0; tick ++){
             notifier.publishTimer(tick);
             Thread.sleep(1000);
         }
-        return notifier.getResult();
+
     }
 }
 

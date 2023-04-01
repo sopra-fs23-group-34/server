@@ -1,9 +1,12 @@
 package ch.uzh.ifi.hase.soprafs23.storage;
 import ch.uzh.ifi.hase.soprafs23.model.Lobby;
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class LobbyStorage implements Serializable {
     private Map<String, Lobby> lobbies;
     private static LobbyStorage lobbyStorage;

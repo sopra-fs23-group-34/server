@@ -25,8 +25,6 @@ public class LobbyController {
 
     private final LobbyService lobbyService;
 
-
-
     LobbyController(UserService userService, LobbyService lobbyService) {
         this.userService = userService;
         this.lobbyService = lobbyService;

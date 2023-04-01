@@ -14,6 +14,8 @@ public class WebsocketNotifier implements Notifier {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 
+    private final String gameCode;
+
     public void publishTurnScores(){
         //send turn scores
     };
@@ -27,6 +29,5 @@ public class WebsocketNotifier implements Notifier {
     public void publishTimer(int timer){
         System.out.println(timer);
     };
-
 
 }
