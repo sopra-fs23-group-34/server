@@ -1,7 +1,9 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.model.GameConfig;
 import ch.uzh.ifi.hase.soprafs23.model.PlayerMessage;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.PlayerGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
@@ -57,20 +59,18 @@ public class WebsocketController {
 
     @MessageMapping("/players/response/{player_id}")
     public void playerResponse(PlayerMessage plm) throws Exception {
-        System.out.println(HtmlUtils.htmlEscape(plm.getContent()));
+        System.out.println(HtmlUtils.htmlEscape(plm.getFoodCategory().toString()));
     }
 
     @MessageMapping("/startGame/{gameCode}")
     @SendTo("/lobbys/messages")
     public PlayerMessage hostStartsGame(PlayerMessage plm,@DestinationVariable String gameCode) throws Exception {
-        System.out.println(gameCode);
         for(int counter = 5; counter  > 0 ; counter --){
-            System.out.println(counter);
             messagingTemplate.convertAndSend("/lobbys/messages", counter);
             Thread.sleep(500);
         }
         messagingTemplate.convertAndSend("/lobbys/messages", "0");
-        lobbyService.startGame(gameCode,1L,"asdf");
+        lobbyService.startGame(gameCode,1L,"asdf", new GameConfig(plm.getRoundLimit(), plm.getFoodCategory()));
         return plm;
     }
 

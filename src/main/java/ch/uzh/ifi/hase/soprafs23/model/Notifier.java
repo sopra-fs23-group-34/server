@@ -2,7 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.model;
 
 public interface Notifier {
 
-    public void publishTurnScores();
+    public void publishTurnScores(Long user_id);
 
     public void publishGameScores();
 

@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs23.model;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +22,7 @@ public class Round {
     private Food getRandomFood(FoodCategory foodCategory){
         // api request here
         Map<String, Integer> nutritionValues = new HashMap<String, Integer>();
+        nutritionValues.put("carbs", 100);
         Food food = new Food("Apfel", nutritionValues,"image");
         return food;
     }
@@ -31,9 +31,10 @@ public class Round {
         //ArrayList<Result>
         Food food = getRandomFood(foodCategory);
         notifier.publishFood(food);
-        for (int tick = 10; tick > 0; tick ++){
+        for (int tick = 10; tick > 0; tick --){
             notifier.publishTimer(tick);
             Thread.sleep(1000);
+
         }
 
     }

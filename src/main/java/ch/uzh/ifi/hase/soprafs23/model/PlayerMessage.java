@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 
+import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,5 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlayerMessage {
-    private String content;
+    private int roundLimit;
+    private FoodCategory foodCategory;
 }

@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.service;
 
 
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
+import ch.uzh.ifi.hase.soprafs23.model.GameConfig;
 import ch.uzh.ifi.hase.soprafs23.model.TestPlayer;
 import ch.uzh.ifi.hase.soprafs23.model.CodeGenerator;
 import ch.uzh.ifi.hase.soprafs23.model.Lobby;
@@ -64,10 +65,10 @@ public class LobbyService {
         //has to be authenticated in userservice
     }
 
-    public void startGame(String gameCode, Long user_id, String token) throws InterruptedException {
+    public void startGame(String gameCode, Long user_id, String token, GameConfig config) throws InterruptedException {
         checkIfHost(user_id, token);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
-        lobby.playGame();
+        lobby.playGame(config);
         lobbyStorage.removeLobby(gameCode);
     }
 

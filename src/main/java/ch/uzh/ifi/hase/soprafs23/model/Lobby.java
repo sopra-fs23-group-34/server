@@ -15,26 +15,21 @@ import java.util.ArrayList;
 
 
 @AllArgsConstructor
-@Data
 public class Lobby {
 
     private final String gameCode;
-    private Integer roundLimit;
-    private FoodCategory foodCategory;
-    @Setter(AccessLevel.NONE)
-    private boolean gameStarted;
-    @Setter(AccessLevel.NONE)
-    @Getter(AccessLevel.NONE)
+    @Getter
+    private boolean gameStarted = false;
+
     private Notifier notifier;
 
-    @Setter(AccessLevel.NONE)
+    @Getter
     private ArrayList<LobbyPlayer> players;
 
     public Lobby(String gameCode, SimpMessagingTemplate simpMessagingTemplate) {
         this.gameCode = gameCode;
         this.notifier = new WebsocketNotifier(simpMessagingTemplate, gameCode);
         this.players = new ArrayList<>();
-        this.gameStarted = false;
     }
 
     public void addPlayer(LobbyPlayer lobbyPlayer){
@@ -50,8 +45,8 @@ public class Lobby {
         players.remove(lobbyPlayer);
     }
 
-    public boolean playGame() throws InterruptedException {
-        Game game = new Game(players, roundLimit, foodCategory, notifier);
+    public boolean playGame(GameConfig config) throws InterruptedException {
+        Game game = new Game(players, config, notifier);
         this.gameStarted = true;
         game.run();
         return true;
