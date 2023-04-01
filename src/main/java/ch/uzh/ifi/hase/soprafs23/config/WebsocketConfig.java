@@ -10,10 +10,15 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
 
+    public final static String applicationDestination = "/app";
+    public final static String simpleBrokerDestination = "/topic";
+    public final static String lobbysDestination = simpleBrokerDestination + "/lobbies/{gameCode}";
+
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/lobbys");
-        config.setApplicationDestinationPrefixes("/app");
+        config.enableSimpleBroker(simpleBrokerDestination);
+        config.setApplicationDestinationPrefixes(applicationDestination);
     }
 
     @Override

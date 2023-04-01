@@ -12,6 +12,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @AllArgsConstructor
@@ -24,20 +26,20 @@ public class Lobby {
     private Notifier notifier;
 
     @Getter
-    private ArrayList<LobbyPlayer> players;
+    private Map<Long, Player> players;
 
     public Lobby(String gameCode, SimpMessagingTemplate simpMessagingTemplate) {
         this.gameCode = gameCode;
         this.notifier = new WebsocketNotifier(simpMessagingTemplate, gameCode);
-        this.players = new ArrayList<>();
+        this.players = new HashMap<Long, Player>();
     }
 
-    public void addPlayer(LobbyPlayer lobbyPlayer){
+    public void addPlayer(Player player){
         if (gameStarted == true){
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
         }
         else{
-            players.add(lobbyPlayer);
+            players.put(player.getPlayer_id(), player);
         }
     }
 
@@ -46,6 +48,9 @@ public class Lobby {
     }
 
     public boolean playGame(GameConfig config) throws InterruptedException {
+        if (this.gameStarted == true){
+            throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
+        }
         Game game = new Game(players, config, notifier);
         this.gameStarted = true;
         game.run();
