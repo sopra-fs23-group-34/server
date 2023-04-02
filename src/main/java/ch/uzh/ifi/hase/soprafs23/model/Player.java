@@ -6,14 +6,14 @@ import lombok.Setter;
 
 import java.util.Map;
 
-
+@Getter
 public class Player {
-    @Getter
+
     @Setter
-    private String guesses;
-    @Getter
+    private Map<String, Integer> guesses;
+    @Setter
+    private Integer points;
     private String username;
-    @Getter
     private Long player_id;
 
     public Player(String username, Long player_id) {

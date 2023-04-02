@@ -3,14 +3,18 @@ package ch.uzh.ifi.hase.soprafs23.messages;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Map;
+
 @AllArgsConstructor
-public class TurnScoreMessage implements Message{
+public class BooleanMessage {
     @Getter
     private String topic;
 
-    private String strMessage;
+    private Boolean content;
 
-    public String getContent(){
-        return strMessage;
+    public Boolean getContent(){
+
+        return content;
     }
+
 }

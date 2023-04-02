@@ -42,27 +42,28 @@ public class LobbyService {
 
     }
     public String createLobby(){
-        //String gameCode = codeGenerator.nextCode();
-        String gameCode = "test";
+        String gameCode = codeGenerator.nextCode();
+        //String gameCode = "test";
         //change to gamecode
-        lobbyStorage.addLobby("test", new Lobby(gameCode, simpMessagingTemplate));
+        lobbyStorage.addLobby(gameCode, new Lobby(gameCode, simpMessagingTemplate));
         return gameCode;
     }
 
     public List<Player> joinLobby(String gameCode, Long user_id){
         System.out.println("successfull Joined Lobby");
-        Player tp = new Player("TestPlayer",user_id);
-        //checkIfLobbyExists(gameCode);
-        //LobbyPlayer lobbyPlayer = userService.getUserById(user_id);
-        //LobbyPlayer lbp = userRepository.findById(10L);
+        checkIfLobbyExists(gameCode);
+        LobbyPlayer lobbyPlayer = userService.getUserById(user_id);
+        //LobbyPlayer lbp = userService.getUserById(10L);
         Lobby lobby =  lobbyStorage.getLobby(gameCode);
-        lobby.addPlayer(tp);
+        Player player = new Player(lobbyPlayer.getUsername(),lobbyPlayer.getId());
+        lobby.addPlayer(player);
         List<Player> lobbyPlayers= new ArrayList(lobby.getPlayers().values());
         return lobbyPlayers;
     };
 
     private void checkIfHost(Long user_id, String token){
         //has to be authenticated in userservice
+        ;
     }
 
     public void startGame(String gameCode, Long user_id, String token, GameConfig config) throws InterruptedException {
@@ -72,7 +73,7 @@ public class LobbyService {
         lobbyStorage.removeLobby(gameCode);
     }
 
-    public void setPlayerScores(String gameCode, long player_id, String guesses){
+    public void setPlayerScores(String gameCode, long player_id, Map<String, Integer> guesses){
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         lobby.getPlayers().get(player_id).setGuesses(guesses);
     }

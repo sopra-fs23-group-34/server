@@ -30,8 +30,6 @@ public class User implements Serializable, LobbyPlayer{
     @GeneratedValue
     private Long id;
 
-
-
     @Column(nullable = false)
     private String password;
 
@@ -55,8 +53,5 @@ public class User implements Serializable, LobbyPlayer{
 
     @Column
     private boolean host;
-
-
-
     
 }

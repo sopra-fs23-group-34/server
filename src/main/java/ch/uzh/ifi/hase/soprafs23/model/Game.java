@@ -22,14 +22,24 @@ public class Game {
     public void run() throws InterruptedException {
         Scores scores = new Scores();
         for (int round=0; round < roundLimit; round ++){
-            Round gameRound = new Round(foodCategory, notifier);
-            gameRound.run();
-            scores.computeRoundScores(gameRound.getPoints());
+            Round gameRound = new Round(notifier);
+            Food food = gameRound.getRandomFood(foodCategory);
+            gameRound.run(food);
+            for (Player player: players.values()){
+                Map<String, ArrayList<Map<String, Integer>>> roundScores =
+                        scores.computeRoundScores(player.getGuesses(),
+                        player.getUsername(),
+                        food);
+                notifier.publishRoundScores(player.getPlayer_id(), roundScores);
+                notifier.publishGameScores(scores.getPlacement());
+            }
+            Thread.sleep(10000);
             // todo player gets guesses
             // scores get players as input and food -> computes scores
             // scores return round scores and final scores
         }
-        scores.getFinalScores();
+        notifier.publishFinalScores(scores.getPlacement());
+
         //notification, also when the food is selected
     }
 
