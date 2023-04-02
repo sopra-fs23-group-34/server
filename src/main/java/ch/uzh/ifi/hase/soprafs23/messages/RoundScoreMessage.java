@@ -2,8 +2,6 @@ package ch.uzh.ifi.hase.soprafs23.messages;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 

@@ -1,7 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.model;
-
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +27,6 @@ public class Round {
             Thread.sleep(1000);
         }
         notifier.publishRoundEnd();
-
     }
 }
 

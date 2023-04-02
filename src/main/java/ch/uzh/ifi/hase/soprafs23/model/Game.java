@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
-import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 
 import java.util.ArrayList;
 import java.util.Map;

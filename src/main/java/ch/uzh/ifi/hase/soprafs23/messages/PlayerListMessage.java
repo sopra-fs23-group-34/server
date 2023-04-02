@@ -1,9 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.messages;
 
-import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.PlayerGetDTO;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 import java.util.List;

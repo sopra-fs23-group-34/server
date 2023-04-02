@@ -1,17 +1,10 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 
-import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
-import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.service.UserService;
-import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
-
 import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
