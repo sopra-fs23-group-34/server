@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -125,15 +127,18 @@ public class UserController {
     @GetMapping("users/banana")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public FoodGetDTO getBanana(){
-      System.out.println("getBanana");
+    public FoodGetDTO getBanana() throws URISyntaxException, IOException, InterruptedException {
+      /*System.out.println("getBanana");
       Food myBanana = new Food();
       myBanana.setName("Banana");
       myBanana.setFat("0.3");
       myBanana.setProtein("1.1");
       myBanana.setCarbs("23");
-      myBanana.setPicture("Butiful Banana");
-      return DTOMapper.INSTANCE.convertEntityToFoodGetDTO(myBanana);
+      myBanana.setPicture("Butiful Banana");*/
+      FoodController foodController = new FoodController();
+      String food = foodController.getFood();
+        System.out.println(food.toString());
+      return DTOMapper.INSTANCE.convertEntityToFoodGetDTO(food);
 
       /*URL url = UserController.class.getResource("banana.png");
         ImageIcon image = new ImageIcon(url);
