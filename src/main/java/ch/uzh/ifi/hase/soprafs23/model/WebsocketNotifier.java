@@ -41,4 +41,20 @@ public class WebsocketNotifier implements Notifier {
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, roundEnd);
     }
 
+    public void publishRoundStart(){
+        BooleanMessage roundEnd = new BooleanMessage("RoundEndStart", true);
+        simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, roundEnd);
+    }
+
+    public void publishRoundScoreStart(){
+        BooleanMessage roundEnd = new BooleanMessage("RoundScoreStart", true);
+        simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, roundEnd);
+    }
+
+    public void publishFinalScoreStart(){
+        BooleanMessage roundEnd = new BooleanMessage("FinalScoreStart", true);
+        simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, roundEnd);
+    }
+
+
 }

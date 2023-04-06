@@ -14,6 +14,8 @@ public interface Notifier {
 
     public void publishTimer(int timer);
 
+    public void publishRoundStart();
+
     public void publishRoundEnd();
 
 }
