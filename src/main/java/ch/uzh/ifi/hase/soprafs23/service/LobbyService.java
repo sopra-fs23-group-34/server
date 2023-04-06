@@ -57,7 +57,7 @@ public class LobbyService {
         lobby.addPlayer(player);
         List<Player> lobbyPlayers= new ArrayList(lobby.getPlayers().values());
         return lobbyPlayers;
-    };
+    }
 
     private void checkIfHost(Long user_id, String token){
         //has to be authenticated in userservice
