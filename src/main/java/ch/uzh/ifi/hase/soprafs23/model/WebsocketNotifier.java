@@ -52,6 +52,10 @@ public class WebsocketNotifier implements Notifier {
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, msg);
     }
 
-
+    public void error(String msg, String topic, Long user_id){
+        StringMessage errorMessage = new StringMessage(topic , msg);
+        int intUser_id = user_id.intValue();
+        simpMessagingTemplate.convertAndSend(WebsocketConfig.errorDestination + intUser_id, errorMessage);
+    }
 
 }
