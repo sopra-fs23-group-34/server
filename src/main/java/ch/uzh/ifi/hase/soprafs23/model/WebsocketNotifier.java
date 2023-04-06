@@ -42,7 +42,7 @@ public class WebsocketNotifier implements Notifier {
     }
 
     public void publishRoundStart(){
-        BooleanMessage roundEnd = new BooleanMessage("RoundEndStart", true);
+        BooleanMessage roundEnd = new BooleanMessage("RoundStart", true);
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, roundEnd);
     }
 

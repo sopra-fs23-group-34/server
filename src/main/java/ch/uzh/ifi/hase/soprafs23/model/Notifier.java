@@ -16,6 +16,8 @@ public interface Notifier {
 
     public void publishRoundStart();
 
-    public void publishRoundEnd();
+    public void publishFinalScoreStart();
+
+    public void publishRoundScoreStart();
 
 }
