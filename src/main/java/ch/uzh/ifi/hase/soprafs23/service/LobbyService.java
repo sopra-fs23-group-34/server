@@ -71,7 +71,7 @@ public class LobbyService {
         lobbyStorage.removeLobby(gameCode);
     }
 
-    public void setPlayerScores(String gameCode, long player_id, Map<String, Integer> guesses){
+    public void setPlayerGuesses(String gameCode, long player_id, Map<String, Integer> guesses){
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         lobby.getPlayers().get(player_id).setGuesses(guesses);
     }

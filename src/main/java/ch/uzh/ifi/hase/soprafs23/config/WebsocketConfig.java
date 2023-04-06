@@ -12,7 +12,6 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
 
     public final static String applicationDestination = "/app";
     public final static String simpleBrokerDestination = "/topic";
-
     public final static String lobbies = simpleBrokerDestination + "/lobbies/";
     public final static String lobbysDestination = lobbies + "{gameCode}";
 

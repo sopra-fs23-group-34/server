@@ -61,7 +61,7 @@ public class WebsocketController {
 
     @MessageMapping("/guess/{gameCode}/{player_id}")
     public void playerMakeGuesses(PlayerGuesses plm, @DestinationVariable String gameCode, @DestinationVariable Long player_id)  {
-        lobbyService.setPlayerScores(gameCode,player_id,plm.getContent());
+        lobbyService.setPlayerGuesses(gameCode,player_id,plm.getContent());
     }
 
 
