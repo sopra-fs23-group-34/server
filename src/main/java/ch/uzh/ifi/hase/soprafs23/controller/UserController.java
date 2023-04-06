@@ -7,6 +7,7 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
+import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import org.springframework.beans.factory.annotation.Required;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -125,7 +127,9 @@ public class UserController {
     @GetMapping("users/banana")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public FoodGetDTO getBanana(){
+    public FoodGetDTO getBanana() throws IOException, InterruptedException {
+      FoodService foodService = new FoodService();
+      foodService.getFood();
       System.out.println("getBanana");
       Food myBanana = new Food();
       myBanana.setName("Banana");
