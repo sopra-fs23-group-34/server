@@ -90,6 +90,14 @@ public class UserService {
         return user;
     }
 
+    private void authenticateUser(String token, long idCurrentUser) {
+        User user = getUserById(idCurrentUser);
+        if (!user.getToken().equals(token)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    String.format("You are not authorized to perform this action"));
+        }
+    }
+
     public void verifyUser(String token, long idCurrentUser) {
         authenticateUser(token, idCurrentUser);
     }
