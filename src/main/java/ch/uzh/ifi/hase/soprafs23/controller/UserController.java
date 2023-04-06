@@ -2,10 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.entity.Food;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.FoodGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
@@ -18,10 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+//import org.json.JSONObject;
 
 /**
  * User Controller
@@ -113,23 +108,41 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public UserGetDTO getUser(@RequestHeader("token") String token,@PathVariable Long userId) {
-        userService.verifyUser(token, userId);
+      userService.verifyUser(token, userId);
       User user = userService.getUserById(userId);
       return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
     }
-
+    //get all Users rank
     @GetMapping("/users/ranking")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void getGlobalRanking() {
-        // get global leaderboard from db
+    public List<UserGetRankDTO> getGlobalRanking() {
+        // fetch all users in the internal representation
+        List<User> users = userService.getUsers();
+        List<UserGetRankDTO> userGetRankDTOs = new ArrayList<UserGetRankDTO>();
+
+        // convert each user to the API representation
+        for (User user : users) {
+            userGetRankDTOs.add(DTOMapper.INSTANCE.convertUserToUserGetRankDTO(user));
+        }
+        //sort descending
+        Collections.sort(userGetRankDTOs, new Comparator<UserGetRankDTO>() {
+            @Override
+            public int compare(UserGetRankDTO o1, UserGetRankDTO o2) {
+                return o1.getTotalScore().compareTo(o2.getTotalScore());
+            }
+        });
+        return userGetRankDTOs;
     }
+    //get all users games
+
     @GetMapping("users/banana")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public FoodGetDTO getBanana() throws IOException, InterruptedException {
       FoodService foodService = new FoodService();
-      foodService.getFood();
+      String food = foodService.getFood();
+      //JSONObject jsonObject = new JSONObject;
       System.out.println("getBanana");
       Food myBanana = new Food();
       myBanana.setName("Banana");
@@ -139,15 +152,6 @@ public class UserController {
       myBanana.setPicture("Butiful Banana");
       return DTOMapper.INSTANCE.convertEntityToFoodGetDTO(myBanana);
 
-      /*URL url = UserController.class.getResource("banana.png");
-        ImageIcon image = new ImageIcon(url);
-
-        JSONObject obj=new JSONObject();
-        obj.put("name","sonoo");
-        obj.put("age",new Integer(27));
-        obj.put("salary",new Double(600000));
-        System.out.print(obj);
-*/
     }
 
 
