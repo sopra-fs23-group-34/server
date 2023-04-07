@@ -11,9 +11,9 @@ public class Food {
     private String image;
     private String name;
     @Getter
-    private Map<String, Integer> nutritionValues;
+    private Map<String, Double> nutritionValues;
 
-    public Food(String name, Map<String, Integer> nutritionValues, String image) {
+    public Food(String name, Map<String, Double> nutritionValues, String image) {
         this.name = name;
         this.nutritionValues = nutritionValues;
         this.image = image;

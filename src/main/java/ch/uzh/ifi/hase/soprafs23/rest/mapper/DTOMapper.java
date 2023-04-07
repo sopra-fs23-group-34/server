@@ -55,7 +55,7 @@ public interface DTOMapper {
   @Mapping(source = "carbs", target = "carbs")
   @Mapping(source = "protein", target = "protein")
   @Mapping(source = "fat", target = "fat")
-  @Mapping(source = "picture", target = "picture")
+  @Mapping(source = "image", target = "image")
   FoodGetDTO convertEntityToFoodGetDTO(Food food);
 
 

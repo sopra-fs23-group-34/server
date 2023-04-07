@@ -25,7 +25,7 @@ public class Game {
             Food food = gameRound.getRandomFood(foodCategory);
             gameRound.run(food);
             for (Player player: players.values()){
-                Map<String, ArrayList<Map<String, Integer>>> roundScores =
+                Map<String, ArrayList<Map<String, Double>>> roundScores =
                         scores.computeRoundScores(player.getGuesses(),
                         player.getUsername(),
                         food);

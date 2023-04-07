@@ -14,8 +14,8 @@ public class Round {
 
     public Food getRandomFood(FoodCategory foodCategory){
         // api request here
-        Map<String, Integer> nutritionValues = new HashMap<String, Integer>();
-        nutritionValues.put("carbs", 100);
+        Map<String, Double> nutritionValues = new HashMap<String, Double>();
+        nutritionValues.put("carbs", 100.0);
         Food food = new Food(foodCategory.toString(), nutritionValues,"image");
         return food;
     }

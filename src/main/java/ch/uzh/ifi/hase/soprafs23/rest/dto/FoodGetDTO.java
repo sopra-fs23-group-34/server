@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class FoodGetDTO {
     String name;
-    String carbs;
-    String protein;
-    String fat;
-    String picture;
+    Double carbs;
+    Double protein;
+    Double fat;
+    String image;
 }

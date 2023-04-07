@@ -10,7 +10,7 @@ import java.util.Map;
 public class Player {
 
     @Setter
-    private Map<String, Integer> guesses;
+    private Map<String, Double> guesses;
     @Setter
     private Integer points;
     private String username;

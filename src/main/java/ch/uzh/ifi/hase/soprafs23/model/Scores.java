@@ -11,19 +11,19 @@ public class Scores {
         this.players_points = new HashMap<>();
     }
 
-    public Map<String,ArrayList<Map<String,Integer>>> computeRoundScores(Map<String,Integer> playerGuesses, String username, Food food){
-        Map<String,ArrayList<Map<String,Integer>>> roundScore = new HashMap<>();
+    public Map<String,ArrayList<Map<String,Double>>> computeRoundScores(Map<String,Double> playerGuesses, String username, Food food){
+        Map<String,ArrayList<Map<String,Double>>> roundScore = new HashMap<>();
         int player_points = 0;
         // todo handle what to do if player did not guess. Easiest way just give a high amount of points
         for ( String playerGuessFoodKey : playerGuesses.keySet()){
-            int absoluteDeviation = Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
+            double absoluteDeviation = (double) Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
             player_points += absoluteDeviation;
-            ArrayList<Map<String,Integer>> roundFoodScore = new ArrayList<>();
-            Map<String,Integer> real_values = new HashMap<>();
+            ArrayList<Map<String,Double>> roundFoodScore = new ArrayList<>();
+            Map<String,Double> real_values = new HashMap<>();
             real_values.put("actualValues", food.getNutritionValues().get(playerGuessFoodKey));
-            Map<String,Integer> guessed_values = new HashMap<>();
+            Map<String,Double> guessed_values = new HashMap<>();
             guessed_values.put("guessedValues", playerGuesses.get(playerGuessFoodKey));
-            Map<String,Integer> deviation = new HashMap<>();
+            Map<String,Double> deviation = new HashMap<>();
             deviation.put("deviations", absoluteDeviation);
             roundFoodScore.add(real_values);
             roundFoodScore.add(guessed_values);

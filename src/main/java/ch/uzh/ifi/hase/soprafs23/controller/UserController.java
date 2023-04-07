@@ -1,27 +1,19 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
-import ch.uzh.ifi.hase.soprafs23.entity.Food;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.FoodGetDTO;
+import ch.uzh.ifi.hase.soprafs23.model.Food;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.*;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * User Controller
@@ -33,38 +25,38 @@ import java.util.Map;
 @RestController
 public class UserController {
 
-  private final UserService userService;
+    private final UserService userService;
 
-  UserController(UserService userService) {
-    this.userService = userService;
-  }
-
-  @GetMapping("/users")
-  @ResponseStatus(HttpStatus.OK)
-  @ResponseBody
-  public List<UserGetDTO> getAllUsers() {
-    // fetch all users in the internal representation
-    List<User> users = userService.getUsers();
-    List<UserGetDTO> userGetDTOs = new ArrayList<>();
-
-    // convert each user to the API representation
-    for (User user : users) {
-      userGetDTOs.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));
+    UserController(UserService userService) {
+        this.userService = userService;
     }
-    return userGetDTOs;
-  }
 
-  @PostMapping("/users/create")
-  @ResponseStatus(HttpStatus.CREATED)
-  @ResponseBody
-  public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
-    // convert API user to internal representation
-    User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-    // create user
-    User createdUser = userService.createUser(userInput);
-    // convert internal representation of user back to API
-    return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
-  }
+    @GetMapping("/users")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserGetDTO> getAllUsers() {
+        // fetch all users in the internal representation
+        List<User> users = userService.getUsers();
+        List<UserGetDTO> userGetDTOs = new ArrayList<>();
+
+        // convert each user to the API representation
+        for (User user : users) {
+            userGetDTOs.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));
+        }
+        return userGetDTOs;
+    }
+
+    @PostMapping("/users/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
+        // convert API user to internal representation
+        User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
+        // create user
+        User createdUser = userService.createUser(userInput);
+        // convert internal representation of user back to API
+        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
+    }
 
     @PostMapping("/users/login")
     @ResponseStatus(HttpStatus.OK)
@@ -78,12 +70,12 @@ public class UserController {
         // convert internal representation of user back to API
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
     }
+
     @PostMapping("/users/logout/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public void logoutUser(@RequestHeader("token") String token,
-                           @PathVariable Long userId) {
-        //Check, if user is authorised to logout
+    public void logoutUser(@RequestHeader("token") String token, @PathVariable Long userId) {
+        //Check, if user is authorised to log out
         //userService.verifyUser(token, userId);
 
         //logout user
@@ -95,10 +87,7 @@ public class UserController {
     @PutMapping("/users/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserGetDTO updateUserInformation(@RequestBody UserPutDTO userPutDTO,
-                                            @RequestHeader("token") String token,
-                                            @RequestHeader(required = false, value = "password") String password,
-                                            @PathVariable Long id){
+    public UserGetDTO updateUserInformation(@RequestBody UserPutDTO userPutDTO, @RequestHeader("token") String token, @RequestHeader(required = false, value = "password") String password, @PathVariable Long id) {
         // convert API user to internal user representation
         User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutUpdateDTOtoEntity(userPutDTO);
         //update user
@@ -112,10 +101,10 @@ public class UserController {
     @GetMapping("/users/getUser/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserGetDTO getUser(@RequestHeader("token") String token,@PathVariable Long userId) {
+    public UserGetDTO getUser(@RequestHeader("token") String token, @PathVariable Long userId) {
         userService.verifyUser(token, userId);
-      User user = userService.getUserById(userId);
-      return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
+        User user = userService.getUserById(userId);
+        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
     }
 
     @GetMapping("/users/ranking")
@@ -124,32 +113,26 @@ public class UserController {
     public void getGlobalRanking() {
         // get global leaderboard from db
     }
-    @GetMapping("users/banana")
+
+    @GetMapping("users/food/{requestedFood}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public FoodGetDTO getBanana() throws IOException, InterruptedException {
-      FoodService foodService = new FoodService();
-      foodService.getFood();
-      System.out.println("getBanana");
-      Food myBanana = new Food();
+    public Food getBanana(@PathVariable String requestedFood) throws IOException {
+        FoodService foodService = new FoodService();
+        Food food = foodService.getFood(requestedFood);
+        System.out.println("getBanana");
+        //Food myBanana = new Food();
+      /*
       myBanana.setName("Banana");
       myBanana.setFat("0.3");
       myBanana.setProtein("1.1");
       myBanana.setCarbs("23");
-      myBanana.setPicture("Butiful Banana");
-      return DTOMapper.INSTANCE.convertEntityToFoodGetDTO(myBanana);
+      myBanana.setPicture("Beautiful Banana");
+       */
+        //return DTOMapper.INSTANCE.convertEntityToFoodGetDTO(food);
+        return food;
 
-      /*URL url = UserController.class.getResource("banana.png");
-        ImageIcon image = new ImageIcon(url);
-
-        JSONObject obj=new JSONObject();
-        obj.put("name","sonoo");
-        obj.put("age",new Integer(27));
-        obj.put("salary",new Double(600000));
-        System.out.print(obj);
-*/
     }
-
 
 
 }
