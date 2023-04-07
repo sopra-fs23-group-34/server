@@ -141,13 +141,13 @@ public class UserController {
         Food food = foodService.getFood(requestedFood);
         System.out.println("getBanana");
         //Food myBanana = new Food();
-      /*
-      myBanana.setName("Banana");
-      myBanana.setFat("0.3");
-      myBanana.setProtein("1.1");
-      myBanana.setCarbs("23");
-      myBanana.setPicture("Beautiful Banana");
-       */
+        /*
+        myBanana.setName("Banana");
+        myBanana.setFat("0.3");
+        myBanana.setProtein("1.1");
+        myBanana.setCarbs("23");
+        myBanana.setPicture("Beautiful Banana");
+        */
         //return DTOMapper.INSTANCE.convertEntityToFoodGetDTO(food);
         return food;
 
