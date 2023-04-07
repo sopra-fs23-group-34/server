@@ -23,44 +23,45 @@ public class LobbyService {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     /*
-    public LobbyService(UserService userService, SimpMessagingTemplate simpMessagingTemplate){
-        this.userService = userService;
-        this.simpMessagingTemplate = simpMessagingTemplate;
-        this.codeGenerator = new CodeGenerator();
-        this.lobbyStorage = LobbyStorage.createLobbyStorage();
-    }
-    */
+     * public LobbyService(UserService userService, SimpMessagingTemplate
+     * simpMessagingTemplate){
+     * this.userService = userService;
+     * this.simpMessagingTemplate = simpMessagingTemplate;
+     * this.codeGenerator = new CodeGenerator();
+     * this.lobbyStorage = LobbyStorage.createLobbyStorage();
+     * }
+     */
 
-
-    private void checkIfLobbyExists(String id){
+    private void checkIfLobbyExists(String id) {
         Lobby lob = lobbyStorage.getLobby(id);
-        if (lob == null){
+        if (lob == null) {
             throw new NullPointerException("Lobby does Not exist");
         }
 
     }
-    public String createLobby(){
+
+    public String createLobby() {
         String gameCode = codeGenerator.nextCode();
-        //String gameCode = "test";
-        //change to gamecode
+        // String gameCode = "test";
+        // change to gamecode
         lobbyStorage.addLobby(gameCode, new Lobby(gameCode, simpMessagingTemplate));
         return gameCode;
     }
 
-    public List<Player> joinLobby(String gameCode, Long user_id){
+    public List<Player> joinLobby(String gameCode, Long user_id) {
         System.out.println("successfull Joined Lobby");
         checkIfLobbyExists(gameCode);
         LobbyPlayer lobbyPlayer = userService.getUserById(user_id);
-        //LobbyPlayer lbp = userService.getUserById(10L);
-        Lobby lobby =  lobbyStorage.getLobby(gameCode);
-        Player player = new Player(lobbyPlayer.getUsername(),lobbyPlayer.getId());
+        // LobbyPlayer lbp = userService.getUserById(10L);
+        Lobby lobby = lobbyStorage.getLobby(gameCode);
+        Player player = new Player(lobbyPlayer.getUsername(), lobbyPlayer.getId());
         lobby.addPlayer(player);
-        List<Player> lobbyPlayers= new ArrayList(lobby.getPlayers().values());
+        List<Player> lobbyPlayers = new ArrayList(lobby.getPlayers().values());
         return lobbyPlayers;
     }
 
-    private void checkIfHost(Long user_id, String token){
-        //has to be authenticated in userservice
+    private void checkIfHost(Long user_id, String token) {
+        // has to be authenticated in userservice
         ;
     }
 

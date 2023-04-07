@@ -13,6 +13,10 @@ public interface Notifier {
     public void publishFood(Food food);
 
     public void publishTimer(int timer);
+    public void publishRoundStart();
+    public void publishFinalScoreStart();
+    public void publishRoundScoreStart();
+    public void error(String msg, String topic, Long user_id);
 
     public void publishRoundEnd();
 

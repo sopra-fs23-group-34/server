@@ -1,19 +1,27 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
-import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.model.Food;
+import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.FoodGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User Controller
@@ -25,38 +33,38 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    UserController(UserService userService) {
-        this.userService = userService;
+  UserController(UserService userService) {
+    this.userService = userService;
+  }
+
+  @GetMapping("/users")
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public List<UserGetDTO> getAllUsers() {
+    // fetch all users in the internal representation
+    List<User> users = userService.getUsers();
+    List<UserGetDTO> userGetDTOs = new ArrayList<>();
+
+    // convert each user to the API representation
+    for (User user : users) {
+      userGetDTOs.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));
     }
+    return userGetDTOs;
+  }
 
-    @GetMapping("/users")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public List<UserGetDTO> getAllUsers() {
-        // fetch all users in the internal representation
-        List<User> users = userService.getUsers();
-        List<UserGetDTO> userGetDTOs = new ArrayList<>();
-
-        // convert each user to the API representation
-        for (User user : users) {
-            userGetDTOs.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));
-        }
-        return userGetDTOs;
-    }
-
-    @PostMapping("/users/create")
-    @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
-    public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
-        // convert API user to internal representation
-        User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-        // create user
-        User createdUser = userService.createUser(userInput);
-        // convert internal representation of user back to API
-        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
-    }
+  @PostMapping("/users/create")
+  @ResponseStatus(HttpStatus.CREATED)
+  @ResponseBody
+  public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
+    // convert API user to internal representation
+    User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
+    // create user
+    User createdUser = userService.createUser(userInput);
+    // convert internal representation of user back to API
+    return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
+  }
 
     @PostMapping("/users/login")
     @ResponseStatus(HttpStatus.OK)
@@ -70,12 +78,12 @@ public class UserController {
         // convert internal representation of user back to API
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(loginUser);
     }
-
     @PostMapping("/users/logout/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public void logoutUser(@RequestHeader("token") String token, @PathVariable Long userId) {
-        //Check, if user is authorised to log out
+    public void logoutUser(@RequestHeader("token") String token,
+                           @PathVariable Long userId) {
+        //Check, if user is authorised to logout
         //userService.verifyUser(token, userId);
 
         //logout user
@@ -87,7 +95,10 @@ public class UserController {
     @PutMapping("/users/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserGetDTO updateUserInformation(@RequestBody UserPutDTO userPutDTO, @RequestHeader("token") String token, @RequestHeader(required = false, value = "password") String password, @PathVariable Long id) {
+    public UserGetDTO updateUserInformation(@RequestBody UserPutDTO userPutDTO,
+                                            @RequestHeader("token") String token,
+                                            @RequestHeader(required = false, value = "password") String password,
+                                            @PathVariable Long id){
         // convert API user to internal user representation
         User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutUpdateDTOtoEntity(userPutDTO);
         //update user
@@ -106,15 +117,29 @@ public class UserController {
         User user = userService.getUserById(userId);
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
     }
-
+    //get all Users rank
     @GetMapping("/users/ranking")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void getGlobalRanking() {
-        // get global leaderboard from db
-    }
+    public List<UserGetRankDTO> getGlobalRanking() {
+        // fetch all users in the internal representation
+        List<User> users = userService.getUsers();
+        List<UserGetRankDTO> userGetRankDTOs = new ArrayList<UserGetRankDTO>();
 
-    @GetMapping("users/food/{requestedFood}")
+        // convert each user to the API representation
+        for (User user : users) {
+            userGetRankDTOs.add(DTOMapper.INSTANCE.convertUserToUserGetRankDTO(user));
+        }
+        //sort descending
+        Collections.sort(userGetRankDTOs, new Comparator<UserGetRankDTO>() {
+            @Override
+            public int compare(UserGetRankDTO o1, UserGetRankDTO o2) {
+                return o1.getTotalScore().compareTo(o2.getTotalScore());
+            }
+        });
+        return userGetRankDTOs;
+    }
+    @GetMapping("users/banana")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Food getBanana(@PathVariable String requestedFood) throws IOException {

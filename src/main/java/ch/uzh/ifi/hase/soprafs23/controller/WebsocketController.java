@@ -59,6 +59,8 @@ public class WebsocketController {
         return new StringMessage("start", "TheGameIsStarting :) ");
     }
 
+
+
     @MessageMapping("/guess/{gameCode}/{player_id}")
     public void playerMakeGuesses(PlayerGuesses plm, @DestinationVariable String gameCode, @DestinationVariable Long player_id)  {
         lobbyService.setPlayerGuesses(gameCode,player_id,plm.getContent());

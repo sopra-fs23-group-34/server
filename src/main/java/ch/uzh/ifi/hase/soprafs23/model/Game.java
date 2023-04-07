@@ -37,6 +37,7 @@ public class Game {
             // scores get players as input and food -> computes scores
             // scores return round scores and final scores
         }
+        notifier.publishFinalScoreStart();
         notifier.publishFinalScores(scores.getPlacement());
 
         //notification, also when the food is selected

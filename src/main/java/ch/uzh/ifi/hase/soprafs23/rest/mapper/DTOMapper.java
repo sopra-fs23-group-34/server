@@ -61,5 +61,8 @@ public interface DTOMapper {
 
   @Mapping(source = "username", target = "username")
   PlayerGetDTO convertPlayerToPlayerGetDTO(Player player);
+  @Mapping(source = "username", target = "username")
+  @Mapping(source = "totalScore", target = "totalScore")
+  UserGetRankDTO convertUserToUserGetRankDTO(User user);
 }
 
