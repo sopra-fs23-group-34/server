@@ -18,6 +18,5 @@ public interface Notifier {
     public void publishRoundScoreStart();
     public void error(String msg, String topic, Long user_id);
 
-    public void publishRoundEnd();
 
 }

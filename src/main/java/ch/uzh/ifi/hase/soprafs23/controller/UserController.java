@@ -2,10 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.model.Food;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.FoodGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
@@ -18,10 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * User Controller
@@ -139,7 +133,7 @@ public class UserController {
         });
         return userGetRankDTOs;
     }
-    @GetMapping("users/banana")
+    @GetMapping("users/food/{requestedFood}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Food getBanana(@PathVariable String requestedFood) throws IOException {
