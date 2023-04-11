@@ -15,7 +15,7 @@ public class WebsocketNotifier implements Notifier {
 
     private final String gameCode;
 
-    public void publishRoundScores(Long user_id, Map<String, ArrayList<Map<String, Integer>>> roundScores){
+    public void publishRoundScores(Long user_id, Map<String, ArrayList<Map<String, Double>>> roundScores){
         int intUser_id = user_id.intValue();
         RoundScoreMessage roundScoreMessage =  new RoundScoreMessage("RoundScore", roundScores );
         simpMessagingTemplate.convertAndSend(WebsocketConfig.simpleBrokerDestination + "/players/" + intUser_id, roundScoreMessage);
@@ -36,9 +36,26 @@ public class WebsocketNotifier implements Notifier {
         IntMessage timerCounter = new IntMessage("Timer",timer);
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, timerCounter);
     };
-    public void publishRoundEnd(){
-        BooleanMessage roundEnd = new BooleanMessage("RoundEnd", true);
-        simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, roundEnd);
+
+    public void publishRoundStart(){
+        BooleanMessage msg = new BooleanMessage("RoundStart", true);
+        simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, msg);
+    }
+
+    public void publishRoundScoreStart(){
+        BooleanMessage msg = new BooleanMessage("RoundScoreStart", true);
+        simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, msg);
+    }
+
+    public void publishFinalScoreStart(){
+        BooleanMessage msg = new BooleanMessage("FinalScoreStart", true);
+        simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, msg);
+    }
+
+    public void error(String msg, String topic, Long user_id){
+        StringMessage errorMessage = new StringMessage(topic , msg);
+        int intUser_id = user_id.intValue();
+        simpMessagingTemplate.convertAndSend(WebsocketConfig.errorDestination + intUser_id, errorMessage);
     }
 
 }

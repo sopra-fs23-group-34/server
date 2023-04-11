@@ -1,5 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs23.entity.Food;
+import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.model.Player;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
@@ -49,14 +51,18 @@ public interface DTOMapper {
   //@Mapping(source = "oldPassword", target = "oldPassword")
   User convertUserPutUpdateDTOtoEntity(UserPutDTO userPutDTO);
 
-  //@Mapping(source = "food_name", target = "food_name")
-  //@Mapping(source = "nf_total_carbohydrate", target = "nf_total_carbohydrate")
-  //@Mapping(source = "nf_protein", target = "nf_protein")
-  //@Mapping(source = "nf_total_fat", target = "nf_total_fat")
-  //@Mapping(source = "highres", target = "highres")
-  FoodGetDTO convertEntityToFoodGetDTO(String food);
+  @Mapping(source = "name", target = "name")
+  @Mapping(source = "carbs", target = "carbs")
+  @Mapping(source = "protein", target = "protein")
+  @Mapping(source = "fat", target = "fat")
+  @Mapping(source = "image", target = "image")
+  FoodGetDTO convertEntityToFoodGetDTO(Food food);
 
-    @Mapping(source = "username", target = "username")
+
+  @Mapping(source = "username", target = "username")
   PlayerGetDTO convertPlayerToPlayerGetDTO(Player player);
+  @Mapping(source = "username", target = "username")
+  @Mapping(source = "totalScore", target = "totalScore")
+  UserGetRankDTO convertUserToUserGetRankDTO(User user);
 }
 

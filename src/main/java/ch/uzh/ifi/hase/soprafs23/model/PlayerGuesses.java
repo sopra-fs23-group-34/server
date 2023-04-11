@@ -11,5 +11,5 @@ import java.util.Map;
 @Getter
 @Setter
 public class PlayerGuesses {
-    private Map<String,Integer> content;
+    private Map<String,Double> content;
 }

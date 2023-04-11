@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface Notifier {
 
-    public void publishRoundScores(Long user_id,Map<String, ArrayList<Map<String, Integer>>> roundScores);
+    public void publishRoundScores(Long user_id,Map<String, ArrayList<Map<String, Double>>> roundScores);
 
     public void publishGameScores(Map<String, Integer> placement);
     public void publishFinalScores(Map<String, Integer> placement);
@@ -13,7 +13,10 @@ public interface Notifier {
     public void publishFood(Food food);
 
     public void publishTimer(int timer);
+    public void publishRoundStart();
+    public void publishFinalScoreStart();
+    public void publishRoundScoreStart();
+    public void error(String msg, String topic, Long user_id);
 
-    public void publishRoundEnd();
 
 }

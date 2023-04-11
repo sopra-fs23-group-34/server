@@ -25,7 +25,7 @@ public class Game {
             Food food = gameRound.getRandomFood(foodCategory);
             gameRound.run(food);
             for (Player player: players.values()){
-                Map<String, ArrayList<Map<String, Integer>>> roundScores =
+                Map<String, ArrayList<Map<String, Double>>> roundScores =
                         scores.computeRoundScores(player.getGuesses(),
                         player.getUsername(),
                         food);
@@ -37,6 +37,7 @@ public class Game {
             // scores get players as input and food -> computes scores
             // scores return round scores and final scores
         }
+        notifier.publishFinalScoreStart();
         notifier.publishFinalScores(scores.getPlacement());
 
         //notification, also when the food is selected

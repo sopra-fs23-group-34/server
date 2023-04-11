@@ -11,8 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.*;
+
 
 /**
  * User Service
@@ -38,11 +38,11 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-
     public User createUser(User newUser) {
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.ONLINE);
         newUser.setCreationDate(new Date());
+        newUser.setTotalScore(0);
         checkIfUserExists(newUser);
         // saves the given entity but data is only persisted in the database once
         // flush() is called
@@ -103,38 +103,38 @@ public class UserService {
         authenticateUser(token, idCurrentUser);
     }
 
-
-
     public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser) {
 
         User user = userRepository.findById(idCurrentUser);
         // make sure, that no information is null
-        if (userWithUpdateInformation.getPassword()== null){
+        if (userWithUpdateInformation.getPassword() == null) {
             userWithUpdateInformation.setPassword(user.getPassword());
         }
 
-        if (userWithUpdateInformation.getEmail()==null){
+        if (userWithUpdateInformation.getEmail() == null) {
             userWithUpdateInformation.setEmail(user.getEmail());
         }
 
-        if (userWithUpdateInformation.getUsername() == null){
+        if (userWithUpdateInformation.getUsername() == null) {
             userWithUpdateInformation.setUsername(user.getUsername());
         }
-        if(userWithUpdateInformation.getBio()==null){
+        if (userWithUpdateInformation.getBio() == null) {
             userWithUpdateInformation.setBio(user.getBio());
         }
         // check if user is authorized to change its data
         authenticateUser(token, idCurrentUser);
         User userSameName = userRepository.findByUsername(userWithUpdateInformation.getUsername());
-        if(userSameName != null){
-            if(!user.getId().equals(userSameName.getId())){
-                throw new ResponseStatusException(HttpStatus.valueOf(404),"You can't pick the same username as somebody else!");
+        if (userSameName != null) {
+            if (!user.getId().equals(userSameName.getId())) {
+                throw new ResponseStatusException(HttpStatus.valueOf(404),
+                        "You can't pick the same username as somebody else!");
             }
         }
         User userSameEmail = userRepository.findByEmail(userWithUpdateInformation.getEmail());
-        if(userSameEmail != null){
-            if(!user.getId().equals(userSameEmail.getId())){
-                throw new ResponseStatusException(HttpStatus.valueOf(404),"You can't pick the same mail as somebody else!");
+        if (userSameEmail != null) {
+            if (!user.getId().equals(userSameEmail.getId())) {
+                throw new ResponseStatusException(HttpStatus.valueOf(404),
+                        "You can't pick the same mail as somebody else!");
             }
         }
         user.setUsername(userWithUpdateInformation.getUsername());
@@ -151,28 +151,27 @@ public class UserService {
         return getUserById(id);
     }
 
-
     /**
-   * This is a helper method that will check the uniqueness criteria of the
-   * username and the name
-   * defined in the User entity. The method will do nothing if the input is unique
-   * and throw an error otherwise.
-   *
-   * @param userToBeCreated
-   * @throws org.springframework.web.server.ResponseStatusException
-   * @see User
-   */
+     * This is a helper method that will check the uniqueness criteria of the
+     * username and the name
+     * defined in the User entity. The method will do nothing if the input is unique
+     * and throw an error otherwise.
+     *
+     * @param userToBeCreated
+     * @throws org.springframework.web.server.ResponseStatusException
+     * @see User
+     */
 
-  private void checkIfUserExists(User userToBeCreated) {
-    User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
-    User userByEmail = userRepository.findByEmail(userToBeCreated.getEmail());
-    if (userByUsername != null) {
-      throw new ResponseStatusException(HttpStatus.CONFLICT,
-          String.format("add User failed because username is already used"));
+    private void checkIfUserExists(User userToBeCreated) {
+        User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
+        User userByEmail = userRepository.findByEmail(userToBeCreated.getEmail());
+        if (userByUsername != null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    String.format("add User failed because username is already used"));
+        }
+        if (userByEmail != null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    String.format("add User failed because email is already used"));
+        }
     }
-    if (userByEmail != null) {
-        throw new ResponseStatusException(HttpStatus.CONFLICT,
-                String.format("add User failed because email is already used"));
-      }
-  }
 }

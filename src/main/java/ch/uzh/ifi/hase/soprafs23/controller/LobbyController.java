@@ -45,10 +45,11 @@ public class LobbyController {
     }
 
     @PostMapping("/lobbys/join")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void joinLobby(@RequestHeader("id") Long id, @RequestParam("arg") String arg) {
-        lobbyService.joinLobby(arg, 1L);
+        lobbyService.joinLobby(arg, id);
+
         // get User from DB with ID
         //LobbyPlayer hostUser = userService.getUserWithId(id);
         // create Lobby and assign Lobby to User

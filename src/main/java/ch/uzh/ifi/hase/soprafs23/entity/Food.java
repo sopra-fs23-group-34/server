@@ -6,9 +6,20 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Food {
-    String food_name;
-    String nf_total_carbohydrate;
-    String nf_protein;
-    String nf_total_fat;
-    String highres;
+    String name;
+    int carbs;
+    int protein;
+    int fat;
+    String image;
+    int calories;
+
+    public void Food(String name, int carbs, int protein, int fat, String image, int calories) {
+        this.name = name;
+        this.carbs = carbs;
+        this.protein = protein;
+        this.fat = fat;
+        this.image = image;
+        this.calories = calories;
+
+    }
 }
