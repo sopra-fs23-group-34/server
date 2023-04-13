@@ -1,6 +1,11 @@
 Nico
 - [ ] sopra-fs23-group-34/client#7
 - [ ] sopra-fs23-group-34/server#23
+- [ ] sopra-fs23-group-34/client#25
+- [ ] sopra-fs23-group-34/client#26
+- [ ] sopra-fs23-group-34/client#27
+- [ ] sopra-fs23-group-34/client#10
+- [ ] sopra-fs23-group-34/client#11
 
 
 Elias
