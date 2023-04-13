@@ -1,5 +1,23 @@
 # Group 24 - The Big Diabetes Game - Weekly contributions
 ## Week 1: 24.03.2023 - 30.03.2023
+
+### Nico
+- [ ] sopra-fs23-group-34/server#20
+- [ ] sopra-fs23-group-34/client#6
+- [ ] sopra-fs23-group-34/client#5
+- [ ] sopra-fs23-group-34/server#27
+
+### Elias
+
+### André
+- [ ] sopra-fs23-group-34/server#21
+- [ ] sopra-fs23-group-34/client#2
+- [ ] sopra-fs23-group-34/server#17
+
+### Nataell
+
+### Maurice
+
 ## Week 2: 31.03.2023 - 06.04.2023
 
 ### Nico
@@ -20,7 +38,6 @@
 - [ ] sopra-fs23-group-34/server#24
 
 ### Maurice
-- [ ] sopra-fs23-group-34/server#27
 - [ ] sopra-fs23-group-34/server#18
 - [ ] sopra-fs23-group-34/server#31
 - [ ] sopra-fs23-group-34/server#30
