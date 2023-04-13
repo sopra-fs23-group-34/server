@@ -1,18 +1,19 @@
 # Group 24 - The Big Diabetes Game - Weekly contributions
 ## Week 1: 24.03.2023 - 30.03.2023
 ## Week 2: 31.03.2023 - 06.04.2023
-### Nico
+
+### Nico
 - [ ] sopra-fs23-group-34/client#7
 - [ ] sopra-fs23-group-34/server#23
 
-### Elias
+### Elias
 - [ ] sopra-fs23-group-34/server#52
 - [ ] sopra-fs23-group-34/client#33
 
 ### André
 - [ ] sopra-fs23-group-34/client#13
 
-### Nataell
+### Nataell
 - [ ] sopra-fs23-group-34/client#34
 - [ ] sopra-fs23-group-34/server#16
 - [ ] sopra-fs23-group-34/server#19
@@ -41,13 +42,13 @@
 
 Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 
-### Elias
+### Elias
 - [ ] 
 
 ### André
 - [ ] 
 
-### Nataell
+### Nataell
 - [ ] 
 
 ### Maurice
@@ -62,13 +63,13 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 - [ ] sopra-fs23-group-34/client#11
 
 
-### Elias
+### Elias
 - [ ] 
 
 ### André
 - [ ] 
 
-### Nataell
+### Nataell
 - [ ] 
 
 ### Maurice
