@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Game {
-    private Map<Long, Player> players;
-    private int roundLimit;
-    private FoodCategory foodCategory;
-    private Notifier notifier;
+    private final Map<Long, Player> players;
+    private final int roundLimit;
+    private final FoodCategory foodCategory;
+    private final Notifier notifier;
 
     public Game(Map<Long, Player> players, GameConfig config, Notifier notifier){
         this.players = players;

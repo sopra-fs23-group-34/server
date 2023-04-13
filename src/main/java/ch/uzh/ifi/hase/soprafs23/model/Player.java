@@ -13,8 +13,8 @@ public class Player {
     private Map<String, Double> guesses;
     @Setter
     private Integer points;
-    private String username;
-    private Long player_id;
+    private final String username;
+    private final Long player_id;
 
     public Player(String username, Long player_id) {
         this.username = username;

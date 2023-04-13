@@ -19,7 +19,7 @@ import java.util.Map;
 public class LobbyService {
     private final UserService userService;
     private final CodeGenerator codeGenerator;
-    private final LobbyStorage lobbyStorage;;
+    private final LobbyStorage lobbyStorage;
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     /*
@@ -62,7 +62,6 @@ public class LobbyService {
 
     private void checkIfHost(Long user_id, String token) {
         // has to be authenticated in userservice
-        ;
     }
 
     public void startGame(String gameCode, Long user_id, String token, GameConfig config) throws InterruptedException {

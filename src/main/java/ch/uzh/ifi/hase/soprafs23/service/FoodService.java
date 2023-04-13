@@ -50,7 +50,7 @@ public class FoodService {
         Double protein = (Double) food.get("nf_protein");
         Double carbs = (Double) food.get("nf_total_carbohydrate");
         String name = (String) food.get("food_name");
-        String image_link = (String) photo.get("highres");
+        String image_link = photo.get("highres");
 
         System.out.println("name: " + name);
         System.out.println("calories: " + calories);

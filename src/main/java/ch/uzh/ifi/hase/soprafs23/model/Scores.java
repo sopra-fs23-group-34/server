@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Scores {
 
-    private Map<String, Integer> players_points;
+    private final Map<String, Integer> players_points;
 
     public Scores() {
         this.players_points = new HashMap<>();
@@ -16,7 +16,7 @@ public class Scores {
         int player_points = 0;
         // todo handle what to do if player did not guess. Easiest way just give a high amount of points
         for ( String playerGuessFoodKey : playerGuesses.keySet()){
-            double absoluteDeviation = (double) Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
+            double absoluteDeviation = Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
             player_points += absoluteDeviation;
             ArrayList<Map<String,Double>> roundFoodScore = new ArrayList<>();
             Map<String,Double> real_values = new HashMap<>();
@@ -29,7 +29,7 @@ public class Scores {
             roundFoodScore.add(guessed_values);
             roundFoodScore.add(deviation);
             roundScore.put(playerGuessFoodKey,roundFoodScore);
-        };
+        }
         players_points.putIfAbsent(username, 0);
         players_points.put(username, players_points.get(username) + player_points);
         return roundScore;

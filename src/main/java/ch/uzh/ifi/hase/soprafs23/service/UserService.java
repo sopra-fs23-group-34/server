@@ -95,7 +95,7 @@ public class UserService {
         User user = getUserById(idCurrentUser);
         if (!user.getToken().equals(token)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
-                    String.format("You are not authorized to perform this action"));
+                    "You are not authorized to perform this action");
         }
     }
 
@@ -167,11 +167,11 @@ public class UserService {
         User userByEmail = userRepository.findByEmail(userToBeCreated.getEmail());
         if (userByUsername != null) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    String.format("add User failed because username is already used"));
+                    "add User failed because username is already used");
         }
         if (userByEmail != null) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    String.format("add User failed because email is already used"));
+                    "add User failed because email is already used");
         }
     }
 }

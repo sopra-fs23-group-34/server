@@ -19,11 +19,13 @@ public class WebsocketNotifier implements Notifier {
         int intUser_id = user_id.intValue();
         RoundScoreMessage roundScoreMessage =  new RoundScoreMessage("RoundScore", roundScores );
         simpMessagingTemplate.convertAndSend(WebsocketConfig.simpleBrokerDestination + "/players/" + intUser_id, roundScoreMessage);
-    };
+    }
+
     public void publishGameScores(Map<String, Integer> placement){
         MapMessage gameScore = new MapMessage("GameScore", placement);
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies + gameCode, gameScore);
-    };
+    }
+
     public void publishFinalScores(Map<String, Integer> placement){
         MapMessage finalScore = new MapMessage("FinalScore", placement);
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, finalScore);
@@ -31,11 +33,12 @@ public class WebsocketNotifier implements Notifier {
     public void publishFood(Food food){
         StringMessage foodItem = new StringMessage("Food", food.getName());
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, foodItem);
-    };
+    }
+
     public void publishTimer(int timer){
         IntMessage timerCounter = new IntMessage("Timer",timer);
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, timerCounter);
-    };
+    }
 
     public void publishRoundStart(){
         BooleanMessage msg = new BooleanMessage("RoundStart", true);

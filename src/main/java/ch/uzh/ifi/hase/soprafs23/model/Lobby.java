@@ -28,7 +28,7 @@ public class Lobby {
     }
 
     public void addPlayer(Player player){
-        if (gameStarted == true){
+        if (gameStarted){
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
         }
         else{
@@ -41,7 +41,7 @@ public class Lobby {
     }
 
     public boolean playGame(GameConfig config) throws InterruptedException {
-        if (this.gameStarted == true){
+        if (this.gameStarted){
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
         }
         Game game = new Game(players, config, notifier);

@@ -5,9 +5,9 @@ import lombok.Getter;
 
 public interface LobbyPlayer {
 
-    public Long getId();
+    Long getId();
 
-    public String getUsername();
+    String getUsername();
 
 
 }

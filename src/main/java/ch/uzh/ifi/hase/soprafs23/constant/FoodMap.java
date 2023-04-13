@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 public class FoodMap {
     public String[] getRandomFoodList(int NumberOfItems){
-        String Foods[];
-        String fruits[] ={"apple", "banana"};
+        String[] Foods;
+        String[] fruits ={"apple", "banana"};
         HashMap<FoodCategory, String[]> foodMap = new HashMap<>();
         foodMap.put(FoodCategory.FRUITS,fruits);
         Foods = foodMap.get(FoodCategory.FRUITS);

@@ -3,6 +3,8 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +28,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -242,17 +245,7 @@ public class UserControllerTest {
     }
 
   @Test
-  public void logout_successful_invalidToken() throws Exception {
-        // given
-        User user = new User();
-        user.setId(1L);
-        user.setPassword("Test User");
-        user.setUsername("testUsername");
-        user.setEmail("test@mail.ch");
-        user.setToken("11");
-        user.setStatus(UserStatus.ONLINE);
-        user.setCreationDate(new Date());
-
+  public void logout_unsuccessful_invalidToken() throws Exception {
         given(userService.logoutUser(Mockito.any(), Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to perform this action"));
 
         // when/then -> do the request + validate the result
@@ -264,8 +257,98 @@ public class UserControllerTest {
         mockMvc.perform(postRequest)
                 .andExpect(status().isUnauthorized())
                 .andExpect(status().reason("You are not authorized to perform this action"));
-        ;
     }
+
+
+    /*
+  @Test
+  public void updateUser_successful() throws Exception {
+        // given
+        User user = new User();
+        user.setId(1L);
+        user.setPassword("new Test User");
+        user.setUsername("newTestUsername");
+        user.setEmail("newtest@mail.ch");
+        user.setToken("11");
+        user.setStatus(UserStatus.ONLINE);
+        user.setBio("Hi I am a testUser:)");
+
+        // 3x Mockito --> error
+        given(userService.updateUser(Mockito.any(), Mockito.any(), Mockito.any())).willReturn(user);
+
+        UserPutDTO userPutDTO = new UserPutDTO();
+        userPutDTO.setPassword("newPassword");
+        userPutDTO.setUsername("testUsername");
+        userPutDTO.setEmail("test@mail.ch");
+        userPutDTO.setBio("Hi I am a testUser:)");
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder putRequest = put("/users/update/1")
+                .header("token", "11")
+                .header("password", "newPassword")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPutDTO));
+
+        // then
+        mockMvc.perform(putRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token", is(user.getToken())))
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.password", is(user.getPassword())))
+                .andExpect(jsonPath("$.email", is(user.getEmail())))
+                .andExpect(jsonPath("$.status", is(user.getStatus().toString())))
+                .andExpect(jsonPath("$.bio", is(user.getBio())));
+    }
+*/
+
+    @Test
+    public void getUser_successful() throws Exception {
+        User user = new User();
+        user.setId(1L);
+        user.setPassword("Test User");
+        user.setUsername("testUsername");
+        user.setEmail("test@mail.ch");
+        user.setToken("11");
+        user.setStatus(UserStatus.ONLINE);
+        user.setBio("Hi I am a testUser:)");
+        given(userService.getUserById(Mockito.any())).willReturn(user);
+
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder getRequest = get("/users/getUser/1")
+                .header("token", "11")
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        // then
+        mockMvc.perform(getRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token", is(user.getToken())))
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.email", is(user.getEmail())))
+                .andExpect(jsonPath("$.bio", is(user.getBio())));
+    }
+
+    @Test
+    public void getUser_unsuccessful_unauthorized() throws Exception {
+        given(userService.getUserById(Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to perform this action"));
+
+
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder getRequest = get("/users/getUser/1")
+                .header("token", "111")
+                .contentType(MediaType.APPLICATION_JSON);
+
+
+        // then
+        mockMvc.perform(getRequest)
+                .andExpect(status().isUnauthorized())
+                .andExpect(status().reason("You are not authorized to perform this action"));
+
+
+    }
+
 
 
 
@@ -282,7 +365,7 @@ public class UserControllerTest {
       return new ObjectMapper().writeValueAsString(object);
     } catch (JsonProcessingException e) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-          String.format("The request body could not be created.%s", e.toString()));
+          String.format("The request body could not be created.%s", e));
     }
   }
 }

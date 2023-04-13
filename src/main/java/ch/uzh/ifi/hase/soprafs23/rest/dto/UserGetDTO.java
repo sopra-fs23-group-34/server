@@ -17,5 +17,6 @@ public class UserGetDTO {
   private String bio;
   private Date creationDate;
   private String token;
+  private int totalScore;
 
 }
