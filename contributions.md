@@ -36,6 +36,10 @@
 - [ ] sopra-fs23-group-34/server#16
 - [ ] sopra-fs23-group-34/server#19
 - [ ] sopra-fs23-group-34/server#24
+- [ ] sopra-fs23-group-34/server#72
+- [ ] sopra-fs23-group-34/server#60
+- [ ] sopra-fs23-group-34/server#8
+
 
 ### Maurice
 - [ ] sopra-fs23-group-34/server#18
