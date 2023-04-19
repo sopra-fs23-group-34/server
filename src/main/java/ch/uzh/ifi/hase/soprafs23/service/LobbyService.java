@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
-
 import ch.uzh.ifi.hase.soprafs23.config.WebsocketConfig;
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 import ch.uzh.ifi.hase.soprafs23.model.*;
@@ -39,7 +38,7 @@ public class LobbyService {
         return gameCode;
     }
 
-    public List<Player> updatePlayerList(String gameCode){
+    public List<Player> updatePlayerList(String gameCode) {
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         List<Player> lobbyPlayers = new ArrayList(lobby.getPlayers().values());
         return lobbyPlayers;
@@ -50,12 +49,23 @@ public class LobbyService {
         LobbyPlayer lobbyPlayer = userService.getUserById(user_id);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         boolean isHost = false;
-        if (lobby.getPlayers().isEmpty()){
+        if (lobby.getPlayers().isEmpty()) {
             isHost = true;
         }
         Player player = new Player(lobbyPlayer.getUsername(), lobbyPlayer.getId(), isHost);
         lobby.addPlayer(player);
         return isHost;
+    }
+
+    public List<Player> leaveLobby(String gameCode, Long user_id) {
+        checkIfLobbyExists(gameCode);
+        LobbyPlayer lobbyPlayer = userService.getUserById(user_id);
+        Lobby lobby = lobbyStorage.getLobby(gameCode);
+        Player player = new Player(lobbyPlayer.getUsername(), lobbyPlayer.getId());
+        lobby.removePlayer(player);
+        System.out.println("Successfully left Lobby");
+        List<Player> lobbyPlayers = new ArrayList(lobby.getPlayers().values());
+        return lobbyPlayers;
     }
 
     private void checkIfHost(String gameCode, Long user_id) {
@@ -77,16 +87,14 @@ public class LobbyService {
         new Thread(() -> {
             try {
                 lobby.playGame(config);
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             lobbyStorage.removeLobby(gameCode);
         }).start();
     }
 
-
-    public void setPlayerGuesses(String gameCode, long player_id, Map<String, Double> guesses){
+    public void setPlayerGuesses(String gameCode, long player_id, Map<String, Double> guesses) {
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         lobby.getPlayers().get(player_id).setGuesses(guesses);
     }

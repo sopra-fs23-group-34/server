@@ -8,7 +8,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @AllArgsConstructor
 public class Lobby {
 
@@ -25,24 +24,22 @@ public class Lobby {
         this.players = new HashMap<>();
     }
 
-    public void checkIfGameStarted(){
-        if (gameStarted == true){
+    public void checkIfGameStarted() {
+        if (gameStarted == true) {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
         }
     }
 
-    public void addPlayer(Player player){
-        if (gameStarted == true){
+    public void addPlayer(Player player) {
+        if (gameStarted == true) {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
-        }
-        else{
+        } else {
             players.put(player.getPlayer_id(), player);
         }
     }
 
-
-    public void removePlayer(LobbyPlayer lobbyPlayer) {
-        players.remove(lobbyPlayer);
+    public void removePlayer(Player lobbyPlayer) {
+        players.remove(lobbyPlayer.getPlayer_id());
     }
 
     public void playGame(GameConfig config) throws InterruptedException {
@@ -51,6 +48,5 @@ public class Lobby {
         game.run();
 
     }
-
 
 }
