@@ -36,8 +36,8 @@ public class Lobby {
         }
     }
 
-    public void removePlayer(LobbyPlayer lobbyPlayer) {
-        players.remove(lobbyPlayer);
+    public void removePlayer(Player lobbyPlayer) {
+        players.remove(lobbyPlayer.getPlayer_id());
     }
 
     public boolean playGame(GameConfig config) throws InterruptedException {

@@ -66,5 +66,17 @@ public class WebsocketController {
         lobbyService.setPlayerGuesses(gameCode,player_id,plm.getContent());
     }
 
+    @MessageMapping("/leave/{gameCode}/{player_id}")
+    @SendTo(WebsocketConfig.lobbysDestination)
+    public PlayerListMessage leaveLobby(@DestinationVariable String gameCode,
+                           @DestinationVariable Long player_id) {
+        List<Player> playerList = lobbyService.leaveLobby(gameCode, player_id);
+        List<PlayerGetDTO> playersGetDTOs = new ArrayList<>();
 
+        for (Player player : playerList) {
+            playersGetDTOs.add(DTOMapper.INSTANCE.convertPlayerToPlayerGetDTO(player));
+        }
+        PlayerListMessage playerListMessage = new PlayerListMessage("players", playersGetDTOs );
+        return playerListMessage;
+    }
 }

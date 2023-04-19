@@ -60,6 +60,18 @@ public class LobbyService {
         return lobbyPlayers;
     }
 
+    public List<Player> leaveLobby(String gameCode, Long user_id) {
+        checkIfLobbyExists(gameCode);
+        LobbyPlayer lobbyPlayer = userService.getUserById(user_id);
+        Lobby lobby = lobbyStorage.getLobby(gameCode);
+        Player player = new Player(lobbyPlayer.getUsername(), lobbyPlayer.getId());
+        lobby.removePlayer(player);
+        System.out.println("Successfully left Lobby");
+        List<Player> lobbyPlayers = new ArrayList(lobby.getPlayers().values());
+        return lobbyPlayers;
+    }
+
+
     private void checkIfHost(Long user_id, String token) {
         // has to be authenticated in userservice
     }
