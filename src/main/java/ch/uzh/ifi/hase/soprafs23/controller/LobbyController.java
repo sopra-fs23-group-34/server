@@ -1,6 +1,8 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
+import ch.uzh.ifi.hase.soprafs23.model.GameConfig;
 import ch.uzh.ifi.hase.soprafs23.model.Lobby;
 import ch.uzh.ifi.hase.soprafs23.model.PlayerMessage;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
@@ -16,12 +18,16 @@ import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.web.util.HtmlUtils;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
+import java.io.ObjectInputFilter;
 import java.util.concurrent.TimeUnit;
 
 @RestController
 public class LobbyController {
 
     private final UserService userService;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     private final LobbyService lobbyService;
 
@@ -36,27 +42,31 @@ public class LobbyController {
     public String createLobby(@RequestHeader("id") Long id) {
         String gameCode = lobbyService.createLobby();
         return gameCode;
-        // get User from DB with ID
-        //LobbyPlayer hostUser = userService.getUserWithId(id);
-        // create Lobby and assign Lobby to User
-        //Lobby lobby = new Lobby(hostUser);
-        // save Lobby to DB?
-        // return WebSocket/ Lobby
     }
 
-    @PostMapping("/lobbys/join")
+    @PostMapping("/lobbys/join/{lobbyCode}/{user_id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public void joinLobby(@RequestHeader("id") Long id, @RequestParam("arg") String arg) {
-        lobbyService.joinLobby(arg, id);
-
-        // get User from DB with ID
-        //LobbyPlayer hostUser = userService.getUserWithId(id);
-        // create Lobby and assign Lobby to User
-        //Lobby lobby = new Lobby(hostUser);
-        // save Lobby to DB?
-        // return WebSocket/ Lobby
+    public boolean joinLobby(@PathVariable("lobbyCode") String gameCode, @PathVariable("user_id") long id) {
+        Boolean isHost = lobbyService.joinLobby(gameCode, id);
+        return isHost;
     }
+
+    @PostMapping("/lobbys/startGame/{lobbyCode}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void startGame(@PathVariable("lobbyCode") String gameCode, @RequestHeader("id") long id,
+                          @RequestHeader("token") String token) throws InterruptedException {
+        System.out.println("hallo");
+        GameConfig gc = new GameConfig(3, FoodCategory.FRUITS);
+        lobbyService.startGame(gameCode, id,token , gc);
+    }
+
+
+
+
+
+
 
 
 }

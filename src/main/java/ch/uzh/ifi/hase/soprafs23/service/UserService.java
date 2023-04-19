@@ -91,7 +91,7 @@ public class UserService {
         return user;
     }
 
-    private void authenticateUser(String token, long idCurrentUser) {
+    public void authenticateUser(String token, long idCurrentUser) {
         User user = getUserById(idCurrentUser);
         if (!user.getToken().equals(token)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,

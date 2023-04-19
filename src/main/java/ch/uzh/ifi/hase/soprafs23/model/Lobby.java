@@ -12,9 +12,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class Lobby {
 
-    private final String gameCode;
     @Getter
-    private boolean gameStarted = false;
+    private boolean gameStarted;
 
     private Notifier notifier;
 
@@ -22,13 +21,18 @@ public class Lobby {
     private Map<Long, Player> players;
 
     public Lobby(String gameCode, SimpMessagingTemplate simpMessagingTemplate) {
-        this.gameCode = gameCode;
         this.notifier = new WebsocketNotifier(simpMessagingTemplate, gameCode);
-        this.players = new HashMap<Long, Player>();
+        this.players = new HashMap<>();
+    }
+
+    public void checkIfGameStarted(){
+        if (gameStarted == true){
+            throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
+        }
     }
 
     public void addPlayer(Player player){
-        if (gameStarted){
+        if (gameStarted == true){
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
         }
         else{
@@ -36,18 +40,16 @@ public class Lobby {
         }
     }
 
+
     public void removePlayer(LobbyPlayer lobbyPlayer) {
         players.remove(lobbyPlayer);
     }
 
-    public boolean playGame(GameConfig config) throws InterruptedException {
-        if (this.gameStarted){
-            throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
-        }
+    public void playGame(GameConfig config) throws InterruptedException {
         Game game = new Game(players, config, notifier);
         this.gameStarted = true;
         game.run();
-        return true;
+
     }
 
 

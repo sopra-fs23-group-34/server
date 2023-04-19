@@ -23,19 +23,13 @@ import java.util.List;
 @Controller
 public class WebsocketController {
 
-    private final UserService userService;
-
     private final LobbyService lobbyService;
 
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
-
-
     WebsocketController(UserService userService, LobbyService lobbyService) {
-        this.userService = userService;
         this.lobbyService = lobbyService;
     }
 
+    /*
     @MessageMapping("/join/{gameCode}/{player_id}")
     @SendTo(WebsocketConfig.lobbysDestination)
     public PlayerListMessage joinLobby(PlayerMessage msg, @DestinationVariable String gameCode,
@@ -50,7 +44,9 @@ public class WebsocketController {
         PlayerListMessage playerListMessage = new PlayerListMessage("players", playersGetDTOs );
         return playerListMessage;
     }
+    */
 
+    /*
     @MessageMapping("/startGame/{gameCode}")
     @SendTo(WebsocketConfig.lobbysDestination)
     public StringMessage hostStartsGame(PlayerMessage plm,@DestinationVariable String gameCode) throws Exception {
@@ -58,8 +54,20 @@ public class WebsocketController {
         lobbyService.startGame(gameCode,1L,"asdf", new GameConfig(plm.getRoundLimit(), plm.getFoodCategory()));
         return new StringMessage("start", "TheGameIsStarting :) ");
     }
+    */
 
 
+    @MessageMapping("/update/{gameCode}")
+    @SendTo(WebsocketConfig.lobbysDestination)
+    public PlayerListMessage updateListedPlayers(@DestinationVariable String gameCode)  {
+        List <Player> players =  lobbyService.updatePlayerList(gameCode);
+        List<PlayerGetDTO> playersGetDTOs = new ArrayList<>();
+        for (Player player : players) {
+            playersGetDTOs.add(DTOMapper.INSTANCE.convertPlayerToPlayerGetDTO(player));
+        }
+        PlayerListMessage playerListMessage = new PlayerListMessage("players", playersGetDTOs );
+        return playerListMessage;
+    }
 
     @MessageMapping("/guess/{gameCode}/{player_id}")
     public void playerMakeGuesses(PlayerGuesses plm, @DestinationVariable String gameCode, @DestinationVariable Long player_id)  {

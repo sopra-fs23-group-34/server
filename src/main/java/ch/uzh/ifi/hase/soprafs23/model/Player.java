@@ -15,10 +15,12 @@ public class Player {
     private Integer points;
     private final String username;
     private final Long player_id;
+    private final boolean host;
 
-    public Player(String username, Long player_id) {
+    public Player(String username, Long player_id, boolean host) {
         this.username = username;
         this.player_id = player_id;
+        this.host = host;
     }
 
 }
