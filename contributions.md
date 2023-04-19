@@ -70,7 +70,8 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 - [ ] 
 
 ### Nataell
-- [ ] 
+- [ ] sopra-fs23-group-34/client#35
+- [ ] sopra-fs23-group-34/server#44
 
 ### Maurice
 - [ ]
