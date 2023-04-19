@@ -59,10 +59,8 @@ public class LobbyService {
 
     public List<Player> leaveLobby(String gameCode, Long user_id) {
         checkIfLobbyExists(gameCode);
-        LobbyPlayer lobbyPlayer = userService.getUserById(user_id);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
-        Player player = new Player(lobbyPlayer.getUsername(), lobbyPlayer.getId());
-        lobby.removePlayer(player);
+        lobby.removePlayer(user_id);
         System.out.println("Successfully left Lobby");
         List<Player> lobbyPlayers = new ArrayList(lobby.getPlayers().values());
         return lobbyPlayers;

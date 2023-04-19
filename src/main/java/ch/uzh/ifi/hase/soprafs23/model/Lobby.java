@@ -38,8 +38,8 @@ public class Lobby {
         }
     }
 
-    public void removePlayer(Player lobbyPlayer) {
-        players.remove(lobbyPlayer.getPlayer_id());
+    public void removePlayer(long user_id) {
+        players.remove(user_id);
     }
 
     public void playGame(GameConfig config) throws InterruptedException {
