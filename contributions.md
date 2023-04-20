@@ -8,10 +8,10 @@
 - [ ] sopra-fs23-group-34/server#27
 
 ### Elias
--[] sopra-fs23-group-34/server#8
--[] sopra-fs23-group-34/server#4
+-[] sopra-fs23-group-34/client#8
+-[] sopra-fs23-group-34/client#4
 -[] sopra-fs23-group-34/server#38
--[] sopra-fs23-group-34/server#3
+-[] sopra-fs23-group-34/client#3
 -[] sopra-fs23-group-34/server#37
 -[] sopra-fs23-group-34/server#35
 -[] sopra-fs23-group-34/server#22
