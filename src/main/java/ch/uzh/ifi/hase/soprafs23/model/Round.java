@@ -16,12 +16,13 @@ public class Round {
         this.notifier = notifier;
     }
 
-    public Food getRandomFood(String name) throws IOException {
-        // api request here
-        Food food = foodService.getFood(name);
-        //Map<String, Double> nutritionValues = new HashMap<String, Double>();
-        //nutritionValues.put("carbs", 100.0);
-        //Food food = new Food(foodCategory.toString(), nutritionValues,"image");
+    public Food getRandomFood(FoodCategory foodCategory) throws IOException {
+        FoodService foodService = new FoodService();
+        foodService.getFood("pizza");
+        //toDo food richtig einfügen
+        Map<String, Double> nutritionValues = new HashMap<String, Double>();
+        nutritionValues.put("carbs", 100.0);
+        Food food = new Food(foodCategory.toString(), nutritionValues,"image");
         return food;
     }
 

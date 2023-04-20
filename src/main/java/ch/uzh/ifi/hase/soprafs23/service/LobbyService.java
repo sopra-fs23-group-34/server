@@ -78,7 +78,7 @@ public class LobbyService {
         }
     }
 
-    public void startGame(String gameCode, Long user_id, String token, GameConfig config) throws InterruptedException {
+    public void startGame(String gameCode, Long user_id, String token, GameConfig config) throws InterruptedException, IOException {
         userService.authenticateUser(token, user_id);
         checkIfHost(gameCode, user_id);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
@@ -86,12 +86,12 @@ public class LobbyService {
         new Thread(() -> {
             try {
                 lobby.playGame(config);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | IOException e) {
                 throw new RuntimeException(e);
             }
-            catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            //catch (IOException e) {
+               // throw new RuntimeException(e);
+           // }
             lobbyStorage.removeLobby(gameCode);
         }).start();
     }

@@ -10,5 +10,7 @@ public class FoodGetDTO {
     Double carbs;
     Double protein;
     Double fat;
+    Double sugar;
     String image;
+
 }

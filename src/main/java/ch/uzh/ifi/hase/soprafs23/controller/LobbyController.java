@@ -18,6 +18,7 @@ import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.web.util.HtmlUtils;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
+import java.io.IOException;
 import java.io.ObjectInputFilter;
 import java.util.concurrent.TimeUnit;
 
@@ -56,7 +57,7 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void startGame(@PathVariable("lobbyCode") String gameCode, @RequestHeader("id") long id,
-                          @RequestHeader("token") String token) throws InterruptedException {
+                          @RequestHeader("token") String token) throws InterruptedException, IOException {
         System.out.println("hallo");
         GameConfig gc = new GameConfig(3, FoodCategory.FRUITS);
         lobbyService.startGame(gameCode, id,token , gc);

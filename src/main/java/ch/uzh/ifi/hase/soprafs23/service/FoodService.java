@@ -12,7 +12,6 @@ import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,12 +23,13 @@ public class FoodService {
 
     private final Logger log = LoggerFactory.getLogger(FoodService.class);
 
-    private final FoodRepository foodsRepository;
+        private final FoodRepository foodsRepository;
 
-    @Autowired
-    public FoodService(@Qualifier("foodsRepository") FoodRepository foodRepository) {
-        this.foodsRepository = foodRepository;
-    }
+        @Autowired
+        public FoodService() {
+            FoodRepository foodRepository = null;
+            this.foodsRepository = foodRepository;
+        }
 
     public List<Foods> getFoods() {
         return this.foodsRepository.findAll();
@@ -88,6 +88,7 @@ public class FoodService {
         Number protein = (Number) food.get("nf_protein");
         Number carbs = (Number) food.get("nf_total_carbohydrate");
         String name = (String) food.get("food_name");
+        Number sugar = (Number) food.get("nf_sugar");
         String image_link = photo.get("highres");
 
         System.out.println("name: " + name);
@@ -96,14 +97,16 @@ public class FoodService {
         System.out.println("protein: " + protein);
         System.out.println("carbs: " + carbs);
         System.out.println("image link: " + image_link);
+        System.out.println("sugar: "+sugar);
 
         Map<String, Double> nutritional_values = new HashMap<>();
         nutritional_values.put("calories", calories.doubleValue());
         nutritional_values.put("fat", fat.doubleValue());
         nutritional_values.put("protein", protein.doubleValue());
         nutritional_values.put("carbs", carbs.doubleValue());
-
+        nutritional_values.put("sugar",sugar.doubleValue());
         Food apiFood = new Food(name, nutritional_values, image_link);
+        System.out.println(apiFood.getName());
         return apiFood;
         }
 
