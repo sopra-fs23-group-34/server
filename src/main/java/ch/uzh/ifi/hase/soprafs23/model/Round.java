@@ -1,22 +1,27 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
+import ch.uzh.ifi.hase.soprafs23.service.FoodService;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Round {
 
     private final Notifier notifier;
+    private FoodService foodService;
 
 
     public Round( Notifier notifier){
         this.notifier = notifier;
     }
 
-    public Food getRandomFood(FoodCategory foodCategory){
+    public Food getRandomFood(String name) throws IOException {
         // api request here
-        Map<String, Double> nutritionValues = new HashMap<String, Double>();
-        nutritionValues.put("carbs", 100.0);
-        Food food = new Food(foodCategory.toString(), nutritionValues,"image");
+        Food food = foodService.getFood(name);
+        //Map<String, Double> nutritionValues = new HashMap<String, Double>();
+        //nutritionValues.put("carbs", 100.0);
+        //Food food = new Food(foodCategory.toString(), nutritionValues,"image");
         return food;
     }
 

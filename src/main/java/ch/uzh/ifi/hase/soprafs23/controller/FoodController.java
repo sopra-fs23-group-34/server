@@ -1,7 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
-import ch.uzh.ifi.hase.soprafs23.entity.Food;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;

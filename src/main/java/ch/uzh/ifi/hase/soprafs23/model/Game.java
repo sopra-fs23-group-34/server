@@ -1,15 +1,20 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
+import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Game {
     private final Map<Long, Player> players;
+    private FoodService foodService;
     private final int roundLimit;
     private final FoodCategory foodCategory;
     private final Notifier notifier;
+    private List<String> foods = new ArrayList<>();
 
     public Game(Map<Long, Player> players, GameConfig config, Notifier notifier){
         this.players = players;
@@ -18,11 +23,14 @@ public class Game {
         this.foodCategory = config.foodCategory();
     }
 
-    public void run() throws InterruptedException {
+    public void run() throws InterruptedException, IOException {
         Scores scores = new Scores();
+
+        // select random foods here, only name
+        foods = foodService.getRandomFoodsByCategory(foodCategory, roundLimit);
         for (int round=0; round < roundLimit; round ++){
             Round gameRound = new Round(notifier);
-            Food food = gameRound.getRandomFood(foodCategory);
+            Food food = gameRound.getRandomFood(foods.get(round));
             gameRound.run(food);
             for (Player player: players.values()){
                 Map<String, ArrayList<Map<String, Double>>> roundScores =
