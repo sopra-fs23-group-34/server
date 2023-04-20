@@ -5,8 +5,8 @@ import ch.uzh.ifi.hase.soprafs23.entity.Foods;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("foodRepository")
-public interface FoodRepository extends JpaRepository<Foods, Long> {
+@Repository("foodsRepository")
+public interface FoodsRepository extends JpaRepository<Foods, Long> {
     Foods findByName(String name);
 
     Foods findByCategory(FoodCategory category);

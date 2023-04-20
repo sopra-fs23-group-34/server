@@ -2,7 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.service;
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.entity.Foods;
 import ch.uzh.ifi.hase.soprafs23.model.Food;
-import ch.uzh.ifi.hase.soprafs23.repository.FoodRepository;
+import ch.uzh.ifi.hase.soprafs23.repository.FoodsRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -23,13 +23,12 @@ public class FoodService {
 
     private final Logger log = LoggerFactory.getLogger(FoodService.class);
 
-        private final FoodRepository foodsRepository;
+    private final FoodsRepository foodsRepository;
 
-        @Autowired
-        public FoodService() {
-            FoodRepository foodRepository = null;
-            this.foodsRepository = foodRepository;
-        }
+    @Autowired
+    public FoodService(@Qualifier("foodsRepository") FoodsRepository foodsRepository) {
+        this.foodsRepository = foodsRepository;
+    }
 
     public List<Foods> getFoods() {
         return this.foodsRepository.findAll();

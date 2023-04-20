@@ -80,7 +80,6 @@ public class WebsocketController {
                            @DestinationVariable Long player_id) {
         List<Player> playerList = lobbyService.leaveLobby(gameCode, player_id);
         List<PlayerGetDTO> playersGetDTOs = new ArrayList<>();
-
         for (Player player : playerList) {
             playersGetDTOs.add(DTOMapper.INSTANCE.convertPlayerToPlayerGetDTO(player));
         }
