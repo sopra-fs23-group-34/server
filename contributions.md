@@ -104,7 +104,7 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 - [ ] sopra-fs23-group-34/server#26
 - [ ] sopra-fs23-group-34/server#49
 - [ ] sopra-fs23-group-34/server#50
-- [ ] sopra-fs23-group-34/server#44
+- [ ] sopra-fs23-group-34/server#7
 
 ## Week 5: 21:04.2023 - 27.04.2023
 
