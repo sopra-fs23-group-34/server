@@ -2,25 +2,25 @@
 ## Week 1: 24.03.2023 - 30.03.2023
 
 ### Nico
-- [ ] sopra-fs23-group-34/server#20
+- [ ] sopra-fs23-group-34/client#38
 - [ ] sopra-fs23-group-34/client#6
 - [ ] sopra-fs23-group-34/client#5
 - [ ] sopra-fs23-group-34/server#27
 
 ### Elias
--[] sopra-fs23-group-34/client#8
--[] sopra-fs23-group-34/client#4
--[] sopra-fs23-group-34/server#38
--[] sopra-fs23-group-34/client#3
--[] sopra-fs23-group-34/server#37
--[] sopra-fs23-group-34/server#35
--[] sopra-fs23-group-34/server#22
--[] sopra-fs23-group-34/server#36
--[] sopra-fs23-group-34/server#34
+- [ ] sopra-fs23-group-34/client#8
+- [ ] sopra-fs23-group-34/client#4
+- [ ] sopra-fs23-group-34/server#38
+- [ ] sopra-fs23-group-34/client#3
+- [ ] sopra-fs23-group-34/server#37
+- [ ] sopra-fs23-group-34/server#35
+- [ ] sopra-fs23-group-34/server#22
+- [ ] sopra-fs23-group-34/server#36
+- [ ] sopra-fs23-group-34/server#34
 ### André
-- [ ] sopra-fs23-group-34/server#21
+- [ ] sopra-fs23-group-34/client#40
 - [ ] sopra-fs23-group-34/client#2
-- [ ] sopra-fs23-group-34/server#17
+- [ ] sopra-fs23-group-34/client#39
 
 ### Nataell
 
