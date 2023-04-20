@@ -1,26 +1,59 @@
 package ch.uzh.ifi.hase.soprafs23.service;
+import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
+import ch.uzh.ifi.hase.soprafs23.entity.Foods;
 import ch.uzh.ifi.hase.soprafs23.model.Food;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.jfr.ContentType;
-import nonapi.io.github.classgraph.json.JSONSerializer;
-
+import ch.uzh.ifi.hase.soprafs23.repository.FoodRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+
+@Service
+@Transactional
 public class FoodService {
+
+    private final Logger log = LoggerFactory.getLogger(FoodService.class);
+
+    private final FoodRepository foodsRepository;
+
+    @Autowired
+    public FoodService(@Qualifier("foodsRepository") FoodRepository foodRepository) {
+        this.foodsRepository = foodRepository;
+    }
+
+    public List<Foods> getFoods() {
+        return this.foodsRepository.findAll();
+    }
+
+    public List<String> getRandomFoodsByCategory(FoodCategory category, Integer rounds) {
+        List<Foods> allFoods = getFoods();
+        List<Foods> specificFoods = new ArrayList<>();
+        for (Foods food : allFoods) {
+            if (food.getCategory() == category) {
+                specificFoods.add(food);
+            }
+        }
+        List<String> randomFoods = new ArrayList<>();
+        while (randomFoods.size() < rounds) {
+            int random = new Random().nextInt(specificFoods.size());
+            if (!randomFoods.contains(specificFoods.get(random))) {
+                randomFoods.add(specificFoods.get(random).getName());
+            }
+        }
+        return randomFoods;
+    }
+
+
 
     public Food getFood(String food_name) throws IOException {
         String apiUrl = "https://trackapi.nutritionix.com/v2/natural/nutrients";
@@ -45,10 +78,15 @@ public class FoodService {
         List<Map<String, Object>> foods = (List<Map<String, Object>>) map.get("foods");
         Map<String, Object> food = foods.get(0);
         Map<String, String> photo = (Map<String, String>) food.get("photo");
-        Double calories = (Double) food.get("nf_calories");
-        Double fat = (Double) food.get("nf_total_fat");
-        Double protein = (Double) food.get("nf_protein");
-        Double carbs = (Double) food.get("nf_total_carbohydrate");
+        System.out.println(food.get("nf_calories").getClass());
+        System.out.println(food.get("nf_total_fat").getClass());
+        System.out.println(food.get("nf_protein").getClass());
+        System.out.println(food.get("nf_total_carbohydrate").getClass());
+        System.out.println(food.get("----------"));
+        Number calories = (Number) food.get("nf_calories");
+        Number fat = (Number) food.get("nf_total_fat");
+        Number protein = (Number) food.get("nf_protein");
+        Number carbs = (Number) food.get("nf_total_carbohydrate");
         String name = (String) food.get("food_name");
         String image_link = photo.get("highres");
 
@@ -60,14 +98,44 @@ public class FoodService {
         System.out.println("image link: " + image_link);
 
         Map<String, Double> nutritional_values = new HashMap<>();
-        nutritional_values.put("calories", calories);
-        nutritional_values.put("fat", fat);
-        nutritional_values.put("protein", protein);
-        nutritional_values.put("carbs", carbs);
+        nutritional_values.put("calories", calories.doubleValue());
+        nutritional_values.put("fat", fat.doubleValue());
+        nutritional_values.put("protein", protein.doubleValue());
+        nutritional_values.put("carbs", carbs.doubleValue());
 
         Food apiFood = new Food(name, nutritional_values, image_link);
         return apiFood;
-
-
         }
+
+    public static void main(String[] args) throws IOException {
+
+        /*
+        String[] foods = new String[] {
+                "bananas",
+                "strawberries",
+                "grapes",
+                "apples",
+                "watermelon",
+                "oranges",
+                "blueberries",
+                "lemons",
+                "peaches",
+                "avocados",
+                "pineapple",
+                "cherries",
+                "cantaloupe",
+                "raspberries",
+                "pears",
+                "limes",
+                "blackberries",
+                "clementine",
+                "mangoes",
+                "plums"};
+        for (int i = 0; i < foods.length; i ++) {
+            FoodService.getFood(foods[i]);
+        }
+
+         */
+    }
+
 }

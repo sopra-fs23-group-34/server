@@ -6,15 +6,10 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.*;
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 /**
@@ -133,25 +128,32 @@ public class UserController {
         });
         return userGetRankDTOs;
     }
+    /*
     @GetMapping("users/food/{requestedFood}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Food getBanana(@PathVariable String requestedFood) throws IOException {
         FoodService foodService = new FoodService();
+
         Food food = foodService.getFood(requestedFood);
         System.out.println("getBanana");
+
+
         //Food myBanana = new Food();
-        /*
+
         myBanana.setName("Banana");
         myBanana.setFat("0.3");
         myBanana.setProtein("1.1");
         myBanana.setCarbs("23");
         myBanana.setPicture("Beautiful Banana");
-        */
+
         //return DTOMapper.INSTANCE.convertEntityToFoodGetDTO(food);
         return food;
-
     }
+
+     */
+
+
 
 
 }

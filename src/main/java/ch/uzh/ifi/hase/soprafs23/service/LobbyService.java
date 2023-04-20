@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +87,9 @@ public class LobbyService {
             try {
                 lobby.playGame(config);
             } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            catch (IOException e) {
                 throw new RuntimeException(e);
             }
             lobbyStorage.removeLobby(gameCode);

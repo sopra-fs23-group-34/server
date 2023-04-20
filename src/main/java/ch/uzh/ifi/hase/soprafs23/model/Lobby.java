@@ -5,6 +5,8 @@ import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +44,7 @@ public class Lobby {
         players.remove(user_id);
     }
 
-    public void playGame(GameConfig config) throws InterruptedException {
+    public void playGame(GameConfig config) throws InterruptedException, IOException {
         Game game = new Game(players, config, notifier);
         this.gameStarted = true;
         game.run();
