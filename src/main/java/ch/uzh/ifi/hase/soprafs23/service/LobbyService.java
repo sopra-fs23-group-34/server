@@ -99,6 +99,7 @@ public class LobbyService {
     public void setPlayerGuesses(String gameCode, long player_id, Map<String, Double> guesses) {
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         lobby.getPlayers().get(player_id).setGuesses(guesses);
+
     }
 
 }
