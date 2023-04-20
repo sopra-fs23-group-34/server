@@ -86,10 +86,7 @@ public class LobbyService {
         new Thread(() -> {
             try {
                 lobby.playGame(config);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            catch (IOException e) {
+            } catch (InterruptedException | IOException e) {
                 throw new RuntimeException(e);
             }
             lobbyStorage.removeLobby(gameCode);

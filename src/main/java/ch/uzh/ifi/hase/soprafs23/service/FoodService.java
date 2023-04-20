@@ -44,9 +44,10 @@ public class FoodService {
             }
         }
         List<String> randomFoods = new ArrayList<>();
+        Random rand = new Random();
         while (randomFoods.size() < rounds) {
-            int random = new Random().nextInt(specificFoods.size());
-            if (!randomFoods.contains(specificFoods.get(random))) {
+            int random = rand.nextInt(specificFoods.size());
+            if (!randomFoods.contains(specificFoods.get(random).getName())) {
                 randomFoods.add(specificFoods.get(random).getName());
             }
         }
