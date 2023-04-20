@@ -25,6 +25,8 @@ public class FoodService {
     private final Logger log = LoggerFactory.getLogger(FoodService.class);
 
     private final FoodsRepository foodsRepository;
+    private Random rand = new Random();
+
 
     @Autowired
     public FoodService(@Qualifier("foodsRepository") FoodsRepository foodsRepository) {
@@ -44,7 +46,6 @@ public class FoodService {
             }
         }
         List<String> randomFoods = new ArrayList<>();
-        Random rand = new Random();
         while (randomFoods.size() < rounds) {
             int random = rand.nextInt(specificFoods.size());
             if (!randomFoods.contains(specificFoods.get(random).getName())) {
