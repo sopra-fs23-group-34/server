@@ -54,6 +54,8 @@
 
 ### Maurice
 - [ ] sopra-fs23-group-34/server#32
+- [ ] sopra-fs23-group-34/server#27
+
 
 
 ## Week 3: 07.04.2023 - 13.04.2023 (OPTIONAL)
