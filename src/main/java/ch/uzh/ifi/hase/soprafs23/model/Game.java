@@ -18,13 +18,12 @@ public class Game {
     private List<String> foods = new ArrayList<>();
     private Map<String, Map> playerRoundScores;
 
-
-    public Game(Map<Long, Player> players, GameConfig config, Notifier notifier, Map<String, Map> playerTotalScores){
+    public Game(Map<Long, Player> players, GameConfig config, Notifier notifier, FoodService foodService){
         this.players = players;
         this.notifier = notifier;
         this.roundLimit = config.roundLimit();
         this.foodCategory = config.foodCategory();
-        this.playerTotalScores = playerTotalScores;
+        this.foodService = foodService;
     }
 
     public void run() throws InterruptedException, IOException {

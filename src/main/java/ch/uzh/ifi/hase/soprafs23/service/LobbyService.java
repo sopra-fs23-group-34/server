@@ -22,6 +22,7 @@ import java.util.Map;
 @Transactional
 public class LobbyService {
     private final UserService userService;
+    private final FoodService foodService;
     private final CodeGenerator codeGenerator;
     private final LobbyStorage lobbyStorage;
     private final SimpMessagingTemplate simpMessagingTemplate;
@@ -35,7 +36,7 @@ public class LobbyService {
 
     public String createLobby() {
         String gameCode = codeGenerator.nextCode();
-        lobbyStorage.addLobby(gameCode, new Lobby(gameCode, simpMessagingTemplate));
+        lobbyStorage.addLobby(gameCode, new Lobby(gameCode, simpMessagingTemplate, foodService));
         return gameCode;
     }
 

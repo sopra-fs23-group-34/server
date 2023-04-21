@@ -40,7 +40,10 @@
 - [ ] sopra-fs23-group-34/client#33
 
 ### André
-- [ ] sopra-fs23-group-34/client#13
+- [ ] sopra-fs23-group-34/client#39
+- [ ] sopra-fs23-group-34/client#36
+- [ ] sopra-fs23-group-34/client#40
+- [ ] sopra-fs23-group-34/client#4
 
 ### Nataell
 - [ ] sopra-fs23-group-34/client#34
@@ -94,7 +97,12 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 - [ ] 
 
 ### André
-- [ ] 
+- [ ] sopra-fs23-group-34/client#22
+- [ ] sopra-fs23-group-34/client#35
+- [ ] sopra-fs23-group-34/client#34
+- [ ] sopra-fs23-group-34/client#37
+- [ ] sopra-fs23-group-34/client#13
+
 
 ### Nataell
 - [ ] sopra-fs23-group-34/client#35
@@ -109,12 +117,21 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 ## Week 5: 21:04.2023 - 27.04.2023
 
 ### Nico
-
+- [ ] sopra-fs23-group-34/client#28
+- [ ] sopra-fs23-group-34/client#29
+- [ ] sopra-fs23-group-34/client#30
+- [ ] sopra-fs23-group-34/client#31
+- [ ] sopra-fs23-group-34/client#32
+- [ ] sopra-fs23-group-34/client#37
 ### Elias
-
+- [ ] sopra-fs23-group-34/client#19
+- [ ] sopra-fs23-group-34/client#12
+- [ ] sopra-fs23-group-34/server#79
 ### André
-
+- [ ] sopra-fs23-group-34/server#10
+- [ ] sopra-fs23-group-34/server#18
 ### Nataell
+--> not two meaningful taks (completed more tasks in the past)
 - [ ] sopra-fs23-group-34/server#76
 - [ ] sopra-fs23-group-34/server#77
 
