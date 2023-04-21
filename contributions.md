@@ -130,6 +130,7 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 ### André
 
 ### Nataell
+--> not two meaningful taks
 - [ ] sopra-fs23-group-34/server#76
 - [ ] sopra-fs23-group-34/server#77
 
