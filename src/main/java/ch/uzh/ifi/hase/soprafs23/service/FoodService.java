@@ -25,7 +25,7 @@ public class FoodService {
     private final Logger log = LoggerFactory.getLogger(FoodService.class);
 
     private final FoodsRepository foodsRepository;
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
 
     @Autowired
@@ -123,8 +123,8 @@ public class FoodService {
     public static void main(String[] args) throws IOException {
         String[] foods = new String[] {
                 "Butter"};
-        for (int i = 0; i < foods.length; i ++) {
-            FoodService.getFood(foods[i]);
+        for (String food : foods) {
+            FoodService.getFood(food);
         }
 
     }
