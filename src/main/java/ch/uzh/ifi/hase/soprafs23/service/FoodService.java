@@ -66,21 +66,13 @@ public class FoodService {
 
 
 
-    public Food getFood(String food_name) throws IOException {
+    public static Food getFood(String food_name) throws IOException {
         String apiUrl = "https://trackapi.nutritionix.com/v2/natural/nutrients";
-        List<String[]> apiKeys = new ArrayList<>();
-        apiKeys.add(new String[]{"9dd751e9","7470f45a98ccc467dc3c043b1f997cf4"});
-        apiKeys.add(new String[]{"376a71b1","46ef2c8c088e63f038d5b2e0d43cf066"});
-        int key = rand.nextInt(2);
-        String appId = apiKeys.get(key)[0];
-        String appKey = apiKeys.get(key)[1];
-        int user = rand.nextInt(2);
-        String remoteUser = Integer.toString(user);
         //String appId = "9dd751e9";
         //String appKey = "7470f45a98ccc467dc3c043b1f997cf4";
-        //String appId = "376a71b1";
-        //String appKey = "46ef2c8c088e63f038d5b2e0d43cf066";
-        //String remoteUser = "0";
+        String appId = "376a71b1";
+        String appKey = "46ef2c8c088e63f038d5b2e0d43cf066";
+        String remoteUser = "0";
         String query = food_name;
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -129,4 +121,13 @@ public class FoodService {
         Food apiFood = new Food(name, nutritional_values, image_link);
         return apiFood;
         }
+
+    public static void main(String[] args) throws IOException {
+        String[] foods = new String[] {
+                "Butter"};
+        for (String food : foods) {
+            FoodService.getFood(food);
+        }
+
+    }
 }
