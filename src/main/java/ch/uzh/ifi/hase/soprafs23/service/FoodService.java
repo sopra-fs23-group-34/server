@@ -39,9 +39,11 @@ public class FoodService {
     public List<String> getRandomFoodsByCategory(FoodCategory category, Integer rounds) {
         List<Foods> allFoods = getFoods();
         List<Foods> specificFoods = new ArrayList<>();
-        for (Foods food : allFoods) {
-            if (food.getCategory() == category) {
-                specificFoods.add(food);
+        if (category != FoodCategory.ALL) {
+            for (Foods food : allFoods) {
+                if (food.getCategory() == category) {
+                    specificFoods.add(food);
+                }
             }
         }
         List<String> randomFoods = new ArrayList<>();
