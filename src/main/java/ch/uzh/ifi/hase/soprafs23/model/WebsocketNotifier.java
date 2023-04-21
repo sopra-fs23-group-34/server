@@ -31,7 +31,7 @@ public class WebsocketNotifier implements Notifier {
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, finalScore);
     }
     public void publishFood(Food food){
-        StringMessage foodItem = new StringMessage("Food", food.getName());
+        FoodMessage foodItem = new FoodMessage("Food", food.getName(),food.getImage());
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, foodItem);
     }
 
@@ -56,9 +56,9 @@ public class WebsocketNotifier implements Notifier {
     }
 
     public void error(String msg, String topic, Long user_id){
-        StringMessage errorMessage = new StringMessage(topic , msg);
+        //StringMessage errorMessage = new StringMessage(topic , msg, food.getImage());
         int intUser_id = user_id.intValue();
-        simpMessagingTemplate.convertAndSend(WebsocketConfig.errorDestination + intUser_id, errorMessage);
+        //simpMessagingTemplate.convertAndSend(WebsocketConfig.errorDestination + intUser_id, errorMessage);
     }
 
 }
