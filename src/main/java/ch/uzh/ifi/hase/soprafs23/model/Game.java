@@ -16,11 +16,12 @@ public class Game {
     private final Notifier notifier;
     private List<String> foods = new ArrayList<>();
 
-    public Game(Map<Long, Player> players, GameConfig config, Notifier notifier){
+    public Game(Map<Long, Player> players, GameConfig config, Notifier notifier, FoodService foodService){
         this.players = players;
         this.notifier = notifier;
         this.roundLimit = config.roundLimit();
         this.foodCategory = config.foodCategory();
+        this.foodService = foodService;
     }
 
     public void run() throws InterruptedException, IOException {

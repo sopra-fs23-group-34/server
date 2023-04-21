@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
+import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@AllArgsConstructor
+
 public class Lobby {
 
     @Getter
@@ -18,12 +19,15 @@ public class Lobby {
 
     private Notifier notifier;
 
+    private FoodService foodService;
+
     @Getter
     private Map<Long, Player> players;
 
-    public Lobby(String gameCode, SimpMessagingTemplate simpMessagingTemplate) {
+    public Lobby(String gameCode, SimpMessagingTemplate simpMessagingTemplate, FoodService foodService) {
         this.notifier = new WebsocketNotifier(simpMessagingTemplate, gameCode);
         this.players = new HashMap<>();
+        this.foodService = foodService;
     }
 
     public void checkIfGameStarted() {
@@ -45,7 +49,7 @@ public class Lobby {
     }
 
     public void playGame(GameConfig config) throws InterruptedException, IOException {
-        Game game = new Game(players, config, notifier);
+        Game game = new Game(players, config, notifier, foodService);
         this.gameStarted = true;
         game.run();
 

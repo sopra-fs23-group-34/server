@@ -57,7 +57,7 @@ public class FoodService {
 
 
 
-    public Food getFood(String food_name) throws IOException {
+    public static Food getFood(String food_name) throws IOException {
         String apiUrl = "https://trackapi.nutritionix.com/v2/natural/nutrients";
         //String appId = "9dd751e9";
         //String appKey = "7470f45a98ccc467dc3c043b1f997cf4";
@@ -111,7 +111,6 @@ public class FoodService {
         return apiFood;
         }
 
-        /*
     public static void main(String[] args) throws IOException {
         String[] foods = new String[] {
                 "Pasta",
@@ -131,7 +130,4 @@ public class FoodService {
         }
 
     }
-
-         */
-
 }
