@@ -46,6 +46,11 @@ public class FoodService {
                     specificFoods.add(food);
                 }
             }
+        } else {
+            specificFoods = allFoods;
+        }
+        if (rounds > specificFoods.size()) {
+            throw new RuntimeException("to many rounds for this category!");
         }
         List<String> randomFoods = new ArrayList<>();
         while (randomFoods.size() < rounds) {
@@ -84,11 +89,11 @@ public class FoodService {
         List<Map<String, Object>> foods = (List<Map<String, Object>>) map.get("foods");
         Map<String, Object> food = foods.get(0);
         Map<String, String> photo = (Map<String, String>) food.get("photo");
-        System.out.println(food.get("nf_calories").getClass());
-        System.out.println(food.get("nf_total_fat").getClass());
-        System.out.println(food.get("nf_protein").getClass());
-        System.out.println(food.get("nf_total_carbohydrate").getClass());
-        System.out.println(food.get("----------"));
+        //System.out.println(food.get("nf_calories").getClass());
+        //System.out.println(food.get("nf_total_fat").getClass());
+        //System.out.println(food.get("nf_protein").getClass());
+        //System.out.println(food.get("nf_total_carbohydrate").getClass());
+        //System.out.println(food.get("----------"));
         Number calories = (Number) food.get("nf_calories");
         Number fat = (Number) food.get("nf_total_fat");
         Number protein = (Number) food.get("nf_protein");
@@ -97,11 +102,12 @@ public class FoodService {
         String image_link = photo.get("highres");
 
         System.out.println("name: " + name);
-        System.out.println("calories: " + calories);
-        System.out.println("fat: " + fat);
-        System.out.println("protein: " + protein);
-        System.out.println("carbs: " + carbs);
+        //System.out.println("calories: " + calories);
+        //System.out.println("fat: " + fat);
+        //System.out.println("protein: " + protein);
+        //System.out.println("carbs: " + carbs);
         System.out.println("image link: " + image_link);
+        System.out.println("----------");
 
         Map<String, Double> nutritional_values = new HashMap<>();
         nutritional_values.put("calories", calories.doubleValue());
@@ -109,24 +115,14 @@ public class FoodService {
         nutritional_values.put("protein", protein.doubleValue());
         nutritional_values.put("carbs", carbs.doubleValue());
 
+
         Food apiFood = new Food(name, nutritional_values, image_link);
         return apiFood;
         }
 
     public static void main(String[] args) throws IOException {
         String[] foods = new String[] {
-                "Pasta",
-                "Bread",
-                "Rice",
-                "Cereal",
-                "Butter",
-                "Cheese",
-                "yogurt",
-                "honey",
-                "popcorn",
-                "crackers",
-                "peanuts",
-                "cashew"};
+                "Butter"};
         for (int i = 0; i < foods.length; i ++) {
             FoodService.getFood(foods[i]);
         }
