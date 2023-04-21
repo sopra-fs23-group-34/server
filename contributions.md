@@ -37,7 +37,10 @@
 - [ ] sopra-fs23-group-34/client#33
 
 ### André
-- [ ] sopra-fs23-group-34/client#13
+- [ ] sopra-fs23-group-34/client#39
+- [ ] sopra-fs23-group-34/client#36
+- [ ] sopra-fs23-group-34/client#40
+- [ ] sopra-fs23-group-34/client#4
 
 ### Nataell
 - [ ] sopra-fs23-group-34/client#34
@@ -96,7 +99,12 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 - [ ] 
 
 ### André
-- [ ] 
+- [ ] sopra-fs23-group-34/client#22
+- [ ] sopra-fs23-group-34/client#35
+- [ ] sopra-fs23-group-34/client#34
+- [ ] sopra-fs23-group-34/client#37
+- [ ] sopra-fs23-group-34/client#13
+
 
 ### Nataell
 - [ ] sopra-fs23-group-34/client#35
