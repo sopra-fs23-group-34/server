@@ -128,7 +128,7 @@ public class UserController {
         });
         return userGetRankDTOs;
     }
-    /*
+
     @GetMapping("users/food/{requestedFood}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -139,19 +139,19 @@ public class UserController {
         System.out.println("getBanana");
 
 
-        //Food myBanana = new Food();
+        /*Food myBanana = new Food();
 
         myBanana.setName("Banana");
         myBanana.setFat("0.3");
         myBanana.setProtein("1.1");
         myBanana.setCarbs("23");
-        myBanana.setPicture("Beautiful Banana");
+        myBanana.setPicture("Beautiful Banana");*/
 
         //return DTOMapper.INSTANCE.convertEntityToFoodGetDTO(food);
         return food;
     }
 
-     */
+
 
 
 

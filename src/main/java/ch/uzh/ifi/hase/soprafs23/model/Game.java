@@ -5,6 +5,7 @@ import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ public class Game {
         this.roundLimit = config.roundLimit();
         this.foodCategory = config.foodCategory();
         this.foodService = foodService;
+        this.playerTotalScores = new HashMap<>();
     }
 
     public void run() throws InterruptedException, IOException {
@@ -60,7 +62,7 @@ public class Game {
                  */
 
             }
-            //notifier.publishRoundScores(players.getPlayer_id(), playerTotalScroes);
+            notifier.publishRoundScores(scores.getPlayerRoundScores());
             notifier.publishGameScores(scores.getPlacement());
             Thread.sleep(10000);
             // todo player gets guesses

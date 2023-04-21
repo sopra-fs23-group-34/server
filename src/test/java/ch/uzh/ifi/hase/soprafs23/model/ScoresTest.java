@@ -25,12 +25,13 @@ public class ScoresTest {
         playerGuesses.put("calories", 95.0);
         playerGuesses.put("sugar", 5.0);
         String username = "player1";
+        String username2 = "player2";
         Food food = new Food("apple", nutritionVales, "image");
 
         System.out.println(nutritionVales.get("carbs"));
         // act
         Map<String, Map> playerRoundScores = scores.computeRoundScores(playerGuesses, username, food);
-        Map<String, Map> playerRoundScoress = scores.computeRoundScores(playerGuesses, username, food);
+        Map<String, Map> playerRoundScoress = scores.computeRoundScores(playerGuesses, username2, food);
         //System.out.println(playerRoundScores);
 /*
         // assert

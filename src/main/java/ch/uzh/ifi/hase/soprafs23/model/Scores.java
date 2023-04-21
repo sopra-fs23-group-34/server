@@ -17,19 +17,20 @@ public class Scores {
         //Map<String, ArrayList<Map<String,Double>>> roundScore = new HashMap<>();
         // todo handle what to do if player did not guess. Easiest way just give a high amount of points
         Map<String,Map> playerGuessedDetails = new HashMap<>(); //Map for all the different guessed objects
-        Map<String, Double> playerGuessedValues = new HashMap<>(); //Map for all the different guessed values
+        Map<String, Double> pointsTotal = new HashMap<>();
         double player_points = 0;
 
         System.out.println(playerGuesses.get("carbs"));
 
         for ( String playerGuessFoodKey : playerGuesses.keySet()){
+            Map<String, Double> playerGuessedValues = new HashMap<>(); //Map for all the different guessed values
             System.out.println("inloop");
             double absoluteMalus = 0;
             //playerGuessedDetails.put(playerGuessFoodKey,playerGuessedValues);
 
-            playerGuessedValues.put("guessed "+ playerGuessFoodKey,playerGuesses.get(playerGuessFoodKey));
+            playerGuessedValues.put("guessed",playerGuesses.get(playerGuessFoodKey));
 
-            playerGuessedValues.put("real Value "+playerGuessFoodKey,food.getNutritionValues().get(playerGuessFoodKey));
+            playerGuessedValues.put("realValue",food.getNutritionValues().get(playerGuessFoodKey));
             /*ArrayList<Map<String,Double>> roundFoodScore = new ArrayList<>();
             Map<String, Double> guessed_values = new HashMap<>();
             Map<String, Integer> points = new HashMap<>();
@@ -58,9 +59,11 @@ public class Scores {
             roundFoodScore.add(deviation);
             */
             //roundScore.put(playerGuessFoodKey,roundFoodScore);
+            playerGuessedDetails.put(playerGuessFoodKey, playerGuessedValues);
         }
-        playerGuessedValues.put("points",player_points);
-        playerRoundScores.put(username,playerGuessedValues);
+        pointsTotal.put("pointsTotal",player_points);
+        playerGuessedDetails.put("points",pointsTotal);
+        playerRoundScores.put(username,playerGuessedDetails);
         //playerGuessedDetails.put("points",playerGuessedValues);
         //playerGuessedValues.put("pointsScored",player_points);
         // update players_points
@@ -76,8 +79,10 @@ public class Scores {
         return playerRoundScores;
     }
     public Map<String,Integer> getPlacement(){
-
         return players_points;
+    }
+    public Map<String, Map> getPlayerRoundScores(){
+        return playerRoundScores;
     }
 
 

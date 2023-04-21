@@ -23,10 +23,10 @@ public class FoodService {
 
     private final Logger log = LoggerFactory.getLogger(FoodService.class);
 
-    private final FoodsRepository foodsRepository;
+    //private final FoodsRepository foodsRepository;
     private Random rand = new Random();
 
-
+/*
     @Autowired
     public FoodService(@Qualifier("foodsRepository") FoodsRepository foodsRepository) {
         this.foodsRepository = foodsRepository;
@@ -55,7 +55,7 @@ public class FoodService {
         }
         return randomFoods;
     }
-
+*/
 
 
     public static Food getFood(String food_name) throws IOException {
@@ -109,7 +109,9 @@ public class FoodService {
         nutritional_values.put("fat", fat.doubleValue());
         nutritional_values.put("protein", protein.doubleValue());
         nutritional_values.put("carbs", carbs.doubleValue());
-        nutritional_values.put("sugar",sugar.doubleValue());
+        if(sugar!=null){
+            nutritional_values.put("sugar",sugar.doubleValue());
+        }
         Food apiFood = new Food(name, nutritional_values, image_link);
         System.out.println(apiFood.getName());
         return apiFood;

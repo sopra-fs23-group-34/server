@@ -15,10 +15,10 @@ public class WebsocketNotifier implements Notifier {
 
     private final String gameCode;
 
-    public void publishRoundScores(Long user_id, Map<String, ArrayList<Map<String, Double>>> roundScores){
-        int intUser_id = user_id.intValue();
-        RoundScoreMessage roundScoreMessage =  new RoundScoreMessage("RoundScore", roundScores );
-        simpMessagingTemplate.convertAndSend(WebsocketConfig.simpleBrokerDestination + "/players/" + intUser_id, roundScoreMessage);
+    public void publishRoundScores(Map<String, Map> roundScores){
+
+        RoundScoreMessage roundScoreMessage =  new RoundScoreMessage    ("RoundScore", roundScores );
+        simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies + gameCode, roundScoreMessage);
     }
 
     public void publishGameScores(Map<String, Integer> placement){
