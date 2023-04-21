@@ -53,6 +53,7 @@ public class Game {
                 notifier.publishRoundScores(player.getPlayer_id(), roundScores);
                 notifier.publishGameScores(scores.getPlacement());
             }
+
             Thread.sleep(10000);
             // todo player gets guesses
             // scores get players as input and food -> computes scores

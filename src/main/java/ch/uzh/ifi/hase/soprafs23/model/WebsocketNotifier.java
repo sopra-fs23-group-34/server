@@ -34,7 +34,6 @@ public class WebsocketNotifier implements Notifier {
         FoodMessage foodItem = new FoodMessage("Food", food.getName(),food.getImage());
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, foodItem);
     }
-
     public void publishTimer(int timer){
         IntMessage timerCounter = new IntMessage("Timer",timer);
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies  + gameCode, timerCounter);

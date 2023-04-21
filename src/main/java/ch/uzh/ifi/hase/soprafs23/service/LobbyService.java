@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.config.WebsocketConfig;
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
+import ch.uzh.ifi.hase.soprafs23.messages.StringMessage;
 import ch.uzh.ifi.hase.soprafs23.model.*;
 import ch.uzh.ifi.hase.soprafs23.storage.LobbyStorage;
 import lombok.AllArgsConstructor;
@@ -62,6 +63,10 @@ public class LobbyService {
     public List<Player> leaveLobby(String gameCode, Long user_id) {
         checkIfLobbyExists(gameCode);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
+        if (lobby.getPlayers().get(user_id).isHost()){
+            StringMessage stringMessage = new StringMessage("error", "host_left");
+            simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies + gameCode, stringMessage);
+        }
         lobby.removePlayer(user_id);
         System.out.println("Successfully left Lobby");
         List<Player> lobbyPlayers = new ArrayList(lobby.getPlayers().values());
