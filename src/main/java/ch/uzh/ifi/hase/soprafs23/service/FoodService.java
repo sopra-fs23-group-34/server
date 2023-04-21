@@ -58,8 +58,10 @@ public class FoodService {
 
     public Food getFood(String food_name) throws IOException {
         String apiUrl = "https://trackapi.nutritionix.com/v2/natural/nutrients";
-        String appId = "9dd751e9";
-        String appKey = "7470f45a98ccc467dc3c043b1f997cf4";
+        //String appId = "9dd751e9";
+        //String appKey = "7470f45a98ccc467dc3c043b1f997cf4";
+        String appId = "376a71b1";
+        String appKey = "46ef2c8c088e63f038d5b2e0d43cf066";
         String remoteUser = "0";
         String query = food_name;
         RestTemplate restTemplate = new RestTemplate();
@@ -111,35 +113,27 @@ public class FoodService {
         return apiFood;
         }
 
-    public static void main(String[] args) throws IOException {
-
         /*
+    public static void main(String[] args) throws IOException {
         String[] foods = new String[] {
-                "bananas",
-                "strawberries",
-                "grapes",
-                "apples",
-                "watermelon",
-                "oranges",
-                "blueberries",
-                "lemons",
-                "peaches",
-                "avocados",
-                "pineapple",
-                "cherries",
-                "cantaloupe",
-                "raspberries",
-                "pears",
-                "limes",
-                "blackberries",
-                "clementine",
-                "mangoes",
-                "plums"};
+                "Pasta",
+                "Bread",
+                "Rice",
+                "Cereal",
+                "Butter",
+                "Cheese",
+                "yogurt",
+                "honey",
+                "popcorn",
+                "crackers",
+                "peanuts",
+                "cashew"};
         for (int i = 0; i < foods.length; i ++) {
             FoodService.getFood(foods[i]);
         }
 
-         */
     }
+
+         */
 
 }

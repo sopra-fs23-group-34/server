@@ -2,29 +2,32 @@
 ## Week 1: 24.03.2023 - 30.03.2023
 
 ### Nico
-- [ ] sopra-fs23-group-34/server#20
+- [ ] sopra-fs23-group-34/client#38
 - [ ] sopra-fs23-group-34/client#6
 - [ ] sopra-fs23-group-34/client#5
 - [ ] sopra-fs23-group-34/server#27
 
 ### Elias
--[] sopra-fs23-group-34/client#8
--[] sopra-fs23-group-34/client#4
--[] sopra-fs23-group-34/server#38
--[] sopra-fs23-group-34/client#3
--[] sopra-fs23-group-34/server#37
--[] sopra-fs23-group-34/server#35
--[] sopra-fs23-group-34/server#22
--[] sopra-fs23-group-34/server#36
--[] sopra-fs23-group-34/server#34
+- [ ] sopra-fs23-group-34/client#8
+- [ ] sopra-fs23-group-34/client#4
+- [ ] sopra-fs23-group-34/server#38
+- [ ] sopra-fs23-group-34/client#3
+- [ ] sopra-fs23-group-34/server#37
+- [ ] sopra-fs23-group-34/server#35
+- [ ] sopra-fs23-group-34/server#22
+- [ ] sopra-fs23-group-34/server#36
+- [ ] sopra-fs23-group-34/server#34
 ### André
-- [ ] sopra-fs23-group-34/server#21
+- [ ] sopra-fs23-group-34/client#40
 - [ ] sopra-fs23-group-34/client#2
-- [ ] sopra-fs23-group-34/server#17
+- [ ] sopra-fs23-group-34/client#39
 
 ### Nataell
 
 ### Maurice
+- [ ] sopra-fs23-group-34/server#18
+- [ ] sopra-fs23-group-34/server#31
+- [ ] sopra-fs23-group-34/server#30
 
 ## Week 2: 31.03.2023 - 06.04.2023
 
@@ -50,15 +53,10 @@
 
 
 ### Maurice
-- [ ] sopra-fs23-group-34/server#18
-- [ ] sopra-fs23-group-34/server#31
-- [ ] sopra-fs23-group-34/server#30
 - [ ] sopra-fs23-group-34/server#32
-- [ ] sopra-fs23-group-34/server#7
-- [ ] sopra-fs23-group-34/server#26
-- [ ] sopra-fs23-group-34/server#49
-- [ ] sopra-fs23-group-34/server#50
-- [ ] sopra-fs23-group-34/server#44
+- [ ] sopra-fs23-group-34/server#27
+
+
 
 ## Week 3: 07.04.2023 - 13.04.2023 (OPTIONAL)
 
@@ -103,7 +101,10 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 - [ ] sopra-fs23-group-34/server#44
 
 ### Maurice
-- [ ]
+- [ ] sopra-fs23-group-34/server#26
+- [ ] sopra-fs23-group-34/server#49
+- [ ] sopra-fs23-group-34/server#50
+- [ ] sopra-fs23-group-34/server#7
 
 ## Week 5: 21:04.2023 - 27.04.2023
 
@@ -114,7 +115,7 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 ### André
 
 ### Nataell
+- [ ] sopra-fs23-group-34/server#76
 - [ ] sopra-fs23-group-34/server#77
-- [ ] sopra-fs23-group-34/server#78
 
 ### Maurice
