@@ -28,7 +28,19 @@ public class Game {
         Scores scores = new Scores();
 
         // select random foods here, only name
-        foods = foodService.getRandomFoodsByCategory(foodCategory, roundLimit);
+        //foods = foodService.getRandomFoodsByCategory(foodCategory, roundLimit);
+        foods.add("Banana");
+        foods.add("Apple");
+        foods.add("Strawberries");
+        foods.add("Avocados");
+        foods.add("Onion");
+        foods.add("Potatoes");
+        foods.add("Spinach");
+        foods.add("Tomatoes");
+        foods.add("Rice");
+        foods.add("Eggs");
+
+
         for (int round=0; round < roundLimit; round ++){
             Round gameRound = new Round(notifier);
             Food food = gameRound.getRandomFood(foods.get(round));
