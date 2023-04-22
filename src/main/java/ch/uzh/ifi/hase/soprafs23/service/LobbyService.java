@@ -35,6 +35,7 @@ public class LobbyService {
         }
     }
 
+
     public String createLobby() {
         String gameCode = codeGenerator.nextCode();
         lobbyStorage.addLobby(gameCode, new Lobby(gameCode, simpMessagingTemplate, foodService));
@@ -91,7 +92,8 @@ public class LobbyService {
         lobby.checkIfGameStarted();
         new Thread(() -> {
             try {
-                lobby.playGame(config);
+                Scores scores = lobby.playGame(config);
+                userService.updateScores(scores);
             } catch (InterruptedException | IOException e) {
                 throw new RuntimeException(e);
             }

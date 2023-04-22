@@ -107,10 +107,16 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
     }
     //get all Users rank
+
     @GetMapping("/users/ranking")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<UserGetRankDTO> getGlobalRanking() {
+    public List<Map<String,Integer>> getGlobalRanking(@RequestHeader("token") String token,@RequestHeader("id") Long id) {
+        List<Map<String,Integer>> scores = userService.getTotalScores(id, token);
+       return scores;
+    }
+
+      /*
         // fetch all users in the internal representation
         List<User> users = userService.getUsers();
         List<UserGetRankDTO> userGetRankDTOs = new ArrayList<UserGetRankDTO>();
@@ -128,7 +134,6 @@ public class UserController {
         });
         return userGetRankDTOs;
     }
-    /*
     @GetMapping("users/food/{requestedFood}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody

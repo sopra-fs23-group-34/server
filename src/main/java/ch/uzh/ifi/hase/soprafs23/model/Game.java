@@ -24,7 +24,7 @@ public class Game {
         this.foodService = foodService;
     }
 
-    public void run() throws InterruptedException, IOException {
+    public Scores run() throws InterruptedException, IOException {
         Scores scores = new Scores();
         foods = foodService.getRandomFoods(roundLimit,foodCategory);
         for (int round=0; round < roundLimit; round ++){
@@ -46,8 +46,11 @@ public class Game {
         }
         notifier.publishFinalScoreStart();
         notifier.publishFinalScores(scores.getPlacement());
-
         //notification, also when the food is selected
+
+        return scores;
     }
+
+
 
 }

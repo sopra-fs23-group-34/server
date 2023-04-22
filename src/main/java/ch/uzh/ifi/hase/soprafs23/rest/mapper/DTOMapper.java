@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.rest.mapper;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
+import ch.uzh.ifi.hase.soprafs23.entity.PlayerScore;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.model.GameConfig;
 import ch.uzh.ifi.hase.soprafs23.model.Player;
@@ -50,6 +51,10 @@ public interface DTOMapper {
   @Mapping(source = "password", target = "password")
   //@Mapping(source = "oldPassword", target = "oldPassword")
   User convertUserPutUpdateDTOtoEntity(UserPutDTO userPutDTO);
+
+    @Mapping(source = "score", target = "score")
+    @Mapping(source = "player_id", target = "user_id")
+PlayerScoreGetDTO convertPlayerScoreToPlayerScoreGetDTO(PlayerScore playerScore);
 
   /*
   @Mapping(source = "name", target = "name")

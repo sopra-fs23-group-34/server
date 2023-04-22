@@ -1,7 +1,12 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs23.entity.PlayerScore;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.messages.RoundScoreMessage;
+import ch.uzh.ifi.hase.soprafs23.model.Player;
+import ch.uzh.ifi.hase.soprafs23.model.Scores;
+import ch.uzh.ifi.hase.soprafs23.repository.PlayerScoreRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +34,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final PlayerScoreRepository playerScoreRepository;
+
     @Autowired
-    public UserService(@Qualifier("userRepository") UserRepository userRepository) {
+    public UserService(@Qualifier("userRepository") UserRepository userRepository, @Qualifier("playerScores") PlayerScoreRepository playerScoreRepository) {
         this.userRepository = userRepository;
+        this.playerScoreRepository = playerScoreRepository;
     }
 
     public List<User> getUsers() {
@@ -146,6 +154,25 @@ public class UserService {
 
         return user;
     }
+
+
+    public void updateScores(Scores scores){
+        for (String userName : scores.getPlacement().keySet()){
+            User user = userRepository.findByUsername(userName);
+            Long user_id = user.getId();
+            PlayerScore playerScore = new PlayerScore();
+            playerScore.setPlayer_id(user_id);
+            playerScore.setScore(scores.getPlacement().get(userName));
+            playerScoreRepository.save(playerScore);
+            userRepository.flush();
+        }
+    }
+
+    public List<Map<String, Integer>> getTotalScores(Long id, String token){
+        authenticateUser(token,id);
+        return playerScoreRepository.getGlobalLeaderboard();
+    }
+
 
     public User getUserWithId(Long id) {
         return getUserById(id);
