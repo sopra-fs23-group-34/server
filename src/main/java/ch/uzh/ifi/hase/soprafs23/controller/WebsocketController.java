@@ -29,7 +29,7 @@ public class WebsocketController {
         this.lobbyService = lobbyService;
     }
 
-    /*
+/*
     @MessageMapping("/join/{gameCode}/{player_id}")
     @SendTo(WebsocketConfig.lobbysDestination)
     public PlayerListMessage joinLobby(PlayerMessage msg, @DestinationVariable String gameCode,
@@ -44,9 +44,9 @@ public class WebsocketController {
         PlayerListMessage playerListMessage = new PlayerListMessage("players", playersGetDTOs );
         return playerListMessage;
     }
-    */
 
-    /*
+
+
     @MessageMapping("/startGame/{gameCode}")
     @SendTo(WebsocketConfig.lobbysDestination)
     public StringMessage hostStartsGame(PlayerMessage plm,@DestinationVariable String gameCode) throws Exception {
@@ -54,8 +54,8 @@ public class WebsocketController {
         lobbyService.startGame(gameCode,1L,"asdf", new GameConfig(plm.getRoundLimit(), plm.getFoodCategory()));
         return new StringMessage("start", "TheGameIsStarting :) ");
     }
-    */
 
+*/
 
     @MessageMapping("/update/{gameCode}")
     @SendTo(WebsocketConfig.lobbysDestination)
