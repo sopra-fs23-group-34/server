@@ -1,6 +1,8 @@
 package ch.uzh.ifi.hase.soprafs23.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.model.GameConfig;
 import ch.uzh.ifi.hase.soprafs23.model.Player;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 
@@ -63,5 +65,29 @@ public interface DTOMapper {
   @Mapping(source = "username", target = "username")
   //@Mapping(source = "totalScore", target = "totalScore")
   UserGetRankDTO convertUserToUserGetRankDTO(User user);
+
+
+    @Mapping(source = "foodCategory", target = "foodCategory", qualifiedByName = "mapFoodCategory")
+    @Mapping(source = "roundLimit", target = "roundLimit")
+    GameConfig convertUserInputDTOToGameConfig(UserInputDTO userInputDto);
+
+    @Named("mapFoodCategory")
+    default FoodCategory mapFoodCategory(String foodCategoryString) {
+        switch (foodCategoryString) {
+            case "Drinks":
+                return FoodCategory.ALL;
+            case "Fruits":
+                return FoodCategory.FRUITS;
+            case "Vegetables":
+                return FoodCategory.VEGETABLES;
+            case "Meat":
+                return FoodCategory.MEAT;
+            case "Snacks":
+                return FoodCategory.SNACKS;
+            default:
+                throw new IllegalArgumentException("Invalid food category");
+        }
+    }
+
 }
 

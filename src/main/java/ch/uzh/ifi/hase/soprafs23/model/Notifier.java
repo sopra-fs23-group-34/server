@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface Notifier {
 
-    void publishRoundScores(Long user_id,Map<String, ArrayList<Map<String, Double>>> roundScores);
+    void publishRoundScores(Map<String, ArrayList<Map<String, Double>>> roundScores);
 
     void publishGameScores(Map<String, Integer> placement);
     void publishFinalScores(Map<String, Integer> placement);

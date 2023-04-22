@@ -35,6 +35,10 @@ public class FoodService {
         this.foodsRepository = foodsRepository;
     }
 
+    public List<String> getRandomFoods(int num, FoodCategory foodCategory) {
+        return foodsRepository.findsRandomFoods(foodCategory.getValue(), num);
+    }
+
     public List<Foods> getFoods() {
         return this.foodsRepository.findAll();
     }

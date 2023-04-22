@@ -19,40 +19,25 @@ public class Game {
     public Game(Map<Long, Player> players, GameConfig config, Notifier notifier, FoodService foodService){
         this.players = players;
         this.notifier = notifier;
-        this.roundLimit = config.roundLimit();
-        this.foodCategory = config.foodCategory();
+        this.roundLimit = config.getRoundLimit();
+        this.foodCategory = config.getFoodCategory();
         this.foodService = foodService;
     }
 
     public void run() throws InterruptedException, IOException {
         Scores scores = new Scores();
-
-        // select random foods here, only name
-        //foods = foodService.getRandomFoodsByCategory(foodCategory, roundLimit);
-        foods.add("Banana");
-        foods.add("Apple");
-        foods.add("Strawberries");
-        foods.add("Avocados");
-        foods.add("Onion");
-        foods.add("Potatoes");
-        foods.add("Spinach");
-        foods.add("Tomatoes");
-        foods.add("Rice");
-        foods.add("Eggs");
-
-
+        foods = foodService.getRandomFoods(roundLimit,foodCategory);
         for (int round=0; round < roundLimit; round ++){
             Round gameRound = new Round(notifier);
             Food food = gameRound.getRandomFood(foods.get(round));
             gameRound.run(food);
             for (Player player: players.values()){
-                Map<String, ArrayList<Map<String, Double>>> roundScores =
-                        scores.computeRoundScores(player.getGuesses(),
+                        scores.updateRoundScore(player.getGuesses(),
                         player.getUsername(),
                         food);
-                notifier.publishRoundScores(player.getPlayer_id(), roundScores);
-                notifier.publishGameScores(scores.getPlacement());
             }
+            notifier.publishRoundScores(scores.getRoundScore());
+            notifier.publishGameScores(scores.getPlacement());
 
             Thread.sleep(10000);
             // todo player gets guesses
