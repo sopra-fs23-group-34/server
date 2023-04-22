@@ -134,6 +134,8 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 --> not two meaningful taks (completed more tasks in the past)
 - [ ] sopra-fs23-group-34/server#76
 - [ ] sopra-fs23-group-34/server#77
+--> second meaningful task:
+- [ ] sopra-fs23-group-34/server#83
 
 ### Maurice
 - [ ] sopra-fs23-group-34/server#80
