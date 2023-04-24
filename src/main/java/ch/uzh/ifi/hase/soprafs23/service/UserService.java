@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;
 import ch.uzh.ifi.hase.soprafs23.entity.PlayerScore;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.messages.RoundScoreMessage;
@@ -92,6 +93,7 @@ public class UserService {
 
     }
 
+
     public User getUserById(Long id) {
         Optional<User> OptionalUser = userRepository.findById(id);
         User user = OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -168,9 +170,14 @@ public class UserService {
         }
     }
 
-    public List<Map<String, Integer>> getTotalScores(Long id, String token){
+    public List<LeaderBoard> getTotalScores(Long id, String token){
         authenticateUser(token,id);
-        return playerScoreRepository.getGlobalLeaderboard();
+        List<LeaderBoard> playerScores = playerScoreRepository.getGlobalLeaderboard();
+        for (LeaderBoard playerScore : playerScores){
+            Long player_id = playerScore.getUser_id();
+            playerScore.setUsername(getUserById(player_id).getUsername());
+        }
+        return playerScores;
     }
 
 

@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;
 import ch.uzh.ifi.hase.soprafs23.model.Food;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
@@ -111,8 +112,8 @@ public class UserController {
     @GetMapping("/users/ranking")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<Map<String,Integer>> getGlobalRanking(@RequestHeader("token") String token,@RequestHeader("id") Long id) {
-        List<Map<String,Integer>> scores = userService.getTotalScores(id, token);
+    public List<LeaderBoard> getGlobalRanking(@RequestHeader("token") String token, @RequestHeader("id") Long id) {
+        List<LeaderBoard> scores = userService.getTotalScores(id, token);
        return scores;
     }
 
