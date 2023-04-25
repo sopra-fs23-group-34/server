@@ -10,9 +10,9 @@ public class RoundScoreMessage implements Message{
     @Getter
     private String topic;
 
-    private Map<String, ArrayList<Map<String, Double>>> roundScores;
+    private Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScores;
 
-    public Map<String, ArrayList<Map<String, Double>>> getContent(){
+    public Map<String,Map<String,ArrayList<Map<String,Double>>>> getContent(){
 
         return roundScores;
     }

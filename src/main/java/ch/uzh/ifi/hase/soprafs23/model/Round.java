@@ -12,12 +12,14 @@ public class Round {
     private FoodService foodService;
 
 
-    public Round( Notifier notifier){
+    public Round( Notifier notifier, FoodService foodService){
         this.notifier = notifier;
+        this.foodService = foodService;
     }
 
     public Food getRandomFood(String name) throws IOException {
         // api request
+
         Food food = foodService.getFood(name);
         //Map<String, Double> nutritionValues = new HashMap<String, Double>();
         //nutritionValues.put("carbs", 100.0);

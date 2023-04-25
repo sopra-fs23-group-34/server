@@ -28,7 +28,8 @@ public class Game {
         Scores scores = new Scores();
         foods = foodService.getRandomFoods(roundLimit,foodCategory);
         for (int round=0; round < roundLimit; round ++){
-            Round gameRound = new Round(notifier);
+            Round gameRound = new Round(notifier, foodService);
+
             Food food = gameRound.getRandomFood(foods.get(round));
             gameRound.run(food);
             for (Player player: players.values()){

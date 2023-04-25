@@ -15,7 +15,7 @@ public class WebsocketNotifier implements Notifier {
 
     private final String gameCode;
 
-    public void publishRoundScores( Map<String, ArrayList<Map<String, Double>>> roundScores){
+    public void publishRoundScores( Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScores){
         RoundScoreMessage roundScoreMessage =  new RoundScoreMessage("RoundScore", roundScores );
         simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies + gameCode, roundScoreMessage);
     }
