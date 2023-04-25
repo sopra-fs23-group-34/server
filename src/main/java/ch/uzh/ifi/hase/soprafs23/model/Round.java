@@ -17,7 +17,7 @@ public class Round {
         this.foodService = foodService;
     }
 
-    public Food getRandomFood(String name) throws IOException {
+    public Food getFood(String name) throws IOException {
         // api request
 
         Food food = foodService.getFood(name);
