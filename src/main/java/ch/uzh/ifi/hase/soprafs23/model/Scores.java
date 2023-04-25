@@ -21,7 +21,6 @@ public class Scores {
     }*/
     public void updateRoundScore(Map<String,Double> playerGuesses, String username, Food food){
         int player_points = 0;
-        // todo handle what to do if player did not guess. Easiest way just give a high amount of points
         for ( String playerGuessFoodKey : playerGuesses.keySet()){
             double absoluteDeviation = Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
             player_points += max(100-(absoluteDeviation*absoluteDeviation),0);
