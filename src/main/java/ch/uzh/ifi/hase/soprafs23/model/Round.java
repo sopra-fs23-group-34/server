@@ -18,7 +18,6 @@ public class Round {
     }
 
     public Food getFood(String name) throws IOException {
-        // api request
         Food food = foodService.getFood(name);
         //Map<String, Double> nutritionValues = new HashMap<String, Double>();
         //nutritionValues.put("carbs", 100.0);
