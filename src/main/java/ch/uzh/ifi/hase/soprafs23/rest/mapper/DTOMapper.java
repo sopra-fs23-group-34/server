@@ -79,7 +79,7 @@ PlayerScoreGetDTO convertPlayerScoreToPlayerScoreGetDTO(PlayerScore playerScore)
     @Named("mapFoodCategory")
     default FoodCategory mapFoodCategory(String foodCategoryString) {
         switch (foodCategoryString) {
-            case "Drinks":
+            case "All":
                 return FoodCategory.ALL;
             case "Fruits":
                 return FoodCategory.FRUITS;
