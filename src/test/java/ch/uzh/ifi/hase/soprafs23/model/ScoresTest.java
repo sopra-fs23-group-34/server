@@ -59,11 +59,11 @@ public class ScoresTest {
         playerGuesses.put("sugar",5.0);
 
         Map<String, Double> playerGuesses1 = new HashMap<>();
-        playerGuesses1.put("calories", 100.0);
+        playerGuesses1.put("calories", 111.0);
         playerGuesses1.put("fat", 11.0);
-        playerGuesses1.put("protein", 10.0);
-        playerGuesses1.put("carbs", 30.0);
-        playerGuesses1.put("sugar",5.0);
+        playerGuesses1.put("protein", 20.0);
+        playerGuesses1.put("carbs", 20.0);
+        playerGuesses1.put("sugar",50.0);
 
         Map<String, Double> actualValues = new HashMap<>();
         actualValues.put("calories", 100.0);
