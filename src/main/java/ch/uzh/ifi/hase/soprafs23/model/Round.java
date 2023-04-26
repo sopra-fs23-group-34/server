@@ -20,7 +20,7 @@ public class Round {
     public void run(Food food) throws InterruptedException {
         notifier.publishRoundStart();
         notifier.publishFood(food);
-        for (int tick = 10; tick >= 0; tick --){
+        for (int tick = 20; tick >= 0; tick --){
             notifier.publishTimer(tick);
             Thread.sleep(1000);
         }

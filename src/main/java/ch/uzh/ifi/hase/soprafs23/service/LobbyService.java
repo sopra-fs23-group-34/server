@@ -89,6 +89,7 @@ public class LobbyService {
                 Scores scores = lobby.playGame(config);
                 userService.updateScores(scores);
             } catch (InterruptedException | IOException e) {
+                Thread.currentThread().interrupt();
                 throw new RuntimeException(e);
             }
             lobbyStorage.removeLobby(gameCode);
