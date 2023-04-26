@@ -61,17 +61,23 @@ public class FoodService {
         List<Map<String, Object>> foods = (List<Map<String, Object>>) map.get("foods");
         Map<String, Object> food = foods.get(0);
         Map<String, String> photo = (Map<String, String>) food.get("photo");
+        Number servingWeight = (Number) food.get("serving_weight_grams");
         Number calories = (Number) food.get("nf_calories");
         Number fat = (Number) food.get("nf_total_fat");
         Number protein = (Number) food.get("nf_protein");
         Number carbs = (Number) food.get("nf_total_carbohydrate");
+        double servingWeithDouble = servingWeight.doubleValue();
+        double caloriesDouble = calories.doubleValue();
+        double fatDouble = fat.doubleValue();
+        double proteinDouble = protein.doubleValue();
+        double carbsDouble = carbs.doubleValue();
         String name = (String) food.get("food_name");
         String image_link = photo.get("highres");
         Map<String, Double> nutritional_values = new HashMap<>();
-        nutritional_values.put("calories", calories.doubleValue());
-        nutritional_values.put("fat", fat.doubleValue());
-        nutritional_values.put("protein", protein.doubleValue());
-        nutritional_values.put("carbs", carbs.doubleValue());
+        nutritional_values.put("calories", caloriesDouble/servingWeithDouble * 100);
+        nutritional_values.put("fat", fatDouble / servingWeithDouble * 100);
+        nutritional_values.put("protein", proteinDouble / servingWeithDouble * 100);
+        nutritional_values.put("carbs", carbsDouble / servingWeithDouble * 100);
         return new Food(name, nutritional_values, image_link);
         }
 
