@@ -8,9 +8,9 @@ import java.util.Random;
 
 @Component
 public class CodeGenerator {
-    private static final String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String digits = "0123456789";
-    private static final String alphanum = upper + digits;
+    private static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String DIGITS = "0123456789";
+    private static final String ALPHANUM = UPPER + DIGITS;
     private final Random random;
     private final char[] symbols;
     private final char[] buf;
@@ -21,7 +21,7 @@ public class CodeGenerator {
         this.buf = new char[length];
     }
     public CodeGenerator() {
-        this(6, new SecureRandom(), alphanum);
+        this(6, new SecureRandom(), ALPHANUM);
     }
 
     public String nextCode() {
