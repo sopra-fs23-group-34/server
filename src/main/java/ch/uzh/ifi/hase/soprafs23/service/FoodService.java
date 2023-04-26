@@ -27,7 +27,10 @@ public class FoodService {
     }
 
     public List<String> getRandomFoods(int num, FoodCategory foodCategory) {
-        return foodsRepository.findsRandomFoods(foodCategory.getValue(), num);
+        if (foodCategory == FoodCategory.ALL) {
+            return foodsRepository.findsRandomFoods(num);
+        }
+        return foodsRepository.findsSpecificFoods(foodCategory.getValue(), num);
     }
 
     public Food getFood(String food_name) throws IOException {
