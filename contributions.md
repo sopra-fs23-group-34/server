@@ -146,7 +146,8 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 ## Week 6: 28.04.2023 - 04.05.2023
 
 ### Nico
-
+- [ ] sopra-fs23-group-34/client#36
+- [ ] 
 ### Elias
 
 ### André
