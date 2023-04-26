@@ -65,7 +65,6 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Wrong Password");
         }
         userDatabase.setStatus(UserStatus.ONLINE);
-        System.out.println(userDatabase.getStatus().toString());
         userRepository.save(userDatabase);
         userRepository.flush();
         log.debug("Logged-in User: {}", loginUser);
