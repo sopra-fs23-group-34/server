@@ -39,11 +39,11 @@ public class ScoresTest {
 
         //Check, that everything is in the round Score
         Assertions.assertEquals(1, roundScore.size());
-        Assertions.assertTrue(roundScore.containsKey("calories"));
-        Assertions.assertTrue(roundScore.containsKey("fat"));
-        Assertions.assertTrue(roundScore.containsKey("protein"));
-        Assertions.assertTrue(roundScore.containsKey("carbs"));
-        Assertions.assertTrue(roundScore.containsKey("sugar"));
+        Assertions.assertTrue(roundScore.get("player1").containsKey("calories"));
+        Assertions.assertTrue(roundScore.get("player1").containsKey("fat"));
+        Assertions.assertTrue(roundScore.get("player1").containsKey("protein"));
+        Assertions.assertTrue(roundScore.get("player1").containsKey("carbs"));
+        Assertions.assertTrue(roundScore.get("player1").containsKey("sugar"));
 
     }
     @Test
@@ -59,11 +59,11 @@ public class ScoresTest {
         playerGuesses.put("sugar",5.0);
 
         Map<String, Double> playerGuesses1 = new HashMap<>();
-        playerGuesses1.put("calories", 100.0);
+        playerGuesses1.put("calories", 111.0);
         playerGuesses1.put("fat", 11.0);
-        playerGuesses1.put("protein", 10.0);
-        playerGuesses1.put("carbs", 30.0);
-        playerGuesses1.put("sugar",5.0);
+        playerGuesses1.put("protein", 20.0);
+        playerGuesses1.put("carbs", 20.0);
+        playerGuesses1.put("sugar",50.0);
 
         Map<String, Double> actualValues = new HashMap<>();
         actualValues.put("calories", 100.0);
@@ -79,13 +79,19 @@ public class ScoresTest {
         scores.updateRoundScore(playerGuesses1, username1, food);
         Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScore = scores.getRoundScore();
 
-        //Check, that everything is in the round Score
+        //Check, that everything is in the round Score (player1)
         Assertions.assertEquals(2, roundScore.size());
-        Assertions.assertTrue(roundScore.containsKey("calories"));
-        Assertions.assertTrue(roundScore.containsKey("fat"));
-        Assertions.assertTrue(roundScore.containsKey("protein"));
-        Assertions.assertTrue(roundScore.containsKey("carbs"));
-        Assertions.assertTrue(roundScore.containsKey("sugar"));
+        Assertions.assertTrue(roundScore.get("player1").containsKey("calories"));
+        Assertions.assertTrue(roundScore.get("player1").containsKey("fat"));
+        Assertions.assertTrue(roundScore.get("player1").containsKey("protein"));
+        Assertions.assertTrue(roundScore.get("player1").containsKey("carbs"));
+        Assertions.assertTrue(roundScore.get("player1").containsKey("sugar"));
+        //player2
+        Assertions.assertTrue(roundScore.get("player2").containsKey("calories"));
+        Assertions.assertTrue(roundScore.get("player2").containsKey("fat"));
+        Assertions.assertTrue(roundScore.get("player2").containsKey("protein"));
+        Assertions.assertTrue(roundScore.get("player2").containsKey("carbs"));
+        Assertions.assertTrue(roundScore.get("player2").containsKey("sugar"));
         System.out.println(roundScore);
     }
     /*
