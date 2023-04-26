@@ -50,10 +50,7 @@ public class LobbyService {
         checkIfLobbyExists(gameCode);
         LobbyPlayer lobbyPlayer = userService.getUserById(user_id);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
-        boolean isHost = false;
-        if (lobby.getPlayers().isEmpty()) {
-            isHost = true;
-        }
+        boolean isHost = lobby.getPlayers().isEmpty();
         Player player = new Player(lobbyPlayer.getUsername(), lobbyPlayer.getId(), isHost);
         lobby.addPlayer(player);
         return isHost;

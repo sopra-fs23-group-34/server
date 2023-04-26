@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 
-
 import lombok.Data;
 import lombok.Getter;
 

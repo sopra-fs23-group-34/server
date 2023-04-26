@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs23.model;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.Map;
 
 public class Game {
     private final Map<Long, Player> players;
-    private FoodService foodService;
+    private final FoodService foodService;
     private final int roundLimit;
     private final FoodCategory foodCategory;
     private final Notifier notifier;

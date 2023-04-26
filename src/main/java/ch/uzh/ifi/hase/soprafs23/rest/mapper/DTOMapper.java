@@ -56,17 +56,9 @@ public interface DTOMapper {
     @Mapping(source = "player_id", target = "user_id")
 PlayerScoreGetDTO convertPlayerScoreToPlayerScoreGetDTO(PlayerScore playerScore);
 
-  /*
-  @Mapping(source = "name", target = "name")
-  @Mapping(source = "carbs", target = "carbs")
-  @Mapping(source = "protein", target = "protein")
-  @Mapping(source = "fat", target = "fat")
-  @Mapping(source = "image", target = "image")
-  FoodGetDTO convertEntityToFoodGetDTO(Food food);
-*/
-
   @Mapping(source = "username", target = "username")
   PlayerGetDTO convertPlayerToPlayerGetDTO(Player player);
+
   @Mapping(source = "username", target = "username")
   //@Mapping(source = "totalScore", target = "totalScore")
   UserGetRankDTO convertUserToUserGetRankDTO(User user);

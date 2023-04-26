@@ -4,7 +4,6 @@ import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,12 +14,12 @@ public class Lobby {
     @Getter
     private boolean gameStarted;
 
-    private Notifier notifier;
+    private final Notifier notifier;
 
-    private FoodService foodService;
+    private final FoodService foodService;
 
     @Getter
-    private Map<Long, Player> players;
+    private final Map<Long, Player> players;
 
     public Lobby(String gameCode, SimpMessagingTemplate simpMessagingTemplate, FoodService foodService) {
         this.notifier = new WebsocketNotifier(simpMessagingTemplate, gameCode);
@@ -29,13 +28,13 @@ public class Lobby {
     }
 
     public void checkIfGameStarted() {
-        if (gameStarted == true) {
+        if (gameStarted) {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
         }
     }
 
     public void addPlayer(Player player) {
-        if (gameStarted == true) {
+        if (gameStarted) {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
         } else {
             players.put(player.getPlayer_id(), player);
