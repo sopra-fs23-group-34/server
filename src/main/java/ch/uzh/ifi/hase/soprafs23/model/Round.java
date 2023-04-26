@@ -1,10 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.model;
-import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
-
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Round {
 
@@ -18,12 +14,7 @@ public class Round {
     }
 
     public Food getFood(String name) throws IOException {
-        // api request
-
         Food food = foodService.getFood(name);
-        //Map<String, Double> nutritionValues = new HashMap<String, Double>();
-        //nutritionValues.put("carbs", 100.0);
-        //Food food = new Food(foodCategory.toString(), nutritionValues,"image");
         return food;
     }
 

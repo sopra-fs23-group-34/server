@@ -1,5 +1,4 @@
 package ch.uzh.ifi.hase.soprafs23.repository;
-
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.entity.Foods;
 import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;

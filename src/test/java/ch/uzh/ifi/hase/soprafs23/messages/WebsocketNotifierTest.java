@@ -37,7 +37,7 @@ public class WebsocketNotifierTest {
             myNotifier.publishFood(food);
 
             // Verify that the SimpMessagingTemplate's convertAndSend method was called
-            //verify(messagingTemplate).convertAndSend(WebsocketConfig.lobbies + gameCode, food);
+            //verify(messagingTemplate).convertAndSend(WebsocketConfig.LOBBIES + gameCode, food);
 
     }*/
 

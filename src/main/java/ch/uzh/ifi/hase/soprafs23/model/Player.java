@@ -1,9 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.model;
-
-import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.Map;
 
 @Getter

@@ -38,16 +38,10 @@ public class Game {
             }
             notifier.publishRoundScores(scores.getRoundScore());
             notifier.publishGameScores(scores.getPlacement());
-
             Thread.sleep(10000);
-            // todo player gets guesses
-            // scores get players as input and food -> computes scores
-            // scores return round scores and final scores
         }
         notifier.publishFinalScoreStart();
         notifier.publishFinalScores(scores.getPlacement());
-        //notification, also when the food is selected
-
         return scores;
     }
 

@@ -10,17 +10,11 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    public final static String applicationDestination = "/app";
-    public final static String simpleBrokerDestination = "/topic";
-    public final static String lobbies = simpleBrokerDestination + "/lobbies/";
-    public final static String lobbysDestination = lobbies + "{gameCode}";
-    public final static String errorDestination = simpleBrokerDestination + "/error/"  ;
-
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker(simpleBrokerDestination);
-        config.setApplicationDestinationPrefixes(applicationDestination);
+        config.enableSimpleBroker(SIMPLEBROKERDESTINATION);
+        config.setApplicationDestinationPrefixes(APPLICATIONDESTINATION);
     }
 
     @Override
@@ -28,4 +22,9 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
     }
 
+    public final static String APPLICATIONDESTINATION = "/app";
+    public final static String SIMPLEBROKERDESTINATION = "/topic";
+    public final static String LOBBIES = SIMPLEBROKERDESTINATION + "/lobbies/";
+    public final static String LOBBYSDESTINATION = LOBBIES + "{gameCode}";
+    public final static String ERRORDESTINATION = SIMPLEBROKERDESTINATION + "/error/"  ;
 }

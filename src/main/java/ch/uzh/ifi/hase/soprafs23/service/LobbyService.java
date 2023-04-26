@@ -1,12 +1,10 @@
 package ch.uzh.ifi.hase.soprafs23.service;
-
 import ch.uzh.ifi.hase.soprafs23.config.WebsocketConfig;
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 import ch.uzh.ifi.hase.soprafs23.messages.StringMessage;
 import ch.uzh.ifi.hase.soprafs23.model.*;
 import ch.uzh.ifi.hase.soprafs23.storage.LobbyStorage;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -44,7 +42,7 @@ public class LobbyService {
 
     public List<Player> updatePlayerList(String gameCode) {
         Lobby lobby = lobbyStorage.getLobby(gameCode);
-        List<Player> lobbyPlayers = new ArrayList(lobby.getPlayers().values());
+        List<Player> lobbyPlayers = new ArrayList<>(lobby.getPlayers().values());
         return lobbyPlayers;
     }
 
@@ -66,11 +64,11 @@ public class LobbyService {
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         if (lobby.getPlayers().get(user_id).isHost()){
             StringMessage stringMessage = new StringMessage("error", "host_left");
-            simpMessagingTemplate.convertAndSend(WebsocketConfig.lobbies + gameCode, stringMessage);
+            simpMessagingTemplate.convertAndSend(WebsocketConfig.LOBBIES + gameCode, stringMessage);
         }
         lobby.removePlayer(user_id);
         System.out.println("Successfully left Lobby");
-        List<Player> lobbyPlayers = new ArrayList(lobby.getPlayers().values());
+        List<Player> lobbyPlayers = new ArrayList<>(lobby.getPlayers().values());
         return lobbyPlayers;
     }
 
@@ -85,7 +83,7 @@ public class LobbyService {
         }
     }
 
-    public void startGame(String gameCode, Long user_id, String token, GameConfig config) throws InterruptedException {
+    public void startGame(String gameCode, Long user_id, String token, GameConfig config) throws RuntimeException {
         userService.authenticateUser(token, user_id);
         checkIfHost(gameCode, user_id);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
