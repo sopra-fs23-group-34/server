@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @AllArgsConstructor
 @Service
@@ -79,7 +80,7 @@ public class LobbyService {
         }
     }
 
-    public void startGame(String gameCode, Long user_id, String token, GameConfig config) throws RuntimeException {
+    public void startGame(String gameCode, Long user_id, String token, GameConfig config) {
         userService.authenticateUser(token, user_id);
         checkIfHost(gameCode, user_id);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
@@ -89,8 +90,8 @@ public class LobbyService {
                 Scores scores = lobby.playGame(config);
                 userService.updateScores(scores);
             } catch (InterruptedException | IOException e) {
+                System.out.println(e);
                 Thread.currentThread().interrupt();
-                throw new RuntimeException(e);
             }
             lobbyStorage.removeLobby(gameCode);
         }).start();

@@ -137,7 +137,6 @@ public class UserService {
         user.setPassword(userWithUpdateInformation.getPassword());
         userRepository.save(user);
         userRepository.flush();
-
         return user;
     }
 
