@@ -1,12 +1,13 @@
 package ch.uzh.ifi.hase.soprafs23.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.PlayerScore;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.PlayerScoreGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
+import ch.uzh.ifi.hase.soprafs23.model.Food;
+import ch.uzh.ifi.hase.soprafs23.model.GameConfig;
+import ch.uzh.ifi.hase.soprafs23.model.Player;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -127,4 +128,57 @@ public class DTOMapperTest {
         assertNull(playerScoreGetDTO);
     }
 
+    @Test
+    public void testConvertPlayerToPlayerGetDTO() {
+
+        Player player = new Player("name",2L,false);
+
+        PlayerGetDTO playerGetDTO = DTOMapper.INSTANCE.convertPlayerToPlayerGetDTO(player);
+
+        assertNotNull(playerGetDTO);
+        assertEquals(player.getUsername(), playerGetDTO.getUsername());
+    }
+
+    @Test
+    public void testConvertPlayerToPlayerGetDTO_NullInput() {
+
+        Player player = null;
+
+        PlayerGetDTO playerGetDTO = DTOMapper.INSTANCE.convertPlayerToPlayerGetDTO(player);
+
+        assertNull(playerGetDTO);
+    }
+    @Test
+    public void testConvertUserToUserGetRankDTO() {
+
+        User user = new User();
+        user.setUsername("john_doe");
+
+        UserGetRankDTO userGetRankDTO = DTOMapper.INSTANCE.convertUserToUserGetRankDTO(user);
+
+        assertNotNull(userGetRankDTO);
+        assertEquals(user.getUsername(), userGetRankDTO.getUsername());
+    }
+
+    @Test
+    public void testConvertUserToUserGetRankDTO_NullInput() {
+
+        User user = null;
+
+        UserGetRankDTO userGetRankDTO = DTOMapper.INSTANCE.convertUserToUserGetRankDTO(user);
+
+        assertNull(userGetRankDTO);
+    }
+
+
+    @Test
+    public void testConvertUserInputDTOToGameConfig_NullInput() {
+
+
+        UserInputDTO userInputDto = null;
+
+        GameConfig gameConfig = DTOMapper.INSTANCE.convertUserInputDTOToGameConfig(userInputDto);
+
+        assertNull(gameConfig);
+    }
 }
