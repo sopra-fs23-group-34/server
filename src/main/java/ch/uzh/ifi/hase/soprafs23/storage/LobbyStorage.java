@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Component
 public class LobbyStorage implements Serializable {
-    private final Map<String, Lobby> lobbies;
+    private transient Map<String, Lobby> lobbies;
     private static LobbyStorage lobbyStorage;
 
     private LobbyStorage() {
