@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.constant;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FoodMap {

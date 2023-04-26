@@ -4,8 +4,6 @@ import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;
 import ch.uzh.ifi.hase.soprafs23.entity.PlayerScore;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.messages.RoundScoreMessage;
-import ch.uzh.ifi.hase.soprafs23.model.Player;
 import ch.uzh.ifi.hase.soprafs23.model.Scores;
 import ch.uzh.ifi.hase.soprafs23.repository.PlayerScoreRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
@@ -68,8 +66,6 @@ public class UserService {
         }
         userDatabase.setStatus(UserStatus.ONLINE);
         System.out.println(userDatabase.getStatus().toString());
-        // saves the given entity but data is only persisted in the database once
-        // flush() is called
         userRepository.save(userDatabase);
         userRepository.flush();
         log.debug("Logged-in User: {}", loginUser);
@@ -80,16 +76,11 @@ public class UserService {
         authenticateUser(token, id);
         User loggedOutUser = getUserById(id);
         loggedOutUser.setStatus(UserStatus.OFFLINE);
-        // saves the given entity but data is only persisted in the database once
-        // flush() is called
         userRepository.save(loggedOutUser);
         userRepository.flush();
-
         log.debug("Logged out user: {}", loggedOutUser);
         return loggedOutUser;
-
     }
-
 
     public User getUserById(Long id) {
         Optional<User> OptionalUser = userRepository.findById(id);
@@ -111,17 +102,14 @@ public class UserService {
     }
 
     public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser) {
-
         User user = userRepository.findById(idCurrentUser);
         // make sure, that no information is null
         if (userWithUpdateInformation.getPassword() == null) {
             userWithUpdateInformation.setPassword(user.getPassword());
         }
-
         if (userWithUpdateInformation.getEmail() == null) {
             userWithUpdateInformation.setEmail(user.getEmail());
         }
-
         if (userWithUpdateInformation.getUsername() == null) {
             userWithUpdateInformation.setUsername(user.getUsername());
         }
@@ -175,11 +163,6 @@ public class UserService {
             playerScore.setUsername(getUserById(player_id).getUsername());
         }
         return playerScores;
-    }
-
-
-    public User getUserWithId(Long id) {
-        return getUserById(id);
     }
 
     /**

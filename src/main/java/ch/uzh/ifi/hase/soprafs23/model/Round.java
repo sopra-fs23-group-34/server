@@ -5,8 +5,7 @@ import java.io.IOException;
 public class Round {
 
     private final Notifier notifier;
-    private FoodService foodService;
-
+    private final FoodService foodService;
 
     public Round( Notifier notifier, FoodService foodService){
         this.notifier = notifier;

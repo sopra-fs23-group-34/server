@@ -5,8 +5,8 @@ import java.util.Map;
 import static java.lang.Math.max;
 
 public class Scores {
-    private Map<String,ArrayList<Map<String,Double>>> roundScore;
-    private Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScoresAllPlayer;
+    private final Map<String,ArrayList<Map<String,Double>>> roundScore;
+    private final Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScoresAllPlayer;
     private final Map<String, Integer> players_points;
 
     public Scores() {

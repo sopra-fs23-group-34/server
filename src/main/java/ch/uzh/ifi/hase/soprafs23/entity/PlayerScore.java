@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.entity;
 
-import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import lombok.Getter;
 import lombok.Setter;
 
