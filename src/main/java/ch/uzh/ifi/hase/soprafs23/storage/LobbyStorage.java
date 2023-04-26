@@ -10,27 +10,15 @@ import java.util.Map;
 @Component
 public class LobbyStorage implements Serializable {
     private transient Map<String, Lobby> lobbies;
-    private static LobbyStorage lobbyStorage;
-
     private LobbyStorage() {
         lobbies = new HashMap<>();
     }
-
-    public static LobbyStorage createLobbyStorage() {
-        if (lobbyStorage == null) {
-            lobbyStorage = new LobbyStorage();
-        }
-        return lobbyStorage;
-    }
-
     public Lobby getLobby(String lobbyCode) {
         return lobbies.get(lobbyCode);
     }
-
     public void addLobby(String gameCode, Lobby lobby) {
         lobbies.put(gameCode, lobby);
     }
-
     public void removeLobby(String gameCode) {
         lobbies.remove(gameCode);
     }
