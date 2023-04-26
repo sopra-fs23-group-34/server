@@ -41,7 +41,6 @@ public class Scores {
         players_points.put(username, players_points.get(username) + player_points);
         roundScoresAllPlayer.put(username,roundScore);
         //sortMapDescending();
-        System.out.println(roundScoresAllPlayer);
     }
 
     public Map<String,Map<String,ArrayList<Map<String,Double>>>> getRoundScore(){

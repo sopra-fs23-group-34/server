@@ -67,7 +67,6 @@ public class LobbyService {
             simpMessagingTemplate.convertAndSend(WebsocketConfig.LOBBIES + gameCode, stringMessage);
         }
         lobby.removePlayer(user_id);
-        System.out.println("Successfully left Lobby");
         List<Player> lobbyPlayers = new ArrayList<>(lobby.getPlayers().values());
         return lobbyPlayers;
     }
