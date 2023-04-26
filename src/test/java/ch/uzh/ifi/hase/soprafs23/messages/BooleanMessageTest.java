@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class BooleanMessageTest {
+
     @Test
     public void testGetContent() {
         BooleanMessage message = new BooleanMessage("test_topic", true);
