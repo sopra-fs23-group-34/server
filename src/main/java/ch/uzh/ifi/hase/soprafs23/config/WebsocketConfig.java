@@ -19,7 +19,7 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
+        registry.addEndpoint("/ws").setAllowedOriginPatterns("http://localhost:3000", "https://sopra-fs23-group-34-client.oa.r.appspot.com").withSockJS();
     }
 
     public final static String APPLICATIONDESTINATION = "/app";
