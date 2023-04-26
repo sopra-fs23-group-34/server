@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;
 import ch.uzh.ifi.hase.soprafs23.model.Food;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
@@ -107,10 +108,16 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
     }
     //get all Users rank
+
     @GetMapping("/users/ranking")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<UserGetRankDTO> getGlobalRanking() {
+    public List<LeaderBoard> getGlobalRanking(@RequestHeader("token") String token, @RequestHeader("id") Long id) {
+        List<LeaderBoard> scores = userService.getTotalScores(id, token);
+       return scores;
+    }
+
+      /*
         // fetch all users in the internal representation
         List<User> users = userService.getUsers();
         List<UserGetRankDTO> userGetRankDTOs = new ArrayList<UserGetRankDTO>();
@@ -128,7 +135,6 @@ public class UserController {
         });
         return userGetRankDTOs;
     }
-
     @GetMapping("users/food/{requestedFood}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -139,19 +145,19 @@ public class UserController {
         System.out.println("getBanana");
 
 
-        /*Food myBanana = new Food();
+        //Food myBanana = new Food();
 
         myBanana.setName("Banana");
         myBanana.setFat("0.3");
         myBanana.setProtein("1.1");
         myBanana.setCarbs("23");
-        myBanana.setPicture("Beautiful Banana");*/
+        myBanana.setPicture("Beautiful Banana");
 
         //return DTOMapper.INSTANCE.convertEntityToFoodGetDTO(food);
         return food;
     }
 
-
+     */
 
 
 

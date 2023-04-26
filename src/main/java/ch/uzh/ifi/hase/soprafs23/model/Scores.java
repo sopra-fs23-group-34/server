@@ -1,91 +1,56 @@
 package ch.uzh.ifi.hase.soprafs23.model;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import static java.lang.Math.max;
 
 public class Scores {
-
+    private Map<String,ArrayList<Map<String,Double>>> roundScore;
+    private Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScoresAllPlayer;
     private final Map<String, Integer> players_points;
-    private final Map<String, Map> playerRoundScores;
-    public Scores(Map<String, Map> playerRoundScores) {
-        this.playerRoundScores = playerRoundScores;
+
+    public Scores() {
         this.players_points = new HashMap<>();
+        this.roundScore = new HashMap<>();
+        this.roundScoresAllPlayer = new HashMap<>();
     }
-
-    public Map<String, Map> computeRoundScores(Map<String,Double> playerGuesses, String username, Food food){
-        //Map<String, ArrayList<Map<String,Double>>> roundScore = new HashMap<>();
-        // todo handle what to do if player did not guess. Easiest way just give a high amount of points
-        Map<String,Map> playerGuessedDetails = new HashMap<>(); //Map for all the different guessed objects
-        Map<String, Double> pointsTotal = new HashMap<>();
-        double player_points = 0;
-
-        System.out.println(playerGuesses.get("carbs"));
-
+    /*public void sortMapDescending(){
+        Stream<Map.Entry<K,V>> sorted = roundScoresAllPlayer.entrySet().stream().sorted(Map.Entry.comparingByValue());
+    }*/
+    public void updateRoundScore(Map<String,Double> playerGuesses, String username, Food food){
+        int player_points = 0;
         for ( String playerGuessFoodKey : playerGuesses.keySet()){
-            Map<String, Double> playerGuessedValues = new HashMap<>(); //Map for all the different guessed values
-            System.out.println("inloop");
-            double absoluteMalus = 0;
-            //playerGuessedDetails.put(playerGuessFoodKey,playerGuessedValues);
-
-            playerGuessedValues.put("guessed",playerGuesses.get(playerGuessFoodKey));
-
-            playerGuessedValues.put("realValue",food.getNutritionValues().get(playerGuessFoodKey));
-            /*ArrayList<Map<String,Double>> roundFoodScore = new ArrayList<>();
-            Map<String, Double> guessed_values = new HashMap<>();
-            Map<String, Integer> points = new HashMap<>();
-            Map<String,ArrayList> roundPoints= (Map<String, ArrayList>) new ArrayList<Map>();*/
-            //if a player did guess, then give him points
-            if (!playerGuesses.keySet().equals(null)){
-                absoluteMalus = Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
-                player_points += max(100-(absoluteMalus*absoluteMalus),0);
-            }
-            player_points += absoluteMalus;
-            /*
-            guessed_values.put("guessedValues", playerGuesses.get(playerGuessFoodKey));
-            points.put("pointsRound",player_points);
-            players_points.putIfAbsent(username, 0);
-            players_points.put(username, players_points.get(username) + player_points);*/
-            /*
-             ArrayList<Map<String,Double>> roundFoodScore = new ArrayList<>();
-             Map<String,Double> real_values = new HashMap<>();
+            double absoluteDeviation = Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
+            player_points += max(100-(absoluteDeviation*absoluteDeviation),0);
+            ArrayList<Map<String,Double>> roundFoodScore = new ArrayList<>();
+            Map<String,Double> real_values = new HashMap<>();
             real_values.put("actualValues", food.getNutritionValues().get(playerGuessFoodKey));
             Map<String,Double> guessed_values = new HashMap<>();
             guessed_values.put("guessedValues", playerGuesses.get(playerGuessFoodKey));
             Map<String,Double> deviation = new HashMap<>();
             deviation.put("deviations", absoluteDeviation);
+            Map<String,Double> points = new HashMap<>();
+            points.put("points", (double) player_points);
             roundFoodScore.add(real_values);
             roundFoodScore.add(guessed_values);
             roundFoodScore.add(deviation);
-            */
-            //roundScore.put(playerGuessFoodKey,roundFoodScore);
-            playerGuessedDetails.put(playerGuessFoodKey, playerGuessedValues);
+            roundFoodScore.add(points);
+            roundScore.put(playerGuessFoodKey,roundFoodScore);
         }
-        pointsTotal.put("pointsTotal",player_points);
-        playerGuessedDetails.put("points",pointsTotal);
-        playerRoundScores.put(username,playerGuessedDetails);
-        //playerGuessedDetails.put("points",playerGuessedValues);
-        //playerGuessedValues.put("pointsScored",player_points);
-        // update players_points
-        int currentScrore = 0;
-        if(players_points.get(username)!= null){
-            currentScrore = players_points.get(username);
-        }
-
-        currentScrore = currentScrore + (int)player_points;
-        players_points.put(username,currentScrore);
-        System.out.println(currentScrore);
-        System.out.println(playerRoundScores);
-        return playerRoundScores;
+        players_points.putIfAbsent(username, 0);
+        players_points.put(username, players_points.get(username) + player_points);
+        roundScoresAllPlayer.put(username,roundScore);
+        //sortMapDescending();
     }
+
+    public Map<String,Map<String,ArrayList<Map<String,Double>>>> getRoundScore(){
+        return roundScoresAllPlayer;
+    }
+
     public Map<String,Integer> getPlacement(){
+        //todo eventually sort and take the 4 best plus the player and return in the order of points
         return players_points;
     }
-    public Map<String, Map> getPlayerRoundScores(){
-        return playerRoundScores;
-    }
-
-
 
 
 }

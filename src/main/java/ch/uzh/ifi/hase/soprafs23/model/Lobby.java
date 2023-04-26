@@ -1,6 +1,4 @@
 package ch.uzh.ifi.hase.soprafs23.model;
-
-import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import lombok.*;
 import org.springframework.http.HttpStatus;
@@ -48,11 +46,9 @@ public class Lobby {
         players.remove(user_id);
     }
 
-    public void playGame(GameConfig config) throws InterruptedException, IOException {
+    public Scores playGame(GameConfig config) throws InterruptedException, IOException {
         Game game = new Game(players, config, notifier, foodService);
         this.gameStarted = true;
-        game.run();
-
+        return game.run();
     }
-
 }

@@ -123,10 +123,11 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 - [ ] sopra-fs23-group-34/client#31
 - [ ] sopra-fs23-group-34/client#32
 - [ ] sopra-fs23-group-34/client#37
+
 ### Elias
 - [ ] sopra-fs23-group-34/client#19
 - [ ] sopra-fs23-group-34/client#12
-- [ ] sopra-fs23-group-34/server#79
+
 ### André
 - [ ] sopra-fs23-group-34/server#10
 - [ ] sopra-fs23-group-34/server#18
@@ -134,10 +135,23 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 --> not two meaningful taks (completed more tasks in the past)
 - [ ] sopra-fs23-group-34/server#76
 - [ ] sopra-fs23-group-34/server#77
+--> second meaningful task:
+- [ ] sopra-fs23-group-34/server#83
 
 ### Maurice
 - [ ] sopra-fs23-group-34/server#80
 - [ ] sopra-fs23-group-34/server#81
 - [ ] sopra-fs23-group-34/server#82
 
+## Week 6: 28.04.2023 - 04.05.2023
 
+### Nico
+- [ ] sopra-fs23-group-34/client#36
+
+### Elias
+
+### André
+
+### Nataell
+
+### Maurice
