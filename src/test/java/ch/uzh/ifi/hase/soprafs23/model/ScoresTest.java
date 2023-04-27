@@ -50,6 +50,7 @@ public class ScoresTest {
     public void testUpdateRoundScoreTwoPlayer() {
         String username = "player1";
         String username1 = "player2";
+        String username2 = "player3";
 
         Map<String, Double> playerGuesses = new HashMap<>();
         playerGuesses.put("calories", 100.0);
@@ -65,6 +66,13 @@ public class ScoresTest {
         playerGuesses1.put("carbs", 20.0);
         playerGuesses1.put("sugar",50.0);
 
+        Map<String, Double> playerGuesses2 = new HashMap<>();
+        playerGuesses2.put("calories", 100.0);
+        playerGuesses2.put("fat", 11.0);
+        playerGuesses2.put("protein", 20.0);
+        playerGuesses2.put("carbs", 20.0);
+        playerGuesses2.put("sugar",50.0);
+
         Map<String, Double> actualValues = new HashMap<>();
         actualValues.put("calories", 100.0);
         actualValues.put("fat", 20.0);
@@ -77,6 +85,7 @@ public class ScoresTest {
 
         scores.updateRoundScore(playerGuesses, username, food);
         scores.updateRoundScore(playerGuesses1, username1, food);
+        scores.updateRoundScore(playerGuesses2, username2, food);
         Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScore = scores.getRoundScore();
 /*
         //Check, that everything is in the round Score (player1)

@@ -1,24 +1,22 @@
 package ch.uzh.ifi.hase.soprafs23.model;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 import static java.lang.Math.max;
 import static java.lang.Math.round;
 
 public class Scores {
     private final Map<String,ArrayList<Map<String,Double>>> roundScore;
-    private final Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScoresAllPlayer;
-    private final Map<String, Integer> players_points;
+    private Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScoresAllPlayer;
+    private Map<String, Integer> players_points;
+    private final SortByRoundScores sortByRoundScores;
 
     public Scores() {
         this.players_points = new HashMap<>();
         this.roundScore = new HashMap<>();
         this.roundScoresAllPlayer = new HashMap<>();
+        this.sortByRoundScores = new SortByRoundScores();
     }
-    /*public void sortMapDescending(){
-        Stream<Map.Entry<K,V>> sorted = roundScoresAllPlayer.entrySet().stream().sorted(Map.Entry.comparingByValue());
-    }*/
+
     public void updateRoundScore(Map<String,Double> playerGuesses, String username, Food food){
         int player_points = 0;
         for ( String playerGuessFoodKey : playerGuesses.keySet()){
@@ -57,11 +55,14 @@ public class Scores {
             copyRoundScore.put(o, roundScore.get(o));
         }
         copyRoundScore = Collections.unmodifiableMap(copyRoundScore);
-
+        //put into the final variable
         roundScoresAllPlayer.put(username,copyRoundScore);
+
+        //sort roundScores descending
+
+        roundScoresAllPlayer = sortByRoundScores.sortByPointsAllScores(roundScoresAllPlayer);
         System.out.println(roundScoresAllPlayer);
 
-        //sortMapDescending();
     }
 
     public Map<String,Map<String,ArrayList<Map<String,Double>>>> getRoundScore(){
@@ -70,6 +71,8 @@ public class Scores {
 
     public Map<String,Integer> getPlacement(){
         //todo eventually sort and take the 4 best plus the player and return in the order of points
+        players_points = sortByRoundScores.sortPlayerPoints(players_points);
+        System.out.println(players_points);
         return players_points;
     }
 
