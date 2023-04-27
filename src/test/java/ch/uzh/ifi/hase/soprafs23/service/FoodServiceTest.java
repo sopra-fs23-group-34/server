@@ -63,4 +63,27 @@ public class FoodServiceTest {
         assertEquals(food.getImage(), apple.getImage());
     }
 
+    @Test
+    public void RoundTest() throws IOException {
+        List<String> randomFood = new ArrayList<>();
+        randomFood.add("apple");
+        when(foodService.getRandomFoods(1, FoodCategory.FRUITS)).thenReturn(randomFood);
+        List<String> foods = foodService.getRandomFoods(1, FoodCategory.FRUITS);
+        Map<String, Double> nutritionalValues = new HashMap<>();
+        nutritionalValues.put("carbs", 13.81);
+        nutritionalValues.put("protein", 0.26);
+        nutritionalValues.put("fat", 0.17);
+        nutritionalValues.put("calories", 52.0);
+
+        Food apple = new Food("apple", nutritionalValues, "https://nix-tag-images.s3.amazonaws.com/384_highres.jpg");
+
+        Food food = foodService.getFood(foods.get(0));
+        System.out.println(food);
+        assertEquals(food.getName(), apple.getName());
+        assertEquals(food.getNutritionValues(), apple.getNutritionValues());
+        assertEquals(food.getImage(), apple.getImage());
+
+
+    }
+
 }
