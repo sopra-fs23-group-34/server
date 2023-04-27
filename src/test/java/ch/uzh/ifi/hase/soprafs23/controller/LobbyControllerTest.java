@@ -40,7 +40,6 @@ public class LobbyControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("id", "1");
 
-        System.out.println(postRequest);
         mockMvc.perform(postRequest)
                 .andExpect(status().isCreated());
     }
@@ -51,7 +50,6 @@ public class LobbyControllerTest {
 
         MockHttpServletRequestBuilder postRequest = post("/lobbys/join/1/1")
                 .contentType(MediaType.APPLICATION_JSON);
-        System.out.println(postRequest);
         mockMvc.perform(postRequest)
                 .andExpect(status().isOk());
     }

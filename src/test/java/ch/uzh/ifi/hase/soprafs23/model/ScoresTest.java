@@ -32,7 +32,6 @@ public class ScoresTest {
         String username = "player1";
 
         Food food = new Food("chicken", actualValues, "prettyImmage");
-        System.out.println(playerGuesses.get("fat"));
         scores.updateRoundScore(playerGuesses, username, food);
 
         Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScore = scores.getRoundScore();
