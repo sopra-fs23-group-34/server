@@ -30,14 +30,10 @@ public class Scores {
             guessed_values.put("guessedValues", playerGuesses.get(playerGuessFoodKey));
             Map<String,Double> deviation = new HashMap<>();
             deviation.put("deviations", absoluteDeviation);
-            /*
-            Map<String,Double> points = new HashMap<>();
-            points.put("points", (double) player_points);*/
 
             roundFoodScore.add(real_values);
             roundFoodScore.add(guessed_values);
             roundFoodScore.add(deviation);
-            //roundFoodScore.add(points);
             roundScore.put(playerGuessFoodKey,roundFoodScore);
         }
         ArrayList<Map<String,Double>> roundPointsTotal = new ArrayList<>();
@@ -70,7 +66,6 @@ public class Scores {
     public Map<String,Integer> getPlacement(){
         //todo eventually sort and take the 4 best plus the player and return in the order of points
         players_points = sortByRoundScores.sortPlayerPoints(players_points);
-        System.out.println(players_points);
         return players_points;
     }
 
