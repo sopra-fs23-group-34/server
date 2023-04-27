@@ -38,7 +38,7 @@ public class DTOMapperTest {
     // create User
     User user = new User();
     user.setUsername("firstname@lastname");
-    //user.setStatus(UserStatus.OFFLINE);
+    user.setStatus(UserStatus.OFFLINE);
     user.setToken("1");
 
     // MAP -> Create UserGetDTO
@@ -59,6 +59,7 @@ public class DTOMapperTest {
         userPutDTO.setEmail("new email");
         userPutDTO.setPassword("new password");
         userPutDTO.setUsername("new username");
+        userPutDTO.setBio("this is my bio");
         userPutDTO.setId(1L);
 
         User user = DTOMapper.INSTANCE.convertUserPutUpdateDTOtoEntity(userPutDTO);
@@ -74,7 +75,6 @@ public class DTOMapperTest {
 
     @Test
     public void testConvertUserPutUpdateDTOtoEntity_NullInput() {
-
 
         UserPutDTO userPutDTO = null;
 
@@ -100,9 +100,8 @@ public class DTOMapperTest {
 
     @Test
     public void testConvertPlayerScoreToPlayerScoreGetDTO_NullInput() {
-        PlayerScore playerScore = new PlayerScore();
 
-        playerScore = null;
+        PlayerScore playerScore = null;
 
         PlayerScoreGetDTO playerScoreGetDTO = DTOMapper.INSTANCE.convertPlayerScoreToPlayerScoreGetDTO(playerScore);
 
@@ -151,10 +150,8 @@ public class DTOMapperTest {
         assertNull(userGetRankDTO);
     }
 
-
     @Test
     public void testConvertUserInputDTOToGameConfig_NullInput() {
-
 
         UserInputDTO userInputDto = null;
 

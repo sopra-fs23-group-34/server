@@ -100,8 +100,13 @@ public class UserService {
         authenticateUser(token, idCurrentUser);
     }
 
-    public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser) {
+    public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser/*, String oldPassword*/) {
         User user = userRepository.findById(idCurrentUser);
+        /*if(!oldPassword.equals(user.getPassword())){
+            throw new ResponseStatusException(HttpStatus.valueOf(404),
+                    "Wrong old Password");
+        }*/
+
         // make sure, that no information is null
         if (userWithUpdateInformation.getPassword() == null) {
             userWithUpdateInformation.setPassword(user.getPassword());
