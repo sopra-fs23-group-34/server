@@ -1,11 +1,12 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 
-import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 
-@Data
+@Getter
+@Setter
 public class Food {
     private String image;
     private String name;

@@ -35,19 +35,5 @@ public class FoodTest {
         assertEquals(name, food.getName());
     }
 
-    @Test
-    public void testFoodEquals(){
-        String name = "Orange";
-        Map<String, Double> nutritionValues = new HashMap<>();
-        nutritionValues.put("calories", 47.0);
-        nutritionValues.put("protein", 0.9);
-        nutritionValues.put("fat", 0.1);
-        nutritionValues.put("carbs", 12.0);
-        String image = "orange.jpg";
-        Food food = new Food(name, nutritionValues, image);
-        Food food1 = new Food(name, nutritionValues,image);
-        assertEquals(food,food1);
-    }
-
 }
 

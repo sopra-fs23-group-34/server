@@ -1,8 +1,11 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class PlayerScoreGetDTO {
     private int id;
     private Long user_id;
