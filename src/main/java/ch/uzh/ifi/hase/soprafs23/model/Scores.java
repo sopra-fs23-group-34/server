@@ -47,7 +47,6 @@ public class Scores {
         roundScore.put("points",roundPointsTotal);
         players_points.putIfAbsent(username, 0);
         players_points.put(username, players_points.get(username) + player_points);
-        System.out.println(roundScore);
 
         //deep copy the roundScore map
         Map<String,ArrayList<Map<String,Double>>> copyRoundScore = new HashMap<>();
@@ -61,7 +60,6 @@ public class Scores {
         //sort roundScores descending
 
         roundScoresAllPlayer = sortByRoundScores.sortByPointsAllScores(roundScoresAllPlayer);
-        System.out.println(roundScoresAllPlayer);
 
     }
 

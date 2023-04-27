@@ -101,7 +101,6 @@ public class ScoresTest {
         Assertions.assertTrue(roundScore.get("player2").containsKey("protein"));
         Assertions.assertTrue(roundScore.get("player2").containsKey("carbs"));
         Assertions.assertTrue(roundScore.get("player2").containsKey("sugar"));*/
-        System.out.println(roundScore);
     }
     /*
     @Test

@@ -1,5 +1,4 @@
 package ch.uzh.ifi.hase.soprafs23.model;
-import ch.uzh.ifi.hase.soprafs23.constant.Fruits;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
