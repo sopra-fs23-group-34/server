@@ -74,7 +74,7 @@ public class FoodService {
         String name = (String) food.get("food_name");
         String image_link = photo.get("highres");
         Map<String, Double> nutritional_values = new HashMap<>();
-        nutritional_values.put("calories", caloriesDouble/servingWeithDouble * 100);
+        nutritional_values.put("calories", (caloriesDouble/servingWeithDouble * 100));
         nutritional_values.put("fat", fatDouble / servingWeithDouble * 100);
         nutritional_values.put("protein", proteinDouble / servingWeithDouble * 100);
         nutritional_values.put("carbs", carbsDouble / servingWeithDouble * 100);

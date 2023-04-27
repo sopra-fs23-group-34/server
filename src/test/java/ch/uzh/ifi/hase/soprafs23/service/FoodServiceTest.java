@@ -70,9 +70,9 @@ public class FoodServiceTest {
         when(foodService.getRandomFoods(1, FoodCategory.FRUITS)).thenReturn(randomFood);
         List<String> foods = foodService.getRandomFoods(1, FoodCategory.FRUITS);
         Map<String, Double> nutritionalValues = new HashMap<>();
-        nutritionalValues.put("carbs", 13.81);
-        nutritionalValues.put("protein", 0.26);
-        nutritionalValues.put("fat", 0.17);
+        nutritionalValues.put("carbs", 13.807692307692307);
+        nutritionalValues.put("protein", 0.2582417582417582);
+        nutritionalValues.put("fat", 0.1703296703296703);
         nutritionalValues.put("calories", 52.0);
 
         Food apple = new Food("apple", nutritionalValues, "https://nix-tag-images.s3.amazonaws.com/384_highres.jpg");
