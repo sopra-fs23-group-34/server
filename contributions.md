@@ -149,6 +149,7 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 
 ### Nico
 - [ ] sopra-fs23-group-34/client#36
+- [ ] sopra-fs23-group-34/client#20
 
 ### Elias
 
