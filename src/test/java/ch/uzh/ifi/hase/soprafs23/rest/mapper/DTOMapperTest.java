@@ -49,26 +49,7 @@ public class DTOMapperTest {
     assertEquals(user.getUsername(), userGetDTO.getUsername());
     assertEquals(user.getStatus(), userGetDTO.getStatus());
   }
-    @Test
-    public void testConvertUserPostLogoutDTOtoEntity() {
-        User user = new User();
 
-        Long id = 1L;
-        user = DTOMapper.INSTANCE.convertUserPostLogoutDTOtoEntity(id);
-
-        assertNotNull(user);
-        assertEquals(id, user.getId());
-    }
-
-    @Test
-    public void testConvertUserPostLogoutDTOtoEntity_NullId() {
-        User user = new User();
-
-        Long id = null;
-        user = DTOMapper.INSTANCE.convertUserPostLogoutDTOtoEntity(id);
-
-        assertNull(user);
-    }
 
     @Test
     public void testConvertUserPutUpdateDTOtoEntity() {
