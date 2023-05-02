@@ -148,22 +148,20 @@ public class UserService {
 
 
     public void updateScores(Scores scores){
+        if (scores.getPlacement().keySet().size() > 1) {
         for (String userName : scores.getPlacement().keySet()){
             User user = userRepository.findByUsername(userName);
             Long user_id = user.getId();
             PlayerScore playerScore = new PlayerScore();
             playerScore.setPlayer_id(user_id);
-            if (scores.getPlacement().keySet().size() > 1) {
             int maxScore = scores.getPlacement().values().stream().max(Double::compare).orElseThrow(
                     () -> new NoSuchElementException("No maximum value found in the placement scores."));
             boolean winner = scores.getPlacement().get(userName) == maxScore;
             playerScore.setWinner(winner);
-            } else {
-                playerScore.setWinner(null);
-            }
             playerScore.setScore(scores.getPlacement().get(userName));
             playerScoreRepository.save(playerScore);
             userRepository.flush();
+        }
         }
     }
 
@@ -177,9 +175,14 @@ public class UserService {
         return playerScores;
     }
 
-    public PlayerStatistics getStatistics(Long id, String token){
-        authenticateUser(token, id);
-        return playerScoreRepository.getPlayerStatistics(id);
+    public PlayerStatistics getStatistics(Long id, String token, Long authenticationId){
+        authenticateUser(token, authenticationId);
+        PlayerStatistics playerStatistics = playerScoreRepository.getPlayerStatistics(id);
+        if (playerStatistics == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Player not found");
+        }
+        return playerStatistics;
     }
 
     /**

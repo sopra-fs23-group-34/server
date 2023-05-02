@@ -96,9 +96,9 @@ public class UserController {
     @GetMapping("/users/statistics/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public PlayerStatistics getStatistics( @PathVariable Long userId, @RequestHeader("token") String token) {
+    public PlayerStatistics getStatistics( @PathVariable Long userId, @RequestHeader("token") String token, @RequestHeader("id") Long id) {
        // you can only check youre own scores, otherwise the authentication has to be handled differently
-        PlayerStatistics playerStatistics = userService.getStatistics(userId, token);
+        PlayerStatistics playerStatistics = userService.getStatistics(userId, token, id);
         return playerStatistics;
     }
 }
