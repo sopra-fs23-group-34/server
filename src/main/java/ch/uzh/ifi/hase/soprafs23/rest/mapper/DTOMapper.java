@@ -49,6 +49,8 @@ public interface DTOMapper {
   @Mapping(source = "password", target = "password")
   User convertUserPutUpdateDTOtoEntity(UserPutDTO userPutDTO);
 
+
+    @Mapping(source = "winner", target = "winner")
     @Mapping(source = "score", target = "score")
     @Mapping(source = "player_id", target = "user_id")
 PlayerScoreGetDTO convertPlayerScoreToPlayerScoreGetDTO(PlayerScore playerScore);

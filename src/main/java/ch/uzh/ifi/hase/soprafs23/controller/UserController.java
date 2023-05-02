@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;
+import ch.uzh.ifi.hase.soprafs23.entity.PlayerStatistics;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
@@ -90,5 +91,14 @@ public class UserController {
     public List<LeaderBoard> getGlobalRanking(@RequestHeader("token") String token, @RequestHeader("id") Long id) {
         List<LeaderBoard> scores = userService.getTotalScores(id, token);
        return scores;
+    }
+
+    @GetMapping("/users/statistics/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public PlayerStatistics getStatistics( @PathVariable Long userId, @RequestHeader("token") String token) {
+       // you can only check youre own scores, otherwise the authentication has to be handled differently
+        PlayerStatistics playerStatistics = userService.getStatistics(userId, token);
+        return playerStatistics;
     }
 }

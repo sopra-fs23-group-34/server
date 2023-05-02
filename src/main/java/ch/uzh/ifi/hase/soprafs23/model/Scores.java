@@ -43,7 +43,6 @@ public class Scores {
         roundScore.put("points",roundPointsTotal);
         players_points.putIfAbsent(username, 0);
         players_points.put(username, players_points.get(username) + player_points);
-
         //deep copy the roundScore map
         Map<String,ArrayList<Map<String,Double>>> copyRoundScore = new HashMap<>();
         for(String o : roundScore.keySet()){
@@ -52,9 +51,7 @@ public class Scores {
         copyRoundScore = Collections.unmodifiableMap(copyRoundScore);
         //put into the final variable
         roundScoresAllPlayer.put(username,copyRoundScore);
-
         //sort roundScores descending
-
         roundScoresAllPlayer = sortByRoundScores.sortByPointsAllScores(roundScoresAllPlayer);
 
     }

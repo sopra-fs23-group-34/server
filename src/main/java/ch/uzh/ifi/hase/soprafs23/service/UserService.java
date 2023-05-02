@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs23.service;
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;
 import ch.uzh.ifi.hase.soprafs23.entity.PlayerScore;
+import ch.uzh.ifi.hase.soprafs23.entity.PlayerStatistics;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.model.Scores;
 import ch.uzh.ifi.hase.soprafs23.repository.PlayerScoreRepository;
@@ -152,6 +153,14 @@ public class UserService {
             Long user_id = user.getId();
             PlayerScore playerScore = new PlayerScore();
             playerScore.setPlayer_id(user_id);
+            if (scores.getPlacement().keySet().size() > 1) {
+            int maxScore = scores.getPlacement().values().stream().max(Double::compare).orElseThrow(
+                    () -> new NoSuchElementException("No maximum value found in the placement scores."));
+            boolean winner = scores.getPlacement().get(userName) == maxScore;
+            playerScore.setWinner(winner);
+            } else {
+                playerScore.setWinner(null);
+            }
             playerScore.setScore(scores.getPlacement().get(userName));
             playerScoreRepository.save(playerScore);
             userRepository.flush();
@@ -166,6 +175,11 @@ public class UserService {
             playerScore.setUsername(getUserById(player_id).getUsername());
         }
         return playerScores;
+    }
+
+    public PlayerStatistics getStatistics(Long id, String token){
+        authenticateUser(token, id);
+        return playerScoreRepository.getPlayerStatistics(id);
     }
 
     /**

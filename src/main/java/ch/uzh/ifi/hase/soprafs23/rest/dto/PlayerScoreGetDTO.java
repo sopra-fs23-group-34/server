@@ -10,4 +10,5 @@ public class PlayerScoreGetDTO {
     private int id;
     private Long user_id;
     private String score;
+    private Boolean winner;
 }
