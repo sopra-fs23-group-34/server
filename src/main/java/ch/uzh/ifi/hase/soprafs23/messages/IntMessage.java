@@ -13,4 +13,9 @@ public class IntMessage implements Message{
     public int getContent(){
         return intMessage;
     }
+
+    @Override
+    public String getType() {
+        return null;
+    }
 }

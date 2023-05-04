@@ -13,4 +13,9 @@ public class StringMessage implements Message{
     public String getContent(){
         return strMessage;
     }
+
+    @Override
+    public String getType() {
+        return null;
+    }
 }

@@ -24,6 +24,7 @@ public class LobbyService {
     private final FoodService foodService;
     private final CodeGenerator codeGenerator;
     private final LobbyStorage lobbyStorage;
+
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     private void checkIfLobbyExists(String id) {
@@ -44,6 +45,17 @@ public class LobbyService {
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         List<Player> lobbyPlayers = new ArrayList<>(lobby.getPlayers().values());
         return lobbyPlayers;
+    }
+    public void updateTimer(Integer roundTimer, Integer scoreTimer, String gameCode, long id){
+        Lobby lobby = lobbyStorage.getLobby(gameCode);
+        /*long lobbyHost = lobby.getHost();
+        if(!(lobbyHost == id)){
+            throw new ResponseStatusException(HttpStatus.valueOf(401), "Only host can change the timer");
+        }*/
+        lobby.setRoundTimer(roundTimer);
+        lobby.setScoreTimer(scoreTimer);
+        System.out.println(lobby.getRoundTimer());
+        System.out.println(lobby.getScoreTimer());
     }
 
     public boolean joinLobby(String gameCode, Long user_id) {

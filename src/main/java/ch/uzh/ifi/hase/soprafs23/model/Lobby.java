@@ -17,6 +17,12 @@ public class Lobby {
     private final Notifier notifier;
 
     private final FoodService foodService;
+    @Getter
+    @Setter
+    private int roundTimer;
+    @Getter
+    @Setter
+    private int scoreTimer;
 
     @Getter
     private final Map<Long, Player> players;
@@ -32,6 +38,14 @@ public class Lobby {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "Game already started");
         }
     }
+    public long getHost(){
+        for(int i = 0; i < players.size(); i++){
+            if(players.get(i).isHost()){
+                return players.get(i).getPlayer_id();
+            }
+        }
+        return -1;
+    }
 
     public void addPlayer(Player player) {
         if (gameStarted) {
@@ -46,7 +60,7 @@ public class Lobby {
     }
 
     public Scores playGame(GameConfig config) throws InterruptedException, IOException {
-        Game game = new Game(players, config, notifier, foodService);
+        Game game = new Game(players, config, notifier, foodService, roundTimer, scoreTimer);
         this.gameStarted = true;
         return game.run();
     }

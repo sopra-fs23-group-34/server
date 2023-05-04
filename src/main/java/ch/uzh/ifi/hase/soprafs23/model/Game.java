@@ -11,16 +11,21 @@ public class Game {
     private final Map<Long, Player> players;
     private final FoodService foodService;
     private final int roundLimit;
+    private final int roundTime;
+    private final int scoreTime;
     private final FoodCategory foodCategory;
     private final Notifier notifier;
+
     private List<String> foods = new ArrayList<>();
 
-    public Game(Map<Long, Player> players, GameConfig config, Notifier notifier, FoodService foodService){
+    public Game(Map<Long, Player> players, GameConfig config, Notifier notifier, FoodService foodService, int roundTime, int scoreTime){
         this.players = players;
         this.notifier = notifier;
         this.roundLimit = config.getRoundLimit();
         this.foodCategory = config.getFoodCategory();
         this.foodService = foodService;
+        this.roundTime = roundTime;
+        this.scoreTime = scoreTime;
     }
 
     public Scores run() throws InterruptedException, IOException {
@@ -29,7 +34,8 @@ public class Game {
         for (int round=0; round < roundLimit; round ++){
             Round gameRound = new Round(notifier, foodService);
             Food food = gameRound.getFood(foods.get(round));
-            gameRound.run(food);
+
+            gameRound.run(food, 20/*roundTime*/);
             for (Player player: players.values()){
                         scores.updateRoundScore(player.getGuesses(),
                         player.getUsername(),
@@ -37,7 +43,7 @@ public class Game {
             }
             notifier.publishRoundScores(scores.getRoundScore());
             notifier.publishGameScores(scores.getPlacement());
-            Thread.sleep(10000);
+            Thread.sleep(10000/*scoreTime*/);
         }
         notifier.publishFinalScoreStart();
         notifier.publishFinalScores(scores.getPlacement());

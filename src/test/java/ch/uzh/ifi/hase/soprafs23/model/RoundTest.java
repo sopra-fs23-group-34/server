@@ -29,7 +29,7 @@ public class RoundTest {
         String name = "Apple";
         Food food = new Food(name, null, null);
         Round round = new Round(notifier, foodService);
-        round.run(food);
+        round.run(food, 10);
         verify(notifier).publishRoundStart();
         verify(notifier).publishFood(food);
         for (int tick = 10; tick >= 0; tick --){
