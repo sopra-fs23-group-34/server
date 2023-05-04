@@ -12,4 +12,8 @@ public class UserInputDTO {
     @Getter
     @Setter
     private int roundLimit;
+    @Getter
+    @Setter
+    private int timerLength;
+
 }

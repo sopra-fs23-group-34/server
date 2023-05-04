@@ -46,17 +46,7 @@ public class LobbyService {
         List<Player> lobbyPlayers = new ArrayList<>(lobby.getPlayers().values());
         return lobbyPlayers;
     }
-    public void updateTimer(Integer roundTimer, Integer scoreTimer, String gameCode, long id){
-        Lobby lobby = lobbyStorage.getLobby(gameCode);
-        /*long lobbyHost = lobby.getHost();
-        if(!(lobbyHost == id)){
-            throw new ResponseStatusException(HttpStatus.valueOf(401), "Only host can change the timer");
-        }*/
-        lobby.setRoundTimer(roundTimer);
-        lobby.setScoreTimer(scoreTimer);
-        System.out.println(lobby.getRoundTimer());
-        System.out.println(lobby.getScoreTimer());
-    }
+
 
     public boolean joinLobby(String gameCode, Long user_id) {
         checkIfLobbyExists(gameCode);
@@ -90,12 +80,12 @@ public class LobbyService {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "You are not authorized to start the game");
         }
     }
-
     public void startGame(String gameCode, Long user_id, String token, GameConfig config) throws RuntimeException {
         userService.authenticateUser(token, user_id);
         checkIfHost(gameCode, user_id);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         lobby.checkIfGameStarted();
+        lobby.setRoundTimer(config.getTimerLength());
         new Thread(() -> {
             try {
                 Scores scores = lobby.playGame(config);

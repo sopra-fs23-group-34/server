@@ -20,7 +20,7 @@ public class UserInputDTOTest {
     public void getters() {
         String foodCategory = "ALL";
         int roundLimit = 1;
-        UserInputDTO userInputDTO = new UserInputDTO("ALL", 1);
+        UserInputDTO userInputDTO = new UserInputDTO("ALL", 1, 23);
         assertEquals(userInputDTO.getFoodCategory(), foodCategory);
         assertEquals(userInputDTO.getRoundLimit(), roundLimit);
 

@@ -65,6 +65,7 @@ PlayerScoreGetDTO convertPlayerScoreToPlayerScoreGetDTO(PlayerScore playerScore)
 
     @Mapping(source = "foodCategory", target = "foodCategory", qualifiedByName = "mapFoodCategory")
     @Mapping(source = "roundLimit", target = "roundLimit")
+    @Mapping(source = "timerLength", target = "timerLength")
     GameConfig convertUserInputDTOToGameConfig(UserInputDTO userInputDto);
 
     @Named("mapFoodCategory")

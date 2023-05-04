@@ -29,18 +29,14 @@ public class LobbyController {
     public boolean joinLobby(@PathVariable("lobbyCode") String gameCode, @PathVariable("user_id") long id) {
         return lobbyService.joinLobby(gameCode, id);
     }
-    @PostMapping("/lobbys/timer/{lobbyCode}/{user_id}")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public void setTimer(@PathVariable("lobbyCode") String gameCode, @PathVariable("user_id") long id, @RequestHeader("roundTimer") int roundTimer, @RequestHeader("scoreTimer") int scoreTimer){
-        lobbyService.updateTimer(roundTimer,scoreTimer,gameCode,id);
-    }
 
     @PostMapping("/lobbys/startGame/{lobbyCode}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void startGame(@PathVariable("lobbyCode") String gameCode, @RequestHeader("id") long id,
                           @RequestHeader("token") String token,@RequestBody UserInputDTO userInputDto) throws InterruptedException {
+
+        System.out.println(userInputDto.getTimerLength());
         GameConfig gc = DTOMapper.INSTANCE.convertUserInputDTOToGameConfig(userInputDto);
         lobbyService.startGame(gameCode, id,token , gc);
     }
