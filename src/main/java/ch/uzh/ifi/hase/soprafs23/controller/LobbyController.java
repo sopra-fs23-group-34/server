@@ -4,7 +4,6 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.UserInputDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import org.springframework.http.HttpStatus;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +19,7 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public String createLobby(@RequestHeader("id") Long id) {
-        return  lobbyService.createLobby();
+        return lobbyService.createLobby();
     }
 
     @PostMapping("/lobbys/join/{lobbyCode}/{user_id}")
@@ -34,18 +33,8 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void startGame(@PathVariable("lobbyCode") String gameCode, @RequestHeader("id") long id,
-                          @RequestHeader("token") String token,@RequestBody UserInputDTO userInputDto) throws InterruptedException {
-
-        System.out.println(userInputDto.getTimerLength());
+                          @RequestHeader("token") String token, @RequestBody UserInputDTO userInputDto) throws InterruptedException {
         GameConfig gc = DTOMapper.INSTANCE.convertUserInputDTOToGameConfig(userInputDto);
-        lobbyService.startGame(gameCode, id,token , gc);
+        lobbyService.startGame(gameCode, id, token, gc);
     }
-
-
-
-
-
-
-
-
 }

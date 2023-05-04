@@ -7,13 +7,10 @@ import lombok.Getter;
 public class StringMessage implements Message{
     @Getter
     private String topic;
-
     private String strMessage;
-
     public String getContent(){
         return strMessage;
     }
-
     @Override
     public String getType() {
         return null;

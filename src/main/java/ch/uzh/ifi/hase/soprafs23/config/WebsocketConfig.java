@@ -1,5 +1,4 @@
 package ch.uzh.ifi.hase.soprafs23.config;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;

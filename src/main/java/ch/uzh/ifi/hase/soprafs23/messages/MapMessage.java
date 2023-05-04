@@ -10,11 +10,8 @@ import java.util.Map;
 public class MapMessage implements Message{
     @Getter
     private String topic;
-
     private Map<String, Integer> content;
-
     public Map<String,Integer> getContent(){
-
         return content;
     }
 

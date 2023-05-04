@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs23.model;
 import java.util.*;
 
 import static java.lang.Math.max;
-import static java.lang.Math.round;
 
 public class Scores {
     private final Map<String,ArrayList<Map<String,Double>>> roundScore;

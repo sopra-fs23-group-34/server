@@ -10,17 +10,13 @@ import java.util.List;
 public class PlayerListMessage implements Message{
     @Getter
     private String topic;
-
     private List<PlayerGetDTO> lobbyPlayers;
-
     public List<PlayerGetDTO> getContent(){
         return lobbyPlayers;
     }
-
     public List<PlayerGetDTO> getPlayers() {
         return null;
     }
-
     @Override
     public String getType() {
         return null;

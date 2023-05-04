@@ -3,7 +3,6 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;
 import ch.uzh.ifi.hase.soprafs23.entity.PlayerStatistics;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.storage.UserStorage;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
@@ -71,6 +70,7 @@ public class UserController {
                                             @RequestHeader("token") String token,
                                             @RequestHeader(required = false, value = "password") String password,
                                             @PathVariable Long id){
+        System.out.println(password);
         User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutUpdateDTOtoEntity(userPutDTO);
         User updatedUser = userService.updateUser(userWithUpdateInformation, token, id, password);
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
