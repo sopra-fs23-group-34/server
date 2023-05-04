@@ -16,4 +16,9 @@ public class RoundScoreMessage implements Message{
 
         return roundScores;
     }
+
+    @Override
+    public String getType() {
+        return null;
+    }
 }

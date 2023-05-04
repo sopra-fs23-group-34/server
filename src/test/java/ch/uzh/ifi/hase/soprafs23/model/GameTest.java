@@ -34,8 +34,8 @@ public class GameTest {
         Notifier notifier = mock(Notifier.class);
 
         // Create a Game object and run it
-        Game game = new Game(players, config, notifier, foodService);
-        Game game1 = new Game(players, config,notifier, foodService);
+        Game game = new Game(players, config, notifier, foodService, 23, 22);
+        Game game1 = new Game(players, config,notifier, foodService, 22, 23);
         assertEquals(game.getClass(), game1.getClass());
 
     }

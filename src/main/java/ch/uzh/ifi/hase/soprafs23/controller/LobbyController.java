@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.UserInputDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,6 +28,12 @@ public class LobbyController {
     @ResponseBody
     public boolean joinLobby(@PathVariable("lobbyCode") String gameCode, @PathVariable("user_id") long id) {
         return lobbyService.joinLobby(gameCode, id);
+    }
+    @PostMapping("/lobbys/timer/{lobbyCode}/{user_id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void setTimer(@PathVariable("lobbyCode") String gameCode, @PathVariable("user_id") long id, @RequestHeader("roundTimer") int roundTimer, @RequestHeader("scoreTimer") int scoreTimer){
+        lobbyService.updateTimer(roundTimer,scoreTimer,gameCode,id);
     }
 
     @PostMapping("/lobbys/startGame/{lobbyCode}")

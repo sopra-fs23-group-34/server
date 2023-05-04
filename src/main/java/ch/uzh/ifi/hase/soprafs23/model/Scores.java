@@ -20,7 +20,7 @@ public class Scores {
     public void updateRoundScore(Map<String,Double> playerGuesses, String username, Food food){
         int player_points = 0;
         for ( String playerGuessFoodKey : playerGuesses.keySet()){
-            double absoluteDeviation = Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
+            int absoluteDeviation = (int)Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
             player_points += max(100-(absoluteDeviation*absoluteDeviation),0);
 
             ArrayList<Map<String,Double>> roundFoodScore = new ArrayList<>();
@@ -29,7 +29,7 @@ public class Scores {
             Map<String,Double> guessed_values = new HashMap<>();
             guessed_values.put("guessedValues", playerGuesses.get(playerGuessFoodKey));
             Map<String,Double> deviation = new HashMap<>();
-            deviation.put("deviations", absoluteDeviation);
+            deviation.put("deviations", (double)absoluteDeviation);
 
             roundFoodScore.add(real_values);
             roundFoodScore.add(guessed_values);

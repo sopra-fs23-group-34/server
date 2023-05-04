@@ -17,4 +17,9 @@ public class MapMessage implements Message{
 
         return content;
     }
+
+    @Override
+    public String getType() {
+        return null;
+    }
 }

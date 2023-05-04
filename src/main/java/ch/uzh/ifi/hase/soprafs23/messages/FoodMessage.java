@@ -19,6 +19,11 @@ public class FoodMessage implements Message{
     public HashMap<String, String> getContent(){
         return food;
     }
+
+    @Override
+    public String getType() {
+        return null;
+    }
 }
 
 

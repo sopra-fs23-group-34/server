@@ -17,11 +17,11 @@ public class Round {
         return food;
     }
 
-    public void run(Food food) throws InterruptedException {
+    public void run(Food food, int roundTime) throws InterruptedException {
         notifier.publishRoundStart();
         Thread.sleep(10);
         notifier.publishFood(food);
-        for (int tick = 20; tick >= 0; tick --){
+        for (int tick = roundTime; tick >= 0; tick --){
             notifier.publishTimer(tick);
             Thread.sleep(1000);
         }
