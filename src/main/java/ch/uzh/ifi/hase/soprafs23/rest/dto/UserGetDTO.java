@@ -18,5 +18,6 @@ public class UserGetDTO {
   private Date creationDate;
   private String token;
   private int totalScore;
+  private boolean guestUser;
 
 }

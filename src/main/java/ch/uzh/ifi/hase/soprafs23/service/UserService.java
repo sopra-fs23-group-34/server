@@ -8,6 +8,10 @@ import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.model.Scores;
 import ch.uzh.ifi.hase.soprafs23.repository.PlayerScoreRepository;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
+import ch.uzh.ifi.hase.soprafs23.storage.UserStorage;
+import ch.uzh.ifi.hase.soprafs23.storage.UserStorage;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +30,15 @@ import java.util.*;
  * (e.g., it creates, modifies, deletes, finds). The result will be passed back
  * to the caller.
  */
+@AllArgsConstructor
 @Service
 @Transactional
 public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
-
     private final UserRepository userRepository;
-
     private final PlayerScoreRepository playerScoreRepository;
+    private UserStorage guestUserStorage = UserStorage.getInstance();
 
     @Autowired
     public UserService(@Qualifier("userRepository") UserRepository userRepository, @Qualifier("playerScores") PlayerScoreRepository playerScoreRepository) {
@@ -50,11 +54,32 @@ public class UserService {
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.ONLINE);
         newUser.setCreationDate(new Date());
+        checkForGuestUser(newUser);
         checkIfUserExists(newUser);
         newUser = userRepository.save(newUser);
         userRepository.flush();
         log.debug("Created Information for User: {}", newUser);
         return newUser;
+    }
+
+    private User createGuestUser(String username) {
+        User newGuestUser = new User();
+        newGuestUser.setUsername(username);
+        newGuestUser.setPassword(username + "password");
+        newGuestUser.setCreationDate(new Date());
+        newGuestUser.setEmail(username + "@email.com");
+        newGuestUser.setToken(UUID.randomUUID().toString());
+        newGuestUser.setStatus(UserStatus.ONLINE);
+        newGuestUser.setBio("Hi I am a Guest User");
+        System.out.println(newGuestUser.getUsername());
+        System.out.println(newGuestUser.getPassword());
+        System.out.println(newGuestUser.getEmail());
+        System.out.println(newGuestUser.getToken());
+        System.out.println(newGuestUser.getStatus());
+        newGuestUser = userRepository.save(newGuestUser);
+        userRepository.flush();
+        log.debug("Created Information for guestUser: {}", newGuestUser);
+        return newGuestUser;
     }
 
     public User loginUser(User loginUser) {
@@ -82,12 +107,36 @@ public class UserService {
         return loggedOutUser;
     }
 
+    public void logoutGuestUser(String token, Long id) {
+        User loggedOutGuestUser = logoutUser(token, id);
+        guestUserStorage.removeUsername(loggedOutGuestUser.getUsername());
+
+    }
+
     public User getUserById(Long id) {
         Optional<User> OptionalUser = userRepository.findById(id);
         User user = OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("user with userid " + id + " was not found")));
         return user;
     }
+
+    public User loginGuestUser() {
+        System.out.println("loginGuestUserStart");
+        String username = guestUserStorage.createNewGuestUser();
+        User guestUser = userRepository.findByUsername(username);
+        if (guestUser == null) {
+            guestUser = createGuestUser(username);
+        } else {
+            guestUser.setStatus(UserStatus.ONLINE);
+            System.out.println("saveGuestUser");
+            userRepository.save(guestUser);
+            userRepository.flush();
+        }
+        System.out.println("loginGuestUserEnd");
+        return guestUser;
+    }
+
+
 
     public void authenticateUser(String token, long idCurrentUser) {
         User user = getUserById(idCurrentUser);
@@ -183,6 +232,22 @@ public class UserService {
                     "Player not found");
         }
         return playerStatistics;
+    }
+
+    private void checkForGuestUser(User userToBeCreated) {
+        List<String> usernames = guestUserStorage.getUsernamesString();
+        String username = userToBeCreated.getUsername();
+        for (int i = 0; i < usernames.size(); i++) {
+            if (userToBeCreated.getUsername().startsWith(usernames.get(i))) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT,
+                        "add User failed because username is reserved for guests");
+            }
+
+        }
+        if (username.substring(0, 5).equalsIgnoreCase("guest")) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "add User failed because username is reserved for guests");
+        }
     }
 
     /**

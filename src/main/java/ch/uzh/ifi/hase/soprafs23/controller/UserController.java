@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;
 import ch.uzh.ifi.hase.soprafs23.entity.PlayerStatistics;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.storage.UserStorage;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
@@ -100,5 +101,23 @@ public class UserController {
        // you can only check youre own scores, otherwise the authentication has to be handled differently
         PlayerStatistics playerStatistics = userService.getStatistics(userId, token, id);
         return playerStatistics;
+    }
+
+    @GetMapping("/users/login/guestUser")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public UserGetDTO loginGuestUser() {
+        User guestUser = userService.loginGuestUser();
+        System.out.println("finished");
+        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(guestUser);
+
+    }
+
+    @GetMapping("/users/logout/guestUser/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void logoutGuestUser(@RequestHeader("token") String token,
+                                 @PathVariable Long userId) {
+      userService.logoutGuestUser(token, userId);
     }
 }
