@@ -3,8 +3,6 @@ package ch.uzh.ifi.hase.soprafs23.controller;
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
-import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +26,6 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -259,8 +256,8 @@ public class UserControllerTest {
                 .andExpect(status().reason("You are not authorized to perform this action"));
     }
 
+/*
 
-    /*
   @Test
   public void updateUser_successful() throws Exception {
         // given
@@ -274,7 +271,7 @@ public class UserControllerTest {
         user.setBio("Hi I am a testUser:)");
 
         // 3x Mockito --> error
-        given(userService.updateUser(Mockito.any(), Mockito.any(), Mockito.any())).willReturn(user);
+        given(userService.updateUser(Mockito.any(), Mockito.any(),Mockito.any(), Mockito.any())).willReturn(user);
 
         UserPutDTO userPutDTO = new UserPutDTO();
         userPutDTO.setPassword("newPassword");

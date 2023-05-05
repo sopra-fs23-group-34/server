@@ -6,7 +6,6 @@ import ch.uzh.ifi.hase.soprafs23.model.PlayerGuesses;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.PlayerGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
-import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -19,7 +18,7 @@ public class WebsocketController {
 
     private final LobbyService lobbyService;
 
-    WebsocketController(UserService userService, LobbyService lobbyService) {
+    WebsocketController( LobbyService lobbyService) {
         this.lobbyService = lobbyService;
     }
 
