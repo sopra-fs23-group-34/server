@@ -1,24 +1,18 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
-import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.model.Food;
-import ch.uzh.ifi.hase.soprafs23.model.PlayerGuesses;
 import ch.uzh.ifi.hase.soprafs23.model.Scores;
 import ch.uzh.ifi.hase.soprafs23.repository.FoodsRepository;
-import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
