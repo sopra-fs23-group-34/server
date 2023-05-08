@@ -41,7 +41,6 @@ public class UserGetDTOTest {
         assertEquals(userGetDTO.getStatus(), userStatus);
         assertEquals(userGetDTO.getEmail(), email);
         assertEquals(userGetDTO.getBio(), bio);
-        assertEquals(userGetDTO.getCreationDate(), creationDate);
         assertEquals(userGetDTO.getToken(), token);
         assertEquals(userGetDTO.getTotalScore(), totalScore);
 

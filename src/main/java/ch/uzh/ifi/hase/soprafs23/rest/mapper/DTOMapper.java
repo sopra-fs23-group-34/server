@@ -57,6 +57,7 @@ PlayerScoreGetDTO convertPlayerScoreToPlayerScoreGetDTO(PlayerScore playerScore)
 
   @Mapping(source = "username", target = "username")
   @Mapping(source = "player_id", target = "id")
+  @Mapping(source = "host", target = "host")
   PlayerGetDTO convertPlayerToPlayerGetDTO(Player player);
 
   @Mapping(source = "username", target = "username")

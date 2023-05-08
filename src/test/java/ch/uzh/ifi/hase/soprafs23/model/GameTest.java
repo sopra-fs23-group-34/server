@@ -28,6 +28,7 @@ public class GameTest {
         GameConfig config = new GameConfig();
         config.setFoodCategory(FoodCategory.FRUITS);
         config.setRoundLimit(2);
+        config.setTimerLength(2);
 
         // Mock FoodService and Notifier
         FoodService foodService = mock(FoodService.class);

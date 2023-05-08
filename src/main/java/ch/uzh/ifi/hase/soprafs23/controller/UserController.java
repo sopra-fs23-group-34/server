@@ -98,23 +98,22 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public PlayerStatistics getStatistics( @PathVariable Long userId, @RequestHeader("token") String token, @RequestHeader("id") Long id) {
-       // you can only check youre own scores, otherwise the authentication has to be handled differently
+       // you can only check your own scores, otherwise the authentication has to be handled differently
         PlayerStatistics playerStatistics = userService.getStatistics(userId, token, id);
         return playerStatistics;
     }
 
-    @GetMapping("/users/login/guestUser")
+    @PostMapping("/users/login/guestUser")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public UserGetDTO loginGuestUser() {
         User guestUser = userService.loginGuestUser();
-        System.out.println("finished");
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(guestUser);
 
     }
 
-    @GetMapping("/users/logout/guestUser/{userId}")
-    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/users/logout/guestUser/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void logoutGuestUser(@RequestHeader("token") String token,
                                  @PathVariable Long userId) {

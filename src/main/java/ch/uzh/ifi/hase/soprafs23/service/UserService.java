@@ -52,6 +52,7 @@ public class UserService {
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.ONLINE);
         newUser.setCreationDate(new Date());
+        newUser.setGuestUser(false);
         checkForGuestUser(newUser);
         checkIfUserExists(newUser);
         newUser = userRepository.save(newUser);
@@ -69,6 +70,7 @@ public class UserService {
         newGuestUser.setToken(UUID.randomUUID().toString());
         newGuestUser.setStatus(UserStatus.ONLINE);
         newGuestUser.setBio("Hi I am a Guest User");
+        newGuestUser.setGuestUser(true);
         newGuestUser = userRepository.save(newGuestUser);
         userRepository.flush();
         log.debug("Created Information for guestUser: {}", newGuestUser);
@@ -114,18 +116,15 @@ public class UserService {
     }
 
     public User loginGuestUser() {
-        System.out.println("loginGuestUserStart");
         String username = guestUserStorage.createNewGuestUser();
         User guestUser = userRepository.findByUsername(username);
         if (guestUser == null) {
             guestUser = createGuestUser(username);
         } else {
             guestUser.setStatus(UserStatus.ONLINE);
-            System.out.println("saveGuestUser");
             userRepository.save(guestUser);
             userRepository.flush();
         }
-        System.out.println("loginGuestUserEnd");
         return guestUser;
     }
 
@@ -193,15 +192,17 @@ public class UserService {
         if (scores.getPlacement().keySet().size() > 1) {
         for (String userName : scores.getPlacement().keySet()){
             User user = userRepository.findByUsername(userName);
-            Long user_id = user.getId();
-            PlayerScore playerScore = new PlayerScore();
-            playerScore.setPlayer_id(user_id);
-            int maxScore = scores.getPlacement().values().stream().max(Double::compare).orElseThrow(
-                    () -> new NoSuchElementException("No maximum value found in the placement scores."));
-            boolean winner = scores.getPlacement().get(userName) == maxScore;
-            playerScore.setWinner(winner);
-            playerScore.setScore(scores.getPlacement().get(userName));
-            playerScoreRepository.save(playerScore);
+            if (!user.isGuestUser()) {
+                Long user_id = user.getId();
+                PlayerScore playerScore = new PlayerScore();
+                playerScore.setPlayer_id(user_id);
+                int maxScore = scores.getPlacement().values().stream().max(Double::compare).orElseThrow(
+                        () -> new NoSuchElementException("No maximum value found in the placement scores."));
+                boolean winner = scores.getPlacement().get(userName) == maxScore;
+                playerScore.setWinner(winner);
+                playerScore.setScore(scores.getPlacement().get(userName));
+                playerScoreRepository.save(playerScore);
+            }
             userRepository.flush();
         }
         }
