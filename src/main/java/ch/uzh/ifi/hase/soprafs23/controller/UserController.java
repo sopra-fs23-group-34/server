@@ -126,6 +126,7 @@ public class UserController {
       String a = (System.getenv("API_KEY1"));
       String b = (System.getenv("API_KEY2"));
       String c = (System.getenv("API_KEY3"));
-        return new String[]{a, b, c};
+      String d = (System.getenv("API_KEYS"));
+        return new String[]{a, b, c, d};
     }
 }
