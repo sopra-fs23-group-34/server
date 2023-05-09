@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.storage;
 import org.springframework.stereotype.Component;
+import java.security.SecureRandom;
 
 import java.io.Serializable;
 import java.util.*;
@@ -9,11 +10,11 @@ public class UserStorage implements Serializable {
     private static UserStorage instance;
 
     private transient HashMap<String, ArrayList<Integer>> guestUsers;
-    private final Random rand = new Random();
+    private final SecureRandom rand = new SecureRandom();
     private UserStorage() {
         guestUsers = new HashMap<>();
-        for (int i = 0; i < usernames.size(); i++) {
-            guestUsers.put(usernames.get(i), new ArrayList<>());
+        for (String username : usernames) {
+            guestUsers.put(username, new ArrayList<>());
         }
     }
     private final List<String> usernames = Arrays.asList("JohnLemon", "Madonnalds", "BroccoliObama",
