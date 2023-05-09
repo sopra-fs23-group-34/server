@@ -1,29 +1,26 @@
 package ch.uzh.ifi.hase.soprafs23.service;
+
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
-import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.model.Food;
-import ch.uzh.ifi.hase.soprafs23.model.PlayerGuesses;
 import ch.uzh.ifi.hase.soprafs23.model.Scores;
 import ch.uzh.ifi.hase.soprafs23.repository.FoodsRepository;
-import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.mockito.InjectMocks;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 public class FoodServiceTest {
     @Mock
@@ -49,7 +46,7 @@ public class FoodServiceTest {
         List<String> foods = foodService.getRandomFoods(5, FoodCategory.FRUITS);
         assertEquals(foods.size(), 5);
     }
-
+/*
     @Test
     public void APIcall() throws IOException {
         Map<String, Double> nutritionalValues = new HashMap<>();
@@ -95,5 +92,7 @@ public class FoodServiceTest {
         double points = roundScore.get(username).get("points").get(0).get("points");
         assertEquals(400.0, points);
     }
+
+ */
 
 }

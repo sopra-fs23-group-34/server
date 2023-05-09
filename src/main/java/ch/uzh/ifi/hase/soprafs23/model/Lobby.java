@@ -17,6 +17,12 @@ public class Lobby {
     private final Notifier notifier;
 
     private final FoodService foodService;
+    @Getter
+    @Setter
+    private int roundTimer;
+    @Getter
+    @Setter
+    private int scoreTimer;
 
     @Getter
     private final Map<Long, Player> players;
@@ -47,6 +53,7 @@ public class Lobby {
 
     public Scores playGame(GameConfig config) throws InterruptedException, IOException {
         Game game = new Game(players, config, notifier, foodService);
+        System.out.println(this.roundTimer);
         this.gameStarted = true;
         return game.run();
     }

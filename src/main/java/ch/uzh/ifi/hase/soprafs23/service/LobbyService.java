@@ -24,6 +24,7 @@ public class LobbyService {
     private final FoodService foodService;
     private final CodeGenerator codeGenerator;
     private final LobbyStorage lobbyStorage;
+
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     private void checkIfLobbyExists(String id) {
@@ -45,6 +46,7 @@ public class LobbyService {
         List<Player> lobbyPlayers = new ArrayList<>(lobby.getPlayers().values());
         return lobbyPlayers;
     }
+
 
     public boolean joinLobby(String gameCode, Long user_id) {
         checkIfLobbyExists(gameCode);
@@ -78,12 +80,12 @@ public class LobbyService {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "You are not authorized to start the game");
         }
     }
-
     public void startGame(String gameCode, Long user_id, String token, GameConfig config) throws RuntimeException {
         userService.authenticateUser(token, user_id);
         checkIfHost(gameCode, user_id);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         lobby.checkIfGameStarted();
+        lobby.setRoundTimer(config.getTimerLength());
         new Thread(() -> {
             try {
                 Scores scores = lobby.playGame(config);
@@ -99,7 +101,5 @@ public class LobbyService {
     public void setPlayerGuesses(String gameCode, long player_id, Map<String, Double> guesses) {
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         lobby.getPlayers().get(player_id).setGuesses(guesses);
-
     }
-
 }

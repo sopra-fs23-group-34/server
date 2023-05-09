@@ -19,7 +19,7 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public String createLobby(@RequestHeader("id") Long id) {
-        return  lobbyService.createLobby();
+        return lobbyService.createLobby();
     }
 
     @PostMapping("/lobbys/join/{lobbyCode}/{user_id}")
@@ -33,16 +33,8 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void startGame(@PathVariable("lobbyCode") String gameCode, @RequestHeader("id") long id,
-                          @RequestHeader("token") String token,@RequestBody UserInputDTO userInputDto) throws InterruptedException {
+                          @RequestHeader("token") String token, @RequestBody UserInputDTO userInputDto) throws InterruptedException {
         GameConfig gc = DTOMapper.INSTANCE.convertUserInputDTOToGameConfig(userInputDto);
-        lobbyService.startGame(gameCode, id,token , gc);
+        lobbyService.startGame(gameCode, id, token, gc);
     }
-
-
-
-
-
-
-
-
 }

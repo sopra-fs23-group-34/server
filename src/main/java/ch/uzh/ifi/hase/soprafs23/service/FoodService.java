@@ -1,26 +1,35 @@
 package ch.uzh.ifi.hase.soprafs23.service;
+
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.model.Food;
 import ch.uzh.ifi.hase.soprafs23.repository.FoodsRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-
-import java.io.IOException;
-import java.util.*;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.*;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Service
 @Transactional
 public class FoodService {
+
+    //private final String apiKey = System.getenv("API_KEY");
+
     private final FoodsRepository foodsRepository;
+
     @Autowired
     public FoodService(@Qualifier("foodsRepository") FoodsRepository foodsRepository) {
         this.foodsRepository = foodsRepository;
@@ -35,6 +44,18 @@ public class FoodService {
 
     public Food getFood(String food_name) throws IOException {
         List<String[]> apiKeys = new ArrayList<>();
+        /*
+        if (apiKey == null) {
+            throw new IOException("API Keys are null");
+        }
+        String[] APIKeysArray = apiKey.split(",");
+        for (int i = 0; i < APIKeysArray.length/2; i++) {
+            apiKeys.add(new String[] {APIKeysArray[i*2], APIKeysArray[i*2+1], "0"});
+            apiKeys.add(new String[] {APIKeysArray[i*2], APIKeysArray[i*2+1], "1"});
+        }
+
+         */
+
         apiKeys.add(new String[]{"9dd751e9","7470f45a98ccc467dc3c043b1f997cf4", "0"});
         apiKeys.add(new String[]{"9dd751e9","7470f45a98ccc467dc3c043b1f997cf4", "1"});
         apiKeys.add(new String[]{"376a71b1","46ef2c8c088e63f038d5b2e0d43cf066", "0"});
@@ -66,7 +87,7 @@ public class FoodService {
         Number fat = (Number) food.get("nf_total_fat");
         Number protein = (Number) food.get("nf_protein");
         Number carbs = (Number) food.get("nf_total_carbohydrate");
-        double servingWeithDouble = servingWeight.doubleValue();
+        double servingWeightDouble = servingWeight.doubleValue();
         double caloriesDouble = calories.doubleValue();
         double fatDouble = fat.doubleValue();
         double proteinDouble = protein.doubleValue();
@@ -74,10 +95,10 @@ public class FoodService {
         String name = (String) food.get("food_name");
         String image_link = photo.get("highres");
         Map<String, Double> nutritional_values = new HashMap<>();
-        nutritional_values.put("calories", (caloriesDouble/servingWeithDouble * 100));
-        nutritional_values.put("fat", fatDouble / servingWeithDouble * 100);
-        nutritional_values.put("protein", proteinDouble / servingWeithDouble * 100);
-        nutritional_values.put("carbs", carbsDouble / servingWeithDouble * 100);
+        nutritional_values.put("calories", (double) Math.round((caloriesDouble/servingWeightDouble * 100)));
+        nutritional_values.put("fat", (double) Math.round((fatDouble / servingWeightDouble * 100)));
+        nutritional_values.put("protein", (double) Math.round((proteinDouble / servingWeightDouble * 100)));
+        nutritional_values.put("carbs", (double) Math.round((carbsDouble / servingWeightDouble * 100)));
         return new Food(name, nutritional_values, image_link);
         }
 

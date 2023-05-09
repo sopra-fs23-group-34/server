@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs23.model;
 import java.util.*;
 
 import static java.lang.Math.max;
-import static java.lang.Math.round;
 
 public class Scores {
     private final Map<String,ArrayList<Map<String,Double>>> roundScore;
@@ -20,7 +19,7 @@ public class Scores {
     public void updateRoundScore(Map<String,Double> playerGuesses, String username, Food food){
         int player_points = 0;
         for ( String playerGuessFoodKey : playerGuesses.keySet()){
-            double absoluteDeviation = Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
+            int absoluteDeviation = (int)Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
             player_points += max(100-(absoluteDeviation*absoluteDeviation),0);
 
             ArrayList<Map<String,Double>> roundFoodScore = new ArrayList<>();
@@ -29,7 +28,7 @@ public class Scores {
             Map<String,Double> guessed_values = new HashMap<>();
             guessed_values.put("guessedValues", playerGuesses.get(playerGuessFoodKey));
             Map<String,Double> deviation = new HashMap<>();
-            deviation.put("deviations", absoluteDeviation);
+            deviation.put("deviations", (double)absoluteDeviation);
 
             roundFoodScore.add(real_values);
             roundFoodScore.add(guessed_values);
@@ -43,7 +42,6 @@ public class Scores {
         roundScore.put("points",roundPointsTotal);
         players_points.putIfAbsent(username, 0);
         players_points.put(username, players_points.get(username) + player_points);
-
         //deep copy the roundScore map
         Map<String,ArrayList<Map<String,Double>>> copyRoundScore = new HashMap<>();
         for(String o : roundScore.keySet()){
@@ -52,9 +50,7 @@ public class Scores {
         copyRoundScore = Collections.unmodifiableMap(copyRoundScore);
         //put into the final variable
         roundScoresAllPlayer.put(username,copyRoundScore);
-
         //sort roundScores descending
-
         roundScoresAllPlayer = sortByRoundScores.sortByPointsAllScores(roundScoresAllPlayer);
 
     }

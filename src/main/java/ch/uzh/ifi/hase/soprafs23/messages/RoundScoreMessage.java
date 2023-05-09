@@ -9,11 +9,12 @@ import java.util.Map;
 public class RoundScoreMessage implements Message{
     @Getter
     private String topic;
-
     private Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScores;
-
     public Map<String,Map<String,ArrayList<Map<String,Double>>>> getContent(){
-
         return roundScores;
+    }
+    @Override
+    public String getType() {
+        return null;
     }
 }

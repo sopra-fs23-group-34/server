@@ -2,8 +2,6 @@ package ch.uzh.ifi.hase.soprafs23.messages;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 @AllArgsConstructor
@@ -18,6 +16,11 @@ public class FoodMessage implements Message{
     }
     public HashMap<String, String> getContent(){
         return food;
+    }
+
+    @Override
+    public String getType() {
+        return null;
     }
 }
 

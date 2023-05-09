@@ -53,7 +53,8 @@ public class User implements Serializable, LobbyPlayer{
     @Column
     private boolean host;
 
-    //@Column()
-    //private int totalScore;
+    @Column
+    private boolean isGuestUser;
+
     
 }

@@ -9,7 +9,9 @@ import lombok.Setter;
 
 public class GameConfig {
     private Integer roundLimit;
+    private Integer timerLength;
     private FoodCategory foodCategory;
+
 
     public int getRoundLimit() {
         return roundLimit;

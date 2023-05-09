@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;
+import ch.uzh.ifi.hase.soprafs23.entity.PlayerStatistics;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
@@ -70,7 +71,7 @@ public class UserController {
                                             @RequestHeader(required = false, value = "password") String password,
                                             @PathVariable Long id){
         User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutUpdateDTOtoEntity(userPutDTO);
-        User updatedUser = userService.updateUser(userWithUpdateInformation, token, id/*, password*/);
+        User updatedUser = userService.updateUser(userWithUpdateInformation, token, id, password);
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
 
     }
@@ -90,5 +91,41 @@ public class UserController {
     public List<LeaderBoard> getGlobalRanking(@RequestHeader("token") String token, @RequestHeader("id") Long id) {
         List<LeaderBoard> scores = userService.getTotalScores(id, token);
        return scores;
+    }
+
+    @GetMapping("/users/statistics/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public PlayerStatistics getStatistics( @PathVariable Long userId, @RequestHeader("token") String token, @RequestHeader("id") Long id) {
+       // you can only check your own scores, otherwise the authentication has to be handled differently
+        PlayerStatistics playerStatistics = userService.getStatistics(userId, token, id);
+        return playerStatistics;
+    }
+
+    @PostMapping("/users/login/guestUser")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public UserGetDTO loginGuestUser() {
+        User guestUser = userService.loginGuestUser();
+        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(guestUser);
+
+    }
+
+    @PostMapping("/users/logout/guestUser/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void logoutGuestUser(@RequestHeader("token") String token,
+                                 @PathVariable Long userId) {
+      userService.logoutGuestUser(token, userId);
+    }
+
+    @PostMapping("/users/test")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String[] test() {
+      String a = (System.getenv("API_KEY1"));
+      String b = (System.getenv("API_KEY2"));
+      String c = (System.getenv("API_KEY3"));
+        return new String[]{a, b, c};
     }
 }

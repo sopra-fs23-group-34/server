@@ -49,11 +49,15 @@ public interface DTOMapper {
   @Mapping(source = "password", target = "password")
   User convertUserPutUpdateDTOtoEntity(UserPutDTO userPutDTO);
 
+
+    @Mapping(source = "winner", target = "winner")
     @Mapping(source = "score", target = "score")
     @Mapping(source = "player_id", target = "user_id")
 PlayerScoreGetDTO convertPlayerScoreToPlayerScoreGetDTO(PlayerScore playerScore);
 
   @Mapping(source = "username", target = "username")
+  @Mapping(source = "player_id", target = "id")
+  @Mapping(source = "host", target = "host")
   PlayerGetDTO convertPlayerToPlayerGetDTO(Player player);
 
   @Mapping(source = "username", target = "username")
@@ -62,6 +66,7 @@ PlayerScoreGetDTO convertPlayerScoreToPlayerScoreGetDTO(PlayerScore playerScore)
 
     @Mapping(source = "foodCategory", target = "foodCategory", qualifiedByName = "mapFoodCategory")
     @Mapping(source = "roundLimit", target = "roundLimit")
+    @Mapping(source = "timerLength", target = "timerLength")
     GameConfig convertUserInputDTOToGameConfig(UserInputDTO userInputDto);
 
     @Named("mapFoodCategory")

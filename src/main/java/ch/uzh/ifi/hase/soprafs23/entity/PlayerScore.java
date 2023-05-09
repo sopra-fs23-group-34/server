@@ -22,5 +22,6 @@ public class PlayerScore implements Serializable {
     private Long player_id;
     @Column (nullable = false)
     private int score;
-
+    @Column (nullable = false)
+    private Boolean winner;
 }
