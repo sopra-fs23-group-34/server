@@ -53,7 +53,6 @@ public class Lobby {
 
     public Scores playGame(GameConfig config) throws InterruptedException, IOException {
         Game game = new Game(players, config, notifier, foodService);
-        System.out.println(this.roundTimer);
         this.gameStarted = true;
         return game.run();
     }
