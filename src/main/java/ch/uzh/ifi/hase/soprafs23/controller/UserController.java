@@ -70,7 +70,6 @@ public class UserController {
                                             @RequestHeader("token") String token,
                                             @RequestHeader(required = false, value = "password") String password,
                                             @PathVariable Long id){
-        System.out.println(password);
         User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutUpdateDTOtoEntity(userPutDTO);
         User updatedUser = userService.updateUser(userWithUpdateInformation, token, id, password);
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
@@ -118,5 +117,15 @@ public class UserController {
     public void logoutGuestUser(@RequestHeader("token") String token,
                                  @PathVariable Long userId) {
       userService.logoutGuestUser(token, userId);
+    }
+
+    @PostMapping("/users/test")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String[] test() {
+      String a = (System.getenv("API_KEY1"));
+      String b = (System.getenv("API_KEY2"));
+      String c = (System.getenv("API_KEY3"));
+        return new String[]{a, b, c};
     }
 }

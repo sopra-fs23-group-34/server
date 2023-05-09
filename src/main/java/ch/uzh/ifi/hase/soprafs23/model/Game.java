@@ -34,7 +34,6 @@ public class Game {
         for (int round=0; round < roundLimit; round ++){
             Round gameRound = new Round(notifier, foodService);
             Food food = gameRound.getFood(foods.get(round));
-            System.out.println(roundTime);
             gameRound.run(food, roundTime);
             for (Player player: players.values()){
                         scores.updateRoundScore(player.getGuesses(),
