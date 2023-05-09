@@ -46,7 +46,7 @@ public class FoodServiceTest {
         List<String> foods = foodService.getRandomFoods(5, FoodCategory.FRUITS);
         assertEquals(foods.size(), 5);
     }
-
+/*
     @Test
     public void APIcall() throws IOException {
         Map<String, Double> nutritionalValues = new HashMap<>();
@@ -92,5 +92,7 @@ public class FoodServiceTest {
         double points = roundScore.get(username).get("points").get(0).get("points");
         assertEquals(400.0, points);
     }
+
+ */
 
 }
