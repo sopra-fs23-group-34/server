@@ -12,5 +12,6 @@ runtime_config:
   runtime_version: "17"
 
 env_variables:
-  API_KEY1: $API_KEYS
+  spring_profiles_active: "dev"
   API_KEYS: $API_KEYS
+  DB_PASSWORD: $DB_PASSWORD
