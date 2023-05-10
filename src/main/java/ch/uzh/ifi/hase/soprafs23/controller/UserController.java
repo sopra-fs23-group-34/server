@@ -116,13 +116,4 @@ public class UserController {
                                  @PathVariable Long userId) {
       userService.logoutGuestUser(token, userId);
     }
-
-    @PostMapping("/users/test")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public String[] test() {
-      String a = (System.getenv("API_KEY1"));
-      String d = (System.getenv("API_KEYS"));
-        return new String[]{a, d};
-    }
 }
