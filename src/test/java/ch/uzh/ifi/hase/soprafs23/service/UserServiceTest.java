@@ -42,7 +42,7 @@ class UserServiceTest {
     testUser.setId(1L);
     testUser.setUsername("testUsername");
     testUser.setPassword("testPassword");
-    testUser.setEmail("test@email.com");
+    testUser.setEmail("testMail");
 
     // when -> any object is being save in the userRepository -> return the dummy
     // testUser
@@ -78,6 +78,35 @@ class UserServiceTest {
     // is thrown
     assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
   }
+    @Test
+    void createUser_duplicateMail_throwsException() {
+      User user = new User();
+      user.setEmail("testMail");
+      user.setUsername("anotherUsername");
+      user.setPassword("somePassword");
+        // given -> a first user has already been created
+        userService.createUser(testUser);
+
+        // when -> setup additional mocks for UserRepository
+        when(userRepository.findByUsername(Mockito.any())).thenReturn(user);
+
+        // then -> attempt to create second user with same user -> check that an error
+        // is thrown
+        assertThrows(ResponseStatusException.class, () -> userService.createUser(user));
+    }
+  /*
+  @Test
+    void createUser_unauthorizedName_throwsException() {
+      User user = new User();
+      user.setUsername("JohnLemon");
+
+        // when -> setup additional mocks for UserRepository
+        when(userRepository.findByUsername(Mockito.any())).thenReturn(user);
+
+        // then -> attempt to create second user with same user -> check that an error
+        // is thrown
+        assertThrows(ResponseStatusException.class, () -> userService.createUser(user));
+    }*/
 
   @Test
   void createUser_duplicateInputs_throwsException() {
@@ -159,7 +188,7 @@ class UserServiceTest {
       when(userRepository.findByUsername(loginUser.getUsername())).thenReturn(userDatabase);
       assertThrows(ResponseStatusException.class, () -> userService.loginUser(loginUser));
     }
-    /*
+
     @Test
     void testLogoutUserSuccess() {
         User loginUser = new User();
@@ -170,18 +199,20 @@ class UserServiceTest {
         User userDatabase = new User();
         userDatabase.setUsername("testUser");
         userDatabase.setPassword("testPassword");
+        userDatabase.setToken("testToken");
         userDatabase.setId(1L);
 
         when(userRepository.findByUsername(loginUser.getUsername())).thenReturn(userDatabase);
-        when(userService.getUserById(1L)).thenReturn(userDatabase);
         when(userRepository.findById(loginUser.getId())).thenReturn(Optional.of(userDatabase));
+
 
         User loggedInUser = userService.loginUser(loginUser);
         assertEquals(UserStatus.ONLINE, loggedInUser.getStatus());
 
-        User loggedOutUser = userService.logoutUser("testUser",1L);
+        User loggedOutUser = userService.logoutUser("testToken",1L);
         assertEquals(UserStatus.OFFLINE, loggedOutUser.getStatus());
-    }*/
+    }
+
 
     @Test
     void testGetUserById() {
@@ -207,7 +238,52 @@ class UserServiceTest {
 
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
+    /*
+    @Test
+    void testUpdateUserInvalidPassword() {
+        User loginUser = new User();
+        loginUser.setUsername("testUser");
+        loginUser.setPassword("testPassword");
+        loginUser.setToken("testToken");
+        loginUser.setId(1L);
+
+        User userUpdateInformation = new User();
+        loginUser.setUsername("userTest");
+        loginUser.setPassword("newPassword");
 
 
+        when(userRepository.findById(1L)).thenReturn(loginUser);
+
+        userService.updateUser(userUpdateInformation,"testToken",1L,"testPassword");
+    }
+*/
+    /*
+    @Test
+    void testUpdateScores() {
+        User loginUser = new User();
+        loginUser.setUsername("testUser");
+        loginUser.setPassword("testPassword");
+        loginUser.setToken("testToken");
+        loginUser.setId(1L);
+        loginUser.setId(1L);
+
+        HashMap playerGuesses = new HashMap<>();
+        playerGuesses.put("carbs", 100);
+        HashMap nutritionValues = new HashMap<>();
+
+        Food food = new Food("banana",nutritionValues,"myImage");
+
+        Scores scores = new Scores();
+        scores.updateRoundScore(playerGuesses,"testUser",food);
+
+        //when(userRepository.findByUsername(loginUser.getUsername())).thenReturn(userDatabase);
+        //when(userRepository.findById(loginUser.getId())).thenReturn(Optional.of(userDatabase));
+
+
+        userService.updateScores(scores);
+        System.out.println(userService.getTotalScores(testUser.getId(),testUser.getToken()));
+
+    }
+*/
 
 }

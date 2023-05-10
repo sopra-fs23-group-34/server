@@ -51,8 +51,8 @@ public class UserService {
     public User createUser(User newUser) {
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.ONLINE);
-        newUser.setCreationDate(new Date());
-        newUser.setGuestUser(false);
+        newUser.setCreation_date(new Date());
+        newUser.set_guest_user(false);
         checkForGuestUser(newUser);
         checkIfUserExists(newUser);
         newUser = userRepository.save(newUser);
@@ -65,12 +65,12 @@ public class UserService {
         User newGuestUser = new User();
         newGuestUser.setUsername(username);
         newGuestUser.setPassword(username + "password");
-        newGuestUser.setCreationDate(new Date());
+        newGuestUser.setCreation_date(new Date());
         newGuestUser.setEmail(username + "@email.com");
         newGuestUser.setToken(UUID.randomUUID().toString());
         newGuestUser.setStatus(UserStatus.ONLINE);
         newGuestUser.setBio("Hi I am a Guest User");
-        newGuestUser.setGuestUser(true);
+        newGuestUser.set_guest_user(true);
         newGuestUser = userRepository.save(newGuestUser);
         userRepository.flush();
         log.debug("Created Information for guestUser: {}", newGuestUser);
@@ -143,6 +143,8 @@ public class UserService {
 
     public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser, String oldPassword) {
         User user = userRepository.findById(idCurrentUser);
+        System.out.println("old Password: "+ oldPassword);
+        System.out.println("user Password: "+user.getPassword());
         if(!oldPassword.equals(user.getPassword())){
             throw new ResponseStatusException(HttpStatus.valueOf(404),
                     "Wrong old Password");
@@ -191,7 +193,7 @@ public class UserService {
         if (scores.getPlacement().keySet().size() > 1) {
         for (String userName : scores.getPlacement().keySet()){
             User user = userRepository.findByUsername(userName);
-            if (!user.isGuestUser()) {
+            if (!user.is_guest_user()) {
                 Long userId = user.getId();
                 PlayerScore playerScore = new PlayerScore();
                 playerScore.setPlayer_id(userId);
