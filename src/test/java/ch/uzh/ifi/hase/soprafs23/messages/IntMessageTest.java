@@ -3,10 +3,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class IntMessageTest {
+class IntMessageTest {
 
     @Test
-    public void testGetContent() {
+    void testGetContent() {
         // Create a new IntMessage object with sample data
         IntMessage message = new IntMessage("number", 42);
 
@@ -17,7 +17,7 @@ public class IntMessageTest {
         assertEquals(42, content);
     }
     @Test
-    public void testGetTopic() {
+    void testGetTopic() {
         IntMessage message = new IntMessage("number", 42);
         assertEquals("number", message.getTopic());
     }

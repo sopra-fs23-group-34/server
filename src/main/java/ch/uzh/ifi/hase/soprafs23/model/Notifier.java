@@ -16,8 +16,6 @@ public interface Notifier {
     void publishRoundStart();
     void publishFinalScoreStart();
     void publishRoundScoreStart();
-    /*
-    void error(String msg, String topic, Long user_id);
-*/
+
 
 }

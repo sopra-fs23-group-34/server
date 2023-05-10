@@ -1,8 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
-import ch.uzh.ifi.hase.soprafs23.model.Food;
-import ch.uzh.ifi.hase.soprafs23.model.Scores;
 import ch.uzh.ifi.hase.soprafs23.repository.FoodsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +20,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class FoodServiceTest {
+class FoodServiceTest {
     @Mock
     private FoodsRepository foodRepository;
 
@@ -35,7 +33,7 @@ public class FoodServiceTest {
     }
 
     @Test
-    public void getRandomFoods() throws IOException {
+    void getRandomFoods() throws IOException {
         List<String> f = new ArrayList<>();
         f.add("Apple");
         f.add("Banana");
@@ -44,11 +42,11 @@ public class FoodServiceTest {
         f.add("Strawberry");
         when(foodService.getRandomFoods(5, FoodCategory.FRUITS)).thenReturn(f);
         List<String> foods = foodService.getRandomFoods(5, FoodCategory.FRUITS);
-        assertEquals(foods.size(), 5);
+        assertEquals( 5, foods.size());
     }
 /*
     @Test
-    public void APIcall() throws IOException {
+    void APIcall() throws IOException {
         Map<String, Double> nutritionalValues = new HashMap<>();
         nutritionalValues.put("carbs", 13.807692307692307);
         nutritionalValues.put("protein", 0.2582417582417582);
@@ -63,7 +61,7 @@ public class FoodServiceTest {
     }
 
     @Test
-    public void RoundTest() throws IOException {
+    void RoundTest() throws IOException {
         List<String> randomFood = new ArrayList<>();
         randomFood.add("apple");
         when(foodService.getRandomFoods(1, FoodCategory.FRUITS)).thenReturn(randomFood);

@@ -9,10 +9,10 @@ public class FoodMessage implements Message{
     @Getter
     private String topic;
     private HashMap<String, String> food = new HashMap();
-    public FoodMessage(String topic, String name, String image_link) {
+    public FoodMessage(String topic, String name, String imageLink) {
         this.topic=topic;
         this.food.put("name",name);
-        this.food.put("imageLink", image_link);
+        this.food.put("imageLink", imageLink);
     }
     public HashMap<String, String> getContent(){
         return food;

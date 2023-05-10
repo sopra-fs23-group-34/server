@@ -47,8 +47,8 @@ public class Lobby {
         }
     }
 
-    public void removePlayer(long user_id) {
-        players.remove(user_id);
+    public void removePlayer(long userId) {
+        players.remove(userId);
     }
 
     public Scores playGame(GameConfig config) throws InterruptedException, IOException {

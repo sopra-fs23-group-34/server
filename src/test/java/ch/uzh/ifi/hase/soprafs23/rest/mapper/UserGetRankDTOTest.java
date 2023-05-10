@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserGetRankDTOTest {
+class UserGetRankDTOTest {
 
     @Test
-    public void getters() {
+    void getters() {
         UserGetRankDTO userGetRankDTO = new UserGetRankDTO();
         String username = "TestUsername";
         String totalScore = "1";

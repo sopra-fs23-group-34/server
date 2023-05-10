@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(LobbyController.class)
-public class LobbyControllerTest {
+class LobbyControllerTest {
     @Autowired
     private MockMvc mockMvc;
 /*
@@ -28,7 +28,7 @@ public class LobbyControllerTest {
 
 
     @Test
-    public void createLobby_successful() throws Exception {
+    void createLobby_successful() throws Exception {
         String code = "abcdef";
         given(lobbyService.createLobby()).willReturn(code);
 
@@ -41,7 +41,7 @@ public class LobbyControllerTest {
     }
 
     @Test
-    public void joinLobby_successful() throws Exception {
+    void joinLobby_successful() throws Exception {
         given(lobbyService.joinLobby(Mockito.any(), Mockito.any())).willReturn(true);
 
         MockHttpServletRequestBuilder postRequest = post("/lobbys/join/1/1")

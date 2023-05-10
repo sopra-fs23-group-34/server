@@ -42,7 +42,7 @@ public class FoodService {
         return foodsRepository.findsSpecificFoods(foodCategory.getValue(), num);
     }
 
-    public Food getFood(String food_name) throws IOException {
+    public Food getFood(String foodName) throws IOException {
         List<String[]> apiKeys = new ArrayList<>();
         /*
         if (apiKey == null) {
@@ -68,7 +68,7 @@ public class FoodService {
                 String appId = apiKeys.get(tries)[0];
                 String appKey = apiKeys.get(tries)[1];
                 String remoteUser = apiKeys.get(tries)[2];
-                responseBody = apiCall(food_name, appId, appKey, remoteUser);
+                responseBody = apiCall(foodName, appId, appKey, remoteUser);
                 break;
             } catch (Exception e) {
                 tries++;
@@ -78,7 +78,7 @@ public class FoodService {
             }
         }
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Object> map = objectMapper.readValue(responseBody, Map.class);
+        Map map = objectMapper.readValue(responseBody, Map.class);
         List<Map<String, Object>> foods = (List<Map<String, Object>>) map.get("foods");
         Map<String, Object> food = foods.get(0);
         Map<String, String> photo = (Map<String, String>) food.get("photo");
@@ -92,14 +92,14 @@ public class FoodService {
         double fatDouble = fat.doubleValue();
         double proteinDouble = protein.doubleValue();
         double carbsDouble = carbs.doubleValue();
-        String name = (String) food.get("food_name");
-        String image_link = photo.get("highres");
+        String name = (String) food.get("foodName");
+        String imageLink = photo.get("highres");
         Map<String, Double> nutritional_values = new HashMap<>();
         nutritional_values.put("calories", (double) Math.round((caloriesDouble/servingWeightDouble * 100)));
         nutritional_values.put("fat", (double) Math.round((fatDouble / servingWeightDouble * 100)));
         nutritional_values.put("protein", (double) Math.round((proteinDouble / servingWeightDouble * 100)));
         nutritional_values.put("carbs", (double) Math.round((carbsDouble / servingWeightDouble * 100)));
-        return new Food(name, nutritional_values, image_link);
+        return new Food(name, nutritional_values, imageLink);
         }
 
         private String apiCall(String foodName, String appId, String appKey, String remoteUser) {

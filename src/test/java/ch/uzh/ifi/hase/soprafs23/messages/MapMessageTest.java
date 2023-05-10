@@ -7,9 +7,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MapMessageTest {
+class MapMessageTest {
     @Test
-    public void testGetContent() {
+    void testGetContent() {
         Map<String, Integer> contentMap = new HashMap<>();
         contentMap.put("player1", 34);
 
@@ -23,7 +23,7 @@ public class MapMessageTest {
         assertEquals(contentMap, content);
     }
     @Test
-    public void testGetTopic() {
+    void testGetTopic() {
         Map<String, Integer> contentMap = new HashMap<>();
         contentMap.put("player1", 34);
 

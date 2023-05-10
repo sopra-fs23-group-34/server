@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-public class ScoresTest {
+class ScoresTest {
     private Scores scores;
 
     @BeforeEach
@@ -14,7 +14,7 @@ public class ScoresTest {
         scores = new Scores();
     }
     @Test
-    public void testUpdateRoundScore() {
+    void testUpdateRoundScore() {
 
         Map<String, Double> playerGuesses = new HashMap<>();
         playerGuesses.put("calories", 100.0);
@@ -46,7 +46,7 @@ public class ScoresTest {
 
     }
     @Test
-    public void testUpdateRoundScoreThreePlayer() {
+    void testUpdateRoundScoreThreePlayer() {
         String username = "player1";
         String username1 = "player2";
         String username2 = "player3";

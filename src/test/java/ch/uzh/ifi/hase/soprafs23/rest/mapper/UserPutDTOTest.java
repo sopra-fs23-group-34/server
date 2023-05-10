@@ -5,9 +5,9 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserPutDTOTest {
+class UserPutDTOTest {
     @Test
-    public void getters() {
+    void getters() {
         Long id = 1L;
         String username = "TestUsername";
         UserStatus userStatus = UserStatus.ONLINE;

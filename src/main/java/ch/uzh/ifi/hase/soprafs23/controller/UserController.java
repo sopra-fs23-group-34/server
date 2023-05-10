@@ -89,8 +89,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<LeaderBoard> getGlobalRanking(@RequestHeader("token") String token, @RequestHeader("id") Long id) {
-        List<LeaderBoard> scores = userService.getTotalScores(id, token);
-       return scores;
+        return userService.getTotalScores(id, token);
     }
 
     @GetMapping("/users/statistics/{userId}")
@@ -98,8 +97,7 @@ public class UserController {
     @ResponseBody
     public PlayerStatistics getStatistics( @PathVariable Long userId, @RequestHeader("token") String token, @RequestHeader("id") Long id) {
        // you can only check your own scores, otherwise the authentication has to be handled differently
-        PlayerStatistics playerStatistics = userService.getStatistics(userId, token, id);
-        return playerStatistics;
+        return userService.getStatistics(userId, token, id);
     }
 
     @PostMapping("/users/login/guestUser")

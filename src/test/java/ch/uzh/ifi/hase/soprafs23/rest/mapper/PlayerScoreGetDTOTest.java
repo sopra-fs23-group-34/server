@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PlayerScoreGetDTOTest {
+class PlayerScoreGetDTOTest {
 
     @Test
-    public void getters() {
+    void getters() {
         PlayerScoreGetDTO playerScoreGetDTO = new PlayerScoreGetDTO();
         String score = "1";
         int id = 1;

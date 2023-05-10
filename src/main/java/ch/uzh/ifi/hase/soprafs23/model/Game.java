@@ -12,7 +12,6 @@ public class Game {
     private final FoodService foodService;
     private final int roundLimit;
     private final int roundTime;
-    private final int scoreTime;
     private final FoodCategory foodCategory;
     private final Notifier notifier;
 
@@ -25,7 +24,6 @@ public class Game {
         this.foodCategory = config.getFoodCategory();
         this.foodService = foodService;
         this.roundTime = config.getTimerLength();
-        this.scoreTime = 10;
     }
 
     public Scores run() throws InterruptedException, IOException {
@@ -42,7 +40,7 @@ public class Game {
             }
             notifier.publishRoundScores(scores.getRoundScore());
             notifier.publishGameScores(scores.getPlacement());
-            Thread.sleep(10000/*scoreTime*/);
+            Thread.sleep(10000);
         }
         notifier.publishFinalScoreStart();
         notifier.publishFinalScores(scores.getPlacement());

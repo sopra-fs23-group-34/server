@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CodeGeneratorTest {
+class CodeGeneratorTest {
     CodeGenerator generator = new CodeGenerator();
     String code = generator.nextCode();
     @Test
-    public void testNextCodeLength() {
+    void testNextCodeLength() {
 
         assertNotNull(code);
         assertEquals(6, code.length());
@@ -17,7 +17,7 @@ public class CodeGeneratorTest {
 
     }
     @Test
-    public void testNextCodeValidChars(){
+    void testNextCodeValidChars(){
 
         String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         for (char c : code.toCharArray()) {
@@ -25,7 +25,7 @@ public class CodeGeneratorTest {
         }
     }
     @Test
-    public void testNextCodeUniqueCode(){
+    void testNextCodeUniqueCode(){
 
         String code2 = generator.nextCode();
         assertNotEquals(code, code2);

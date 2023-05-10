@@ -43,8 +43,7 @@ public class LobbyService {
 
     public List<Player> updatePlayerList(String gameCode) {
         Lobby lobby = lobbyStorage.getLobby(gameCode);
-        List<Player> lobbyPlayers = new ArrayList<>(lobby.getPlayers().values());
-        return lobbyPlayers;
+        return new ArrayList<>(lobby.getPlayers().values());
     }
 
 
@@ -58,16 +57,15 @@ public class LobbyService {
         return isHost;
     }
 
-    public List<Player> leaveLobby(String gameCode, Long user_id) {
+    public List<Player> leaveLobby(String gameCode, Long userId) {
         checkIfLobbyExists(gameCode);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
-        if (lobby.getPlayers().get(user_id).isHost()){
+        if (lobby.getPlayers().get(userId).isHost()){
             StringMessage stringMessage = new StringMessage("error", "host_left");
             simpMessagingTemplate.convertAndSend(WebsocketConfig.LOBBIES + gameCode, stringMessage);
         }
-        lobby.removePlayer(user_id);
-        List<Player> lobbyPlayers = new ArrayList<>(lobby.getPlayers().values());
-        return lobbyPlayers;
+        lobby.removePlayer(userId);
+        return new ArrayList<>(lobby.getPlayers().values());
     }
 
     private void checkIfHost(String gameCode, Long user_id) {
@@ -98,8 +96,8 @@ public class LobbyService {
         }).start();
     }
 
-    public void setPlayerGuesses(String gameCode, long player_id, Map<String, Double> guesses) {
+    public void setPlayerGuesses(String gameCode, long playerId, Map<String, Double> guesses) {
         Lobby lobby = lobbyStorage.getLobby(gameCode);
-        lobby.getPlayers().get(player_id).setGuesses(guesses);
+        lobby.getPlayers().get(playerId).setGuesses(guesses);
     }
 }

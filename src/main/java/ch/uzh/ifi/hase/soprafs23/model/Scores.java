@@ -17,31 +17,31 @@ public class Scores {
     }
 
     public void updateRoundScore(Map<String,Double> playerGuesses, String username, Food food){
-        int player_points = 0;
+        int playerPoints = 0;
         for ( String playerGuessFoodKey : playerGuesses.keySet()){
             int absoluteDeviation = (int)Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
-            player_points += max(100-(absoluteDeviation*absoluteDeviation),0);
+            playerPoints += max(100-(absoluteDeviation*absoluteDeviation),0);
 
             ArrayList<Map<String,Double>> roundFoodScore = new ArrayList<>();
-            Map<String,Double> real_values = new HashMap<>();
-            real_values.put("actualValues", food.getNutritionValues().get(playerGuessFoodKey));
-            Map<String,Double> guessed_values = new HashMap<>();
-            guessed_values.put("guessedValues", playerGuesses.get(playerGuessFoodKey));
+            Map<String,Double> realValues = new HashMap<>();
+            realValues.put("actualValues", food.getNutritionValues().get(playerGuessFoodKey));
+            Map<String,Double> guessedValues = new HashMap<>();
+            guessedValues.put("guessedValues", playerGuesses.get(playerGuessFoodKey));
             Map<String,Double> deviation = new HashMap<>();
             deviation.put("deviations", (double)absoluteDeviation);
 
-            roundFoodScore.add(real_values);
-            roundFoodScore.add(guessed_values);
+            roundFoodScore.add(realValues);
+            roundFoodScore.add(guessedValues);
             roundFoodScore.add(deviation);
             roundScore.put(playerGuessFoodKey,roundFoodScore);
         }
         ArrayList<Map<String,Double>> roundPointsTotal = new ArrayList<>();
         Map<String,Double> roundPointsTotalMap = new HashMap<>();
-        roundPointsTotalMap.put("points",(double) player_points);
+        roundPointsTotalMap.put("points",(double) playerPoints);
         roundPointsTotal.add(roundPointsTotalMap);
         roundScore.put("points",roundPointsTotal);
         players_points.putIfAbsent(username, 0);
-        players_points.put(username, players_points.get(username) + player_points);
+        players_points.put(username, players_points.get(username) + playerPoints);
         //deep copy the roundScore map
         Map<String,ArrayList<Map<String,Double>>> copyRoundScore = new HashMap<>();
         for(String o : roundScore.keySet()){
@@ -51,7 +51,7 @@ public class Scores {
         //put into the final variable
         roundScoresAllPlayer.put(username,copyRoundScore);
         //sort roundScores descending
-        roundScoresAllPlayer = sortByRoundScores.sortByPointsAllScores(roundScoresAllPlayer);
+        roundScoresAllPlayer = SortByRoundScores.sortByPointsAllScores(roundScoresAllPlayer);
 
     }
 
@@ -60,8 +60,7 @@ public class Scores {
     }
 
     public Map<String,Integer> getPlacement(){
-        //todo eventually sort and take the 4 best plus the player and return in the order of points
-        players_points = sortByRoundScores.sortPlayerPoints(players_points);
+        players_points = SortByRoundScores.sortPlayerPoints(players_points);
         return players_points;
     }
 

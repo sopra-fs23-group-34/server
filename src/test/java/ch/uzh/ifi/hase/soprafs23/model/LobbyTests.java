@@ -14,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 
-public class LobbyTests {
+class LobbyTests {
 
     FoodService foodService = mock(FoodService.class);
     SimpMessagingTemplate simpMessagingTemplate = mock(SimpMessagingTemplate.class);
 
     @Test
-    public void testCheckIfGameStarted_false() {
+    void testCheckIfGameStarted_false() {
         Lobby lobby = new Lobby("XXXXXX", simpMessagingTemplate, foodService);
         try {
             lobby.checkIfGameStarted();
@@ -30,7 +30,7 @@ public class LobbyTests {
     }
 
     @Test
-    public void testCheckIfGameStarted_true() {
+    void testCheckIfGameStarted_true() {
         Lobby lobby = new Lobby("gameCode", simpMessagingTemplate, foodService);
         ReflectionTestUtils.setField(lobby,"gameStarted",true);
         try {
@@ -42,7 +42,7 @@ public class LobbyTests {
         }
     }
     @Test
-    public void testAddPlayer() {
+    void testAddPlayer() {
         Lobby lobby = new Lobby("gameCode", simpMessagingTemplate, foodService);
         Player player = new Player("name", 12L,true);
         lobby.addPlayer(player);
@@ -51,7 +51,7 @@ public class LobbyTests {
         assertEquals(player, players.get(12L));
     }
     @Test
-    public void testAddPlayer_gameStarted() {
+    void testAddPlayer_gameStarted() {
         Lobby lobby = new Lobby("gameCode", simpMessagingTemplate, foodService);
         Player player = new Player("name", 12L,false);
         ReflectionTestUtils.setField(lobby,"gameStarted",true);
@@ -64,7 +64,7 @@ public class LobbyTests {
         }
     }
     @Test
-    public void testRemovePlayer() {
+    void testRemovePlayer() {
         Lobby lobby = new Lobby("gameCode", simpMessagingTemplate, foodService);
         Player player1 = new Player("name", 12L,false);
         Player player2 = new Player("name1", 13L,false);

@@ -9,10 +9,10 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserGetDTOTest {
+class UserGetDTOTest {
 
     @Test
-    public void getters() {
+    void getters() {
         Long id = 1L;
         String username = "TestUsername";
         UserStatus userStatus = UserStatus.ONLINE;

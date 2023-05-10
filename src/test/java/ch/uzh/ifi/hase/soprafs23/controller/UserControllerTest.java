@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * This tests if the UserController works.
  */
 @WebMvcTest(UserController.class)
-public class UserControllerTest {
+class UserControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
@@ -45,7 +45,7 @@ public class UserControllerTest {
   private UserService userService;
 
   @Test
-  public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
+  void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
     // given
     User user = new User();
     user.setUsername("firstname@lastname");
@@ -69,7 +69,7 @@ public class UserControllerTest {
   }
 
   @Test
-  public void createUser_validInput_userCreated() throws Exception {
+  void createUser_validInput_userCreated() throws Exception {
     // given
     User user = new User();
     user.setId(1L);
@@ -103,7 +103,7 @@ public class UserControllerTest {
     }
 
   @Test
-  public void createUser_unsuccessful_EmailAlreadyUsed() throws Exception {
+  void createUser_unsuccessful_EmailAlreadyUsed() throws Exception {
 
     UserPostDTO userPostDTO = new UserPostDTO();
     userPostDTO.setPassword("Test User");
@@ -124,7 +124,7 @@ public class UserControllerTest {
     }
 
   @Test
-  public void createUser_unsuccessful_UsernameAlreadyUsed() throws Exception {
+  void createUser_unsuccessful_UsernameAlreadyUsed() throws Exception {
 
     UserPostDTO userPostDTO = new UserPostDTO();
     userPostDTO.setPassword("Test User");
@@ -146,7 +146,7 @@ public class UserControllerTest {
 
 
   @Test
-  public void loginUser_successful() throws Exception {
+  void loginUser_successful() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -180,7 +180,7 @@ public class UserControllerTest {
     }
 
   @Test
-  public void loginUser_unsuccessful_invalidUsername() throws Exception {
+  void loginUser_unsuccessful_invalidUsername() throws Exception {
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
         userPostDTO.setUsername("testUsernameInvalid");
@@ -199,7 +199,7 @@ public class UserControllerTest {
     }
 
   @Test
-  public void loginUser_unsuccessful_invalidPassword() throws Exception {
+  void loginUser_unsuccessful_invalidPassword() throws Exception {
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
         userPostDTO.setUsername("testUsernameInvalid");
@@ -218,7 +218,7 @@ public class UserControllerTest {
     }
 
   @Test
-  public void logout_successful() throws Exception {
+  void logout_successful() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -242,7 +242,7 @@ public class UserControllerTest {
     }
 
   @Test
-  public void logout_unsuccessful_invalidToken() throws Exception {
+  void logout_unsuccessful_invalidToken() throws Exception {
         given(userService.logoutUser(Mockito.any(), Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to perform this action"));
 
         // when/then -> do the request + validate the result
@@ -299,7 +299,7 @@ public class UserControllerTest {
 */
 
     @Test
-    public void getUser_successful() throws Exception {
+    void getUser_successful() throws Exception {
         User user = new User();
         user.setId(1L);
         user.setPassword("Test User");
@@ -327,7 +327,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUser_unsuccessful_unauthorized() throws Exception {
+    void getUser_unsuccessful_unauthorized() throws Exception {
         given(userService.getUserById(Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to perform this action"));
 
 
