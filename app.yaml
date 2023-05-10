@@ -12,4 +12,5 @@ runtime_config:
   runtime_version: "17"
 
 env_variables:
+  API_KEY1: $API_KEYS
   API_KEYS: $API_KEYS
