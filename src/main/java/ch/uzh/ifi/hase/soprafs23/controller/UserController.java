@@ -122,9 +122,7 @@ public class UserController {
     @ResponseBody
     public String[] test() {
       String a = (System.getenv("API_KEY1"));
-      String b = (System.getenv("API_KEY2"));
-      String c = (System.getenv("API_KEY3"));
       String d = (System.getenv("API_KEYS"));
-        return new String[]{a, b, c, d};
+        return new String[]{a, d};
     }
 }
