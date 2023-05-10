@@ -78,7 +78,7 @@ class UserControllerTest {
     user.setEmail("test@mail.ch");
     user.setToken("1");
     user.setStatus(UserStatus.ONLINE);
-    user.setCreationDate(new Date());
+    user.setCreation_date(new Date());
 
     UserPostDTO userPostDTO = new UserPostDTO();
     userPostDTO.setPassword("Test User");
@@ -155,7 +155,7 @@ class UserControllerTest {
         user.setEmail("test@mail.ch");
         user.setToken("1");
         user.setStatus(UserStatus.ONLINE);
-        user.setCreationDate(new Date());
+        user.setCreation_date(new Date());
 
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
@@ -227,7 +227,7 @@ class UserControllerTest {
         user.setEmail("test@mail.ch");
         user.setToken("11");
         user.setStatus(UserStatus.ONLINE);
-        user.setCreationDate(new Date());
+        user.setCreation_date(new Date());
 
         given(userService.logoutUser(Mockito.any(), Mockito.any())).willReturn(user);
 
