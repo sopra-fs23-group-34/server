@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class UserServiceTest {
+class UserServiceTest {
 
 
   @Mock
@@ -51,7 +51,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void createUser_validInputs_success() {
+  void createUser_validInputs_success() {
     // when -> any object is being save in the userRepository -> return the dummy
     // testUser
     User createdUser = userService.createUser(testUser);
@@ -67,7 +67,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void createUser_duplicateUserName_throwsException() {
+  void createUser_duplicateUserName_throwsException() {
     // given -> a first user has already been created
     userService.createUser(testUser);
 
@@ -80,7 +80,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void createUser_duplicateInputs_throwsException() {
+  void createUser_duplicateInputs_throwsException() {
     // given -> a first user has already been created
     userService.createUser(testUser);
 
@@ -91,6 +91,38 @@ public class UserServiceTest {
     // is thrown
     assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
   }
+    @Test
+    void loginGuestUser() {
+        // when -> any object is being save in the userRepository -> return the dummy
+        // testUser
+        User createdUser = userService.loginGuestUser();
+
+        // then
+        verify(userRepository, times(1)).save(Mockito.any());
+
+
+        assertNotNull(createdUser.getId());
+        assertNotNull(createdUser.getEmail());
+        assertNotNull(createdUser.getPassword());
+        assertNotNull(createdUser.getUsername());
+        assertNotNull(createdUser.isHost());
+    }/*
+    @Test
+    public void logoutGuestUser() {
+        // when -> any object is being save in the userRepository -> return the dummy
+        // testUser
+        User createdUser = userService.loginGuestUser();
+
+        // then
+        verify(userRepository, times(1)).save(Mockito.any());
+
+        assertNotNull(createdUser.getId());
+        assertNotNull(createdUser.getEmail());
+        assertNotNull(createdUser.getPassword());
+        assertNotNull(createdUser.getUsername());
+        assertNotNull(createdUser.isHost());
+        userService.logoutGuestUser(createdUser.getToken(),createdUser.getId());
+    }*/
   @Test
   void testLoginUserSuccess() {
       User loginUser = new User();
@@ -127,6 +159,30 @@ public class UserServiceTest {
       when(userRepository.findByUsername(loginUser.getUsername())).thenReturn(userDatabase);
       assertThrows(ResponseStatusException.class, () -> userService.loginUser(loginUser));
     }
+    /*
+    @Test
+    void testLogoutUserSuccess() {
+        User loginUser = new User();
+        loginUser.setUsername("testUser");
+        loginUser.setPassword("testPassword");
+        loginUser.setId(1L);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setPassword("testPassword");
+        userDatabase.setId(1L);
+
+        when(userRepository.findByUsername(loginUser.getUsername())).thenReturn(userDatabase);
+        when(userService.getUserById(1L)).thenReturn(userDatabase);
+        when(userRepository.findById(loginUser.getId())).thenReturn(Optional.of(userDatabase));
+
+        User loggedInUser = userService.loginUser(loginUser);
+        assertEquals(UserStatus.ONLINE, loggedInUser.getStatus());
+
+        User loggedOutUser = userService.logoutUser("testUser",1L);
+        assertEquals(UserStatus.OFFLINE, loggedOutUser.getStatus());
+    }*/
+
     @Test
     void testGetUserById() {
         Long id = 1L;
@@ -151,6 +207,7 @@ public class UserServiceTest {
 
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
+
 
 
 }

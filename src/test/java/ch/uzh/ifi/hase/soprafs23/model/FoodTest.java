@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FoodTest {
+class FoodTest {
 
     @Test
-    public void testFoodConstructor() {
+    void testFoodConstructor() {
         String name = "Apple";
         Map<String, Double> nutritionValues = new HashMap<>();
         nutritionValues.put("calories", 52.0);
@@ -23,7 +23,7 @@ public class FoodTest {
     }
 
     @Test
-    public void testFoodName() {
+    void testFoodName() {
         String name = "Orange";
         Map<String, Double> nutritionValues = new HashMap<>();
         nutritionValues.put("calories", 47.0);

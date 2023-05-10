@@ -8,9 +8,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SortByRoundScoresTest {
+class SortByRoundScoresTest {
     @Test
-    public void testUnsortedMap(){
+    void testUnsortedMap(){
         Map<String, Integer>unsortedMap = new HashMap<>();
         unsortedMap.put("max",1);
         unsortedMap.put("maxi", 3);

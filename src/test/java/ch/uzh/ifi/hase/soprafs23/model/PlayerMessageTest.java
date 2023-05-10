@@ -3,7 +3,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PlayerMessageTest {
+class PlayerMessageTest {
     @Test
     void testGetRoundLimit() {
         PlayerMessage playerMessage = new PlayerMessage();

@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class UserInputDTOTest {
+class UserInputDTOTest {
 
     @Test
-    public void getters() {
+    void getters() {
         String foodCategory = "ALL";
         int roundLimit = 1;
         UserInputDTO userInputDTO = new UserInputDTO("ALL", 1, 23);

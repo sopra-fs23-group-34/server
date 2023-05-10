@@ -22,7 +22,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class FoodServiceTest {
+class FoodServiceTest {
     @Mock
     private FoodsRepository foodRepository;
 
@@ -35,7 +35,7 @@ public class FoodServiceTest {
     }
 
     @Test
-    public void getRandomFoods() throws IOException {
+    void getRandomFoods() throws IOException {
         List<String> f = new ArrayList<>();
         f.add("Apple");
         f.add("Banana");
@@ -48,7 +48,7 @@ public class FoodServiceTest {
     }
 /*
     @Test
-    public void APIcall() throws IOException {
+    void APIcall() throws IOException {
         Map<String, Double> nutritionalValues = new HashMap<>();
         nutritionalValues.put("carbs", 13.807692307692307);
         nutritionalValues.put("protein", 0.2582417582417582);
@@ -63,7 +63,7 @@ public class FoodServiceTest {
     }
 
     @Test
-    public void RoundTest() throws IOException {
+    void RoundTest() throws IOException {
         List<String> randomFood = new ArrayList<>();
         randomFood.add("apple");
         when(foodService.getRandomFoods(1, FoodCategory.FRUITS)).thenReturn(randomFood);

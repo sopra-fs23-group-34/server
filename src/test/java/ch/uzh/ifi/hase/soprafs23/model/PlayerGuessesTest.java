@@ -6,7 +6,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PlayerGuessesTest {
+class PlayerGuessesTest {
     @Test
     void testGetContent() {
         PlayerGuesses playerGuesses = new PlayerGuesses();

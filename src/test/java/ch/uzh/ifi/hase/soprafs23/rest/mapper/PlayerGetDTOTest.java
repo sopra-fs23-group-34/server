@@ -4,10 +4,10 @@ import ch.uzh.ifi.hase.soprafs23.rest.dto.PlayerGetDTO;
 
 import org.junit.jupiter.api.Test;
 
-public class PlayerGetDTOTest {
+class PlayerGetDTOTest {
 
     @Test
-    public void getUsername() {
+    void getUsername() {
         String username = "Test User";
         PlayerGetDTO playerGetDTOTest = new PlayerGetDTO();
         playerGetDTOTest.setUsername("Test User");

@@ -4,7 +4,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GameConfigTest {
+class GameConfigTest {
     @Test
     void testGetRoundLimit() {
         GameConfig config = new GameConfig();
