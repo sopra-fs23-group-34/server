@@ -76,6 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up environment variables
+        uses: actions/checkout@v2
         env:
           API_KEYS: ${{ secrets.API_KEYS }}
 
