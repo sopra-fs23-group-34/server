@@ -6,7 +6,6 @@ import ch.uzh.ifi.hase.soprafs23.repository.FoodsRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -53,11 +52,14 @@ public class FoodService {
             apiKeys.add(new String[] {APIKeysArray[i*2], APIKeysArray[i*2+1], "0"});
             apiKeys.add(new String[] {APIKeysArray[i*2], APIKeysArray[i*2+1], "1"});
         }
+/*
+        apiKeys.add(new String[]{"9dd751e9","7470f45a98ccc467dc3c043b1f997cf4", "0"});
+        apiKeys.add(new String[]{"9dd751e9","7470f45a98ccc467dc3c043b1f997cf4", "1"});
+        apiKeys.add(new String[]{"376a71b1","46ef2c8c088e63f038d5b2e0d43cf066", "0"});
+        apiKeys.add(new String[]{"376a71b1","46ef2c8c088e63f038d5b2e0d43cf066", "1"});
 
-        //apiKeys.add(new String[]{"9dd751e9","7470f45a98ccc467dc3c043b1f997cf4", "0"});
-        //apiKeys.add(new String[]{"9dd751e9","7470f45a98ccc467dc3c043b1f997cf4", "1"});
-        //apiKeys.add(new String[]{"376a71b1","46ef2c8c088e63f038d5b2e0d43cf066", "0"});
-        //apiKeys.add(new String[]{"376a71b1","46ef2c8c088e63f038d5b2e0d43cf066", "1"});
+ */
+
         int maxTries = apiKeys.size();
         int tries = 0;
         String responseBody = "";
