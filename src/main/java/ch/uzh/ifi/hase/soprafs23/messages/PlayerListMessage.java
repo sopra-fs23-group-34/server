@@ -14,9 +14,6 @@ public class PlayerListMessage implements Message{
     public List<PlayerGetDTO> getContent(){
         return lobbyPlayers;
     }
-    public List<PlayerGetDTO> getPlayers() {
-        return null;
-    }
     @Override
     public String getType() {
         return null;

@@ -110,9 +110,8 @@ public class UserService {
 
     public User getUserById(Long id) {
         Optional<User> OptionalUser = userRepository.findById(id);
-        User user = OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+        return OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("user with userid " + id + " was not found")));
-        return user;
     }
 
     public User loginGuestUser() {
@@ -193,9 +192,9 @@ public class UserService {
         for (String userName : scores.getPlacement().keySet()){
             User user = userRepository.findByUsername(userName);
             if (!user.isGuestUser()) {
-                Long user_id = user.getId();
+                Long userId = user.getId();
                 PlayerScore playerScore = new PlayerScore();
-                playerScore.setPlayer_id(user_id);
+                playerScore.setPlayer_id(userId);
                 int maxScore = scores.getPlacement().values().stream().max(Double::compare).orElseThrow(
                         () -> new NoSuchElementException("No maximum value found in the placement scores."));
                 boolean winner = scores.getPlacement().get(userName) == maxScore;
@@ -212,8 +211,8 @@ public class UserService {
         authenticateUser(token,id);
         List<LeaderBoard> playerScores = playerScoreRepository.getGlobalLeaderboard();
         for (LeaderBoard playerScore : playerScores){
-            Long player_id = playerScore.getUser_id();
-            playerScore.setUsername(getUserById(player_id).getUsername());
+            Long playerId = playerScore.getUserId();
+            playerScore.setUsername(getUserById(playerId).getUsername());
         }
         return playerScores;
     }
@@ -231,8 +230,8 @@ public class UserService {
     private void checkForGuestUser(User userToBeCreated) {
         List<String> usernames = guestUserStorage.getUsernamesString();
         String username = userToBeCreated.getUsername();
-        for (int i = 0; i < usernames.size(); i++) {
-            if (userToBeCreated.getUsername().startsWith(usernames.get(i))) {
+        for (String s : usernames) {
+            if (userToBeCreated.getUsername().startsWith(s)) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT,
                         "add User failed because username is reserved for guests");
             }

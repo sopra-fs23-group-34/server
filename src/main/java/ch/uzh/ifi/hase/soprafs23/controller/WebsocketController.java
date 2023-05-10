@@ -31,8 +31,7 @@ public class WebsocketController {
         for (Player player : players) {
             playersGetDTOs.add(DTOMapper.INSTANCE.convertPlayerToPlayerGetDTO(player));
         }
-        PlayerListMessage playerListMessage = new PlayerListMessage("players", playersGetDTOs );
-        return playerListMessage;
+        return new PlayerListMessage("players", playersGetDTOs );
     }
 
     @MessageMapping("/guess/{gameCode}/{player_id}")
@@ -49,7 +48,6 @@ public class WebsocketController {
         for (Player player : playerList) {
             playersGetDTOs.add(DTOMapper.INSTANCE.convertPlayerToPlayerGetDTO(player));
         }
-        PlayerListMessage playerListMessage = new PlayerListMessage("players", playersGetDTOs );
-        return playerListMessage;
+        return new PlayerListMessage("players", playersGetDTOs );
     }
 }

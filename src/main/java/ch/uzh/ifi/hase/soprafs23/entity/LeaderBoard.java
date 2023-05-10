@@ -6,13 +6,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LeaderBoard {
-        private Long user_id;
+        private Long userId;
         private Long totalScore;
 
         private String username;
 
-        public LeaderBoard(Long user_id, Long totalScore){
-            this.user_id = user_id;
+        public LeaderBoard(Long userId, Long totalScore){
+            this.userId = userId;
             this.totalScore = totalScore;
         }
 
