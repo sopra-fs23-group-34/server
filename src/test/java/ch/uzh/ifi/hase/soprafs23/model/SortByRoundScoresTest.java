@@ -21,8 +21,8 @@ class SortByRoundScoresTest {
         ArrayList<Integer>valuesSorted = new ArrayList<>();
         valuesSorted.addAll(unsortedMap.values());
 
-        assertEquals(valuesSorted.get(0),3);
-        assertEquals(valuesSorted.get(1),2);
-        assertEquals(valuesSorted.get(2),1);
+        assertEquals(3, valuesSorted.get(0));
+        assertEquals(2, valuesSorted.get(1));
+        assertEquals(1, valuesSorted.get(2));
     }
 }

@@ -2,7 +2,10 @@ package ch.uzh.ifi.hase.soprafs23.rest.mapper;
 
 import ch.uzh.ifi.hase.soprafs23.rest.dto.PlayerGetDTO;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.Assert.assertEquals;
 
 class PlayerGetDTOTest {
 
@@ -11,6 +14,6 @@ class PlayerGetDTOTest {
         String username = "Test User";
         PlayerGetDTO playerGetDTOTest = new PlayerGetDTO();
         playerGetDTOTest.setUsername("Test User");
-        assert playerGetDTOTest.getUsername().equals(username);
+        Assertions.assertEquals(playerGetDTOTest.getUsername(), username);
     }
 }

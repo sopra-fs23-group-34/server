@@ -1,8 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
-import ch.uzh.ifi.hase.soprafs23.model.Food;
-import ch.uzh.ifi.hase.soprafs23.model.Scores;
 import ch.uzh.ifi.hase.soprafs23.repository.FoodsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,7 +42,7 @@ class FoodServiceTest {
         f.add("Strawberry");
         when(foodService.getRandomFoods(5, FoodCategory.FRUITS)).thenReturn(f);
         List<String> foods = foodService.getRandomFoods(5, FoodCategory.FRUITS);
-        assertEquals(foods.size(), 5);
+        assertEquals( 5, foods.size());
     }
 /*
     @Test
