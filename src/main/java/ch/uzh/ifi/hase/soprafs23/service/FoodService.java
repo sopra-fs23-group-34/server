@@ -26,7 +26,7 @@ import java.util.Map;
 @Transactional
 public class FoodService {
 
-    //private final String apiKey = System.getenv("API_KEY");
+    private final String apiKey = System.getenv("API_KEYS");
 
     private final FoodsRepository foodsRepository;
 
@@ -44,7 +44,7 @@ public class FoodService {
 
     public Food getFood(String foodName) throws IOException {
         List<String[]> apiKeys = new ArrayList<>();
-        /*
+
         if (apiKey == null) {
             throw new IOException("API Keys are null");
         }
@@ -54,12 +54,10 @@ public class FoodService {
             apiKeys.add(new String[] {APIKeysArray[i*2], APIKeysArray[i*2+1], "1"});
         }
 
-         */
-
-        apiKeys.add(new String[]{"9dd751e9","7470f45a98ccc467dc3c043b1f997cf4", "0"});
-        apiKeys.add(new String[]{"9dd751e9","7470f45a98ccc467dc3c043b1f997cf4", "1"});
-        apiKeys.add(new String[]{"376a71b1","46ef2c8c088e63f038d5b2e0d43cf066", "0"});
-        apiKeys.add(new String[]{"376a71b1","46ef2c8c088e63f038d5b2e0d43cf066", "1"});
+        //apiKeys.add(new String[]{"9dd751e9","7470f45a98ccc467dc3c043b1f997cf4", "0"});
+        //apiKeys.add(new String[]{"9dd751e9","7470f45a98ccc467dc3c043b1f997cf4", "1"});
+        //apiKeys.add(new String[]{"376a71b1","46ef2c8c088e63f038d5b2e0d43cf066", "0"});
+        //apiKeys.add(new String[]{"376a71b1","46ef2c8c088e63f038d5b2e0d43cf066", "1"});
         int maxTries = apiKeys.size();
         int tries = 0;
         String responseBody = "";
