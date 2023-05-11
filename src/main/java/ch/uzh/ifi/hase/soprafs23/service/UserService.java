@@ -49,12 +49,12 @@ public class UserService {
     }
 
     public User createUser(User newUser) {
+        checkForGuestUser(newUser);
+        checkIfUserExists(newUser);
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.ONLINE);
         newUser.setCreation_date(new Date());
         newUser.set_guest_user(false);
-        checkForGuestUser(newUser);
-        checkIfUserExists(newUser);
         newUser = userRepository.save(newUser);
         userRepository.flush();
         log.debug("Created Information for User: {}", newUser);
@@ -238,7 +238,6 @@ public class UserService {
                 throw new ResponseStatusException(HttpStatus.CONFLICT,
                         "add User failed because username is reserved for guests");
             }
-
         }
         if (username.substring(0, 5).equalsIgnoreCase("guest")) {
             throw new ResponseStatusException(HttpStatus.CONFLICT,

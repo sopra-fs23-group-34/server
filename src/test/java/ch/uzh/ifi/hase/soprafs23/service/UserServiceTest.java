@@ -89,7 +89,12 @@ class UserServiceTest {
       user.setPassword("somePassword");
       userService.createUser(testUser);
 
-      when(userRepository.findByUsername(Mockito.any())).thenReturn(user);
+      User userDatabase = new User();
+      userDatabase.setEmail("testMail");
+      userDatabase.setUsername("Username");
+      userDatabase.setPassword("Password");
+
+      when(userRepository.findByEmail(Mockito.any())).thenReturn(userDatabase);
 
       assertThrows(ResponseStatusException.class, () -> userService.createUser(user));
   }
@@ -553,6 +558,40 @@ class UserServiceTest {
         assertEquals(5, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getGamesWon());
         assertEquals(0.5, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getWinRatio());
         assertEquals(500, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getHighScore());
+    }
+
+    @Test
+    void getStatisticsErrorPlayerNotFound() {
+        User user = new User();
+        user.setId(1L);
+        user.setToken("11");
+        user.setUsername("testUser");
+        PlayerStatistics playerStatistics = new PlayerStatistics(1L, 10L, 500, 5L, 0.5);
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+        when(playerScoreRepository.getPlayerStatistics(user.getId())).thenReturn(null);
+        assertThatThrownBy(() -> userService.getStatistics(user.getId(), user.getToken(), user.getId()).getUserId())
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Player not found");
+    }
+
+    @Test
+    void createUserErrorUsernameForGuestUserReserved() {
+      User newUser = new User();
+      newUser.setUsername("FreddieMer-curry123456");
+      List<String> reservedUsernamesStrings = new ArrayList<>();
+      reservedUsernamesStrings.add("FreddieMer-curry");
+      when(guestUserStorage.getUsernamesString()).thenReturn(reservedUsernamesStrings);
+      assertThatThrownBy(() -> userService.createUser(newUser))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("add User failed because username is reserved for guests");
+    }
+    @Test
+    void createUserErrorUsernameForGuestUserReserved2() {
+        User newUser = new User();
+        newUser.setUsername("Guest123456");
+        assertThatThrownBy(() -> userService.createUser(newUser))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("add User failed because username is reserved for guests");
     }
 
 }
