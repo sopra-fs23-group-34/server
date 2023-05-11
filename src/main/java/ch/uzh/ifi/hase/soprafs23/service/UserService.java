@@ -105,7 +105,6 @@ public class UserService {
     public void logoutGuestUser(String token, Long id) {
         User loggedOutGuestUser = logoutUser(token, id);
         guestUserStorage.removeUsername(loggedOutGuestUser.getUsername());
-
     }
 
     public User getUserById(Long id) {
