@@ -1,17 +1,12 @@
 package ch.uzh.ifi.hase.soprafs23.service;
-
-
 import ch.uzh.ifi.hase.soprafs23.config.WebsocketConfig;
-import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.messages.StringMessage;
 import ch.uzh.ifi.hase.soprafs23.model.CodeGenerator;
 import ch.uzh.ifi.hase.soprafs23.model.GameConfig;
 import ch.uzh.ifi.hase.soprafs23.model.Lobby;
 import ch.uzh.ifi.hase.soprafs23.model.Player;
-import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import ch.uzh.ifi.hase.soprafs23.storage.LobbyStorage;
-import ch.uzh.ifi.hase.soprafs23.storage.UserStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,52 +18,18 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.server.ResponseStatusException;
-import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
-import ch.uzh.ifi.hase.soprafs23.entity.User;
-import ch.uzh.ifi.hase.soprafs23.model.CodeGenerator;
-import ch.uzh.ifi.hase.soprafs23.model.Lobby;
-import ch.uzh.ifi.hase.soprafs23.model.Player;
-import ch.uzh.ifi.hase.soprafs23.storage.LobbyStorage;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.random.RandomGenerator;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-public class LobbyServiceTest {
-
-
-    @Mock
-    private UserService userService;
-
 
 
 public class LobbyServiceTest {
     @InjectMocks
     private LobbyService lobbyService;
-
 
     @Mock
     private LobbyStorage lobbyStorage;
@@ -80,7 +41,6 @@ public class LobbyServiceTest {
     private CodeGenerator codeGenerator;
 
     @Mock
-
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @Mock
@@ -89,8 +49,6 @@ public class LobbyServiceTest {
 
     private Lobby testLobby;
 
-
-    SimpMessagingTemplate simpMessagingTemplate;
 
     @Mock
     UserService userService;
@@ -138,15 +96,6 @@ public class LobbyServiceTest {
         boolean host2 = lobbyService.joinLobby("a", 2L);
         assertEquals(host2,false);
 
-
-
-        //lobbyService.joinLobby(new Player("a",1L, true));
-        //assertEquals(testLobby.getPlayers().get(1L).getPlayer_id(),1L );
-        //assertEquals(testLobby.getPlayers().get(1L).getUsername(),"a" );
-        //assertEquals(testLobby.getPlayers().get(1L).isHost(),true );
-        //testLobby.addPlayer(new Player("b",2L, false));
-        //assertEquals(testLobby.getPlayers().get(2L).isHost(),false );
-        //assertEquals(testLobby.getPlayers().keySet().size(),2 );
     }
 
     @Test
@@ -226,7 +175,7 @@ public class LobbyServiceTest {
 
 
     @Test
-    public void setPlayerGuesses(){
+    public void setPlayerGuessesSucess(){
         String gameCode = "a";
         long playerId = 1L;
         Map<String, Double> guesses = new HashMap<>();
@@ -241,8 +190,6 @@ public class LobbyServiceTest {
         verify(mockPlayer).setGuesses(guesses);
     }
 
-
-    }
 
     @Test
     void test_nullLobby() {
