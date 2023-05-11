@@ -30,4 +30,12 @@ class MapMessageTest {
         MapMessage message = new MapMessage("map", contentMap);
         assertEquals("map", message.getTopic());
     }
+    @Test
+    void GetTypeTest(){
+        Map<String, Integer> contentMap = new HashMap<>();
+        contentMap.put("player1", 34);
+        MapMessage message = new MapMessage("map", contentMap);
+        String s = message.getType();
+        assertEquals(null,s);
+    }
 }

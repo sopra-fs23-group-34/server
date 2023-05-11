@@ -3,6 +3,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class IntMessageTest {
 
     @Test
@@ -20,6 +23,12 @@ class IntMessageTest {
     void testGetTopic() {
         IntMessage message = new IntMessage("number", 42);
         assertEquals("number", message.getTopic());
+    }
+    @Test
+    void GetTypeTest(){
+        IntMessage message = new IntMessage("number", 42);
+        String s = message.getType();
+        assertEquals(null,s);
     }
 }
 
