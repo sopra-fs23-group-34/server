@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
@@ -46,15 +47,12 @@ class UserServiceTest {
   public void setup() {
     MockitoAnnotations.openMocks(this);
 
-    // given
     testUser = new User();
     testUser.setId(1L);
     testUser.setUsername("testUsername");
     testUser.setPassword("testPassword");
     testUser.setEmail("testMail");
 
-    // when -> any object is being save in the userRepository -> return the dummy
-    // testUser
     when(userRepository.save(Mockito.any())).thenReturn(testUser);
 
   }
@@ -77,14 +75,10 @@ class UserServiceTest {
 
   @Test
   void createUser_duplicateUserName_throwsException() {
-    // given -> a first user has already been created
     userService.createUser(testUser);
 
-    // when -> setup additional mocks for UserRepository
     when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
 
-    // then -> attempt to create second user with same user -> check that an error
-    // is thrown
     assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
   }
     @Test
@@ -93,48 +87,34 @@ class UserServiceTest {
       user.setEmail("testMail");
       user.setUsername("anotherUsername");
       user.setPassword("somePassword");
-        // given -> a first user has already been created
-        userService.createUser(testUser);
+      userService.createUser(testUser);
 
-        // when -> setup additional mocks for UserRepository
-        when(userRepository.findByUsername(Mockito.any())).thenReturn(user);
+      when(userRepository.findByUsername(Mockito.any())).thenReturn(user);
 
-        // then -> attempt to create second user with same user -> check that an error
-        // is thrown
-        assertThrows(ResponseStatusException.class, () -> userService.createUser(user));
-    }
+      assertThrows(ResponseStatusException.class, () -> userService.createUser(user));
+  }
 
   @Test
     void createUser_unauthorizedName_throwsException() {
       User user = new User();
       user.setUsername("JohnLemon");
 
-        // when -> setup additional mocks for UserRepository
-        when(userRepository.findByUsername(Mockito.any())).thenReturn(user);
+      when(userRepository.findByUsername(Mockito.any())).thenReturn(user);
 
-        // then -> attempt to create second user with same user -> check that an error
-        // is thrown
-        assertThrows(ResponseStatusException.class, () -> userService.createUser(user));
-    }
+      assertThrows(ResponseStatusException.class, () -> userService.createUser(user));
+  }
 
   @Test
   void createUser_duplicateInputs_throwsException() {
-    // given -> a first user has already been created
     userService.createUser(testUser);
 
-    // when -> setup additional mocks for UserRepository
     when(userRepository.findByUsername(Mockito.any())).thenReturn(testUser);
 
-    // then -> attempt to create second user with same user -> check that an error
-    // is thrown
     assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser));
   }
     @Test
     void loginGuestUser() {
-        // when -> any object is being save in the userRepository -> return the dummy
-        // testUser
         User createdUser = userService.loginGuestUser();
-        // then
         verify(userRepository, times(1)).save(Mockito.any());
 
         assertNotNull(createdUser.getId());
@@ -156,7 +136,6 @@ class UserServiceTest {
       assertEquals(guestUser.getUsername(), loggedInUser.getUsername());
       assertEquals(guestUser.getPassword(), loggedInUser.getPassword());
       assertEquals(guestUser.getId(), loggedInUser.getId());
-
     }
 
     @Test
@@ -169,7 +148,6 @@ class UserServiceTest {
       user2.setId(2L);
       when(userRepository.findById(user1.getId())).thenReturn(Optional.of(user2));
       assertThrows(ResponseStatusException.class, () -> userService.authenticateUser("11", 1L));
-
     }
 
 
@@ -220,9 +198,6 @@ class UserServiceTest {
       user2.setId(2L);
       when(userRepository.findById(user1.getId())).thenReturn(Optional.of(user2));
       assertThrows(ResponseStatusException.class, () -> userService.verifyUser("11", 1L));
-
-
-
     }
 
     @Test
@@ -254,9 +229,7 @@ class UserServiceTest {
         Long id = 1L;
         User user = new User();
         user.setId(id);
-
         when(userRepository.findById(id)).thenReturn(Optional.of(user));
-
         User result = userService.getUserById(id);
 
         assertEquals(user, result);
@@ -264,7 +237,6 @@ class UserServiceTest {
     @Test
     void testGetUserByIdNotFound() {
         Long id = 1L;
-
         when(userRepository.findById(id)).thenReturn(Optional.empty());
 
         ResponseStatusException exception =
@@ -282,27 +254,24 @@ class UserServiceTest {
       user.setToken("11");
       user.setId(1L);
 
-
       User userDatabase = new User();
       userDatabase.setUsername("testUser");
       userDatabase.setPassword("testPassword");
       userDatabase.setToken("11");
       userDatabase.setId(1L);
-
       when(userRepository.findById(user.getId())).thenReturn(Optional.of(userDatabase));
-
       userService.logoutGuestUser("11", 1L);
     }
 
-    /*
+
     @Test
-    void updateUserOnlyPasswordSuccessful() {
-      User userWithUpdateInfos = new User();
-      userWithUpdateInfos.setUsername("testUser");
-      userWithUpdateInfos.setPassword("newPW");
-      userWithUpdateInfos.setId(1L);
-      userWithUpdateInfos.setToken("11");
-      userWithUpdateInfos.set_guest_user(true);
+    void updateUserErrorGuestUser() {
+      User userWithUpdateInfo = new User();
+      userWithUpdateInfo.setUsername("testUser");
+      userWithUpdateInfo.setPassword("newPW");
+      userWithUpdateInfo.setId(1L);
+      userWithUpdateInfo.setToken("11");
+      userWithUpdateInfo.set_guest_user(true);
 
       User userDatabase = new User();
       userDatabase.setUsername("testUser");
@@ -310,10 +279,214 @@ class UserServiceTest {
       userDatabase.setToken("11");
       userDatabase.setId(1L);
       userDatabase.set_guest_user(true);
-      given(userRepository.findById(1L)).willReturn(userDatabase);
-      userService.updateUser(userWithUpdateInfos, "11", userWithUpdateInfos.getId(), null);
+      when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+      assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Profiles of guest users can't be changed!");
+  }
+
+
+
+    @Test
+    void updateUserUsernameNotFree() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername("testUser");
+        userWithUpdateInfo.setEmail("email");
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setEmail("email");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+
+        User userDatabase2 = new User();
+        userDatabase2.setId(2L);
+
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        when(userRepository.findByUsername(userWithUpdateInfo.getUsername())).thenReturn(userDatabase2);
+
+        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("You can't pick the same username as somebody else!");    }
+
+    @Test
+    void updateUserEmailNotFree() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername("testUser");
+        userWithUpdateInfo.setEmail("email");
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setEmail("email");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+
+        User userDatabase2 = new User();
+        userDatabase2.setId(2L);
+
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        when(userRepository.findByEmail(userWithUpdateInfo.getEmail())).thenReturn(userDatabase2);
+        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("You can't pick the same mail as somebody else!");
     }
-     */
+
+    @Test
+    void updateUserUsernameEmptyString() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername(null);
+        userWithUpdateInfo.setEmail("email");
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setEmail("email");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Username and Email can't be empty Strings!");
+    }
+
+    @Test
+    void updateUserEmailEmptyString() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername("testUser");
+        userWithUpdateInfo.setEmail(null);
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setEmail("email");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Username and Email can't be empty Strings!");
+    }
+    @Test
+    void updateUserUsernameAndEmailEmptyString() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername(null);
+        userWithUpdateInfo.setEmail(null);
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setEmail("email");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Username and Email can't be empty Strings!");
+    }
+    @Test
+    void updateUserUsernameAndEmailAndBioSuccessful() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername("newUsername");
+        userWithUpdateInfo.setEmail("newMail");
+        userWithUpdateInfo.setBio("newBio");
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setEmail("email");
+        userDatabase.setBio("bio");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null);
+    }
+
+    @Test
+    void updateUserOnlyPasswordSuccessful() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername("testUser");
+        userWithUpdateInfo.setPassword("newPW");
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setPassword("testPassword");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), userDatabase.getPassword());
+    }
+
+    @Test
+    void updateUserOnlyPasswordEmptyString() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername("testUser");
+        userWithUpdateInfo.setEmail("email");
+        userWithUpdateInfo.setPassword(null);
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setEmail("email");
+        userDatabase.setPassword("testPassword");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), userDatabase.getPassword()))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Password can't be empty Strings!");
+    }
+
+    @Test
+    void updateUserOnlyPasswordErrorWrongOldPassword() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername("testUser");
+        userWithUpdateInfo.setPassword("newPW");
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setPassword("testPassword");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), userWithUpdateInfo.getPassword()))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Wrong old Password");
+    }
 
     @Test
     void updateScores() {
@@ -364,7 +537,6 @@ class UserServiceTest {
         assertEquals(100L, userService.getTotalScores(1L, "11").get(0).getTotalScore());
         assertEquals("testUser", userService.getTotalScores(1L, "11").get(0).getUsername());
         assertEquals(1L, userService.getTotalScores(1L, "11").get(0).getUserId());
-
     }
 
     @Test
@@ -381,8 +553,6 @@ class UserServiceTest {
         assertEquals(5, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getGamesWon());
         assertEquals(0.5, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getWinRatio());
         assertEquals(500, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getHighScore());
-
-
     }
 
 }

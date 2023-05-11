@@ -142,7 +142,7 @@ public class UserService {
 
     public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser, String oldPassword) {
         authenticateUser(token, idCurrentUser);
-        User user = userRepository.findById(idCurrentUser);
+        User user = getUserById(idCurrentUser);
         if (user.is_guest_user()) {
             throw new ResponseStatusException(HttpStatus.valueOf(404),
                     "Profiles of guest users can't be changed!");
