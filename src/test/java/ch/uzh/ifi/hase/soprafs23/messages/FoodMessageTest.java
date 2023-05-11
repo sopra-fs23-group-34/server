@@ -24,5 +24,11 @@ class FoodMessageTest {
         FoodMessage message = new FoodMessage("food", "Pizza", "https://example.com/pizza.jpg");
         assertEquals("food", message.getTopic());
     }
+    @Test
+    void GetTypeTest(){
+        FoodMessage message = new FoodMessage("food", "Pizza", "https://example.com/pizza.jpg");
+        String s = message.getType();
+        assertEquals(null,s);
+    }
 }
 
