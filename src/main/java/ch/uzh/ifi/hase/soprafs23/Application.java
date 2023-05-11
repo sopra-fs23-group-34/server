@@ -14,10 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class Application {
 
   public static void main(String[] args) {
-
-      System.setProperty("API_KEYS", "9dd751e9,7470f45a98ccc467dc3c043b1f997cf4,376a71b1,46ef2c8c088e63f038d5b2e0d43cf066");
-      System.setProperty("DB_PASSWORD", "v2Rr,[3#zhsRc`F[S454'_*35'2$¨ü¨0509anxsd5%&dfg%/&34|¢§°6cxv ljr'23'1");
-      SpringApplication.run(Application.class, args);
+    SpringApplication.run(Application.class, args);
   }
 
   @GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
