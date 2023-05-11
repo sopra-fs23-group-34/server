@@ -5,6 +5,7 @@ import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;
 import ch.uzh.ifi.hase.soprafs23.entity.PlayerStatistics;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +29,10 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,7 +53,7 @@ class UserControllerTest {
   private UserService userService;
 
   @Test
-  void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
+  void givenUsersWhenGetUsersThenReturnJsonArray() throws Exception {
     // given
     User user = new User();
     user.setUsername("firstname@lastname");
@@ -73,7 +77,7 @@ class UserControllerTest {
   }
 
   @Test
-  void createUser_validInput_userCreated() throws Exception {
+  void createUserValidInputUserCreated() throws Exception {
     // given
     User user = new User();
     user.setId(1L);
@@ -107,7 +111,7 @@ class UserControllerTest {
     }
 
   @Test
-  void createUser_unsuccessful_EmailAlreadyUsed() throws Exception {
+  void createUserUnsuccessfulEmailAlreadyUsed() throws Exception {
 
     UserPostDTO userPostDTO = new UserPostDTO();
     userPostDTO.setPassword("Test User");
@@ -128,7 +132,7 @@ class UserControllerTest {
     }
 
   @Test
-  void createUser_unsuccessful_UsernameAlreadyUsed() throws Exception {
+  void createUserUnsuccessfulUsernameAlreadyUsed() throws Exception {
 
     UserPostDTO userPostDTO = new UserPostDTO();
     userPostDTO.setPassword("Test User");
@@ -150,7 +154,7 @@ class UserControllerTest {
 
 
   @Test
-  void loginUser_successful() throws Exception {
+  void loginUserSuccessful() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -184,7 +188,7 @@ class UserControllerTest {
     }
 
     @Test
-    void loginGuestUser_successful() throws Exception {
+    void loginGuestUserSuccessful() throws Exception {
         // given
         User guestUser = new User();
         guestUser.setId(1L);
@@ -218,7 +222,7 @@ class UserControllerTest {
     }
 
   @Test
-  void loginUser_unsuccessful_invalidUsername() throws Exception {
+  void loginUserUnsuccessfulInvalidUsername() throws Exception {
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
         userPostDTO.setUsername("testUsernameInvalid");
@@ -237,7 +241,7 @@ class UserControllerTest {
     }
 
   @Test
-  void loginUser_unsuccessful_invalidPassword() throws Exception {
+  void loginUserUnsuccessfulInvalidPassword() throws Exception {
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
         userPostDTO.setUsername("testUsernameInvalid");
@@ -256,7 +260,7 @@ class UserControllerTest {
     }
 
   @Test
-  void logout_successful() throws Exception {
+  void logoutSuccessful() throws Exception {
         // given
         User user = new User();
         user.setId(1L);
@@ -320,7 +324,7 @@ class UserControllerTest {
     }
 
   @Test
-  void logout_unsuccessful_invalidToken() throws Exception {
+  void logoutUnsuccessfulInvalidToken() throws Exception {
         given(userService.logoutUser(Mockito.any(), Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to perform this action"));
 
         // when/then -> do the request + validate the result
@@ -334,7 +338,7 @@ class UserControllerTest {
                 .andExpect(status().reason("You are not authorized to perform this action"));
     }
     @Test
-    void logoutGuest_successful() throws Exception {
+    void logoutGuestSuccessful() throws Exception {
 
        // when/then -> do the request + validate the result
         MockHttpServletRequestBuilder postRequest = post("/users/logout/guestUser/1")
@@ -346,52 +350,74 @@ class UserControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-
-
-/*
-
-  @Test
-  public void updateUser_successful() throws Exception {
-        // given
+    @Test
+    void updateUseSuccessful() throws Exception {
         User user = new User();
         user.setId(1L);
-        user.setPassword("new Test User");
-        user.setUsername("newTestUsername");
-        user.setEmail("newtest@mail.ch");
+        user.setPassword("newPassword");
+        user.setUsername("testUsername");
+        user.setEmail("test@mail.ch");
         user.setToken("11");
         user.setStatus(UserStatus.ONLINE);
-        user.setBio("Hi I am a testUser:)");
+        user.setBio("Hi");
 
-        // 3x Mockito --> error
-        given(userService.updateUser(Mockito.any(), Mockito.any(),Mockito.any(), Mockito.any())).willReturn(user);
-
+        given(userService.updateUser(Mockito.any(User.class), Mockito.anyString(), Mockito.anyLong(), Mockito.anyString())).willThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to perform this action"));
         UserPutDTO userPutDTO = new UserPutDTO();
         userPutDTO.setPassword("newPassword");
         userPutDTO.setUsername("testUsername");
         userPutDTO.setEmail("test@mail.ch");
-        userPutDTO.setBio("Hi I am a testUser:)");
+        userPutDTO.setBio("Hi");
+        userPutDTO.setStatus(UserStatus.ONLINE);
 
-        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder putRequest = put("/users/update/1")
+                .header("token", "22")
+                .header("password", "newPassword")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPutDTO));
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isUnauthorized())
+                .andExpect(status().reason("You are not authorized to perform this action"));
+
+    }
+
+    @Test
+    void updateUserUnsuccessfulInvalidToken() throws Exception {
+        User user = new User();
+        user.setId(1L);
+        user.setPassword("newPassword");
+        user.setUsername("testUsername");
+        user.setEmail("test@mail.ch");
+        user.setToken("11");
+        user.setStatus(UserStatus.ONLINE);
+        user.setBio("Hi");
+
+        given(userService.updateUser(Mockito.any(User.class), Mockito.anyString(), Mockito.anyLong(), Mockito.anyString())).willReturn(user);
+        UserPutDTO userPutDTO = new UserPutDTO();
+        userPutDTO.setPassword("newPassword");
+        userPutDTO.setUsername("testUsername");
+        userPutDTO.setEmail("test@mail.ch");
+        userPutDTO.setBio("Hi");
+        userPutDTO.setStatus(UserStatus.ONLINE);
+
         MockHttpServletRequestBuilder putRequest = put("/users/update/1")
                 .header("token", "11")
                 .header("password", "newPassword")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userPutDTO));
 
-        // then
         mockMvc.perform(putRequest)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.token", is(user.getToken())))
                 .andExpect(jsonPath("$.username", is(user.getUsername())))
-                .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())))
                 .andExpect(jsonPath("$.status", is(user.getStatus().toString())))
                 .andExpect(jsonPath("$.bio", is(user.getBio())));
     }
-*/
+
 
     @Test
-    void getUser_successful() throws Exception {
+    void getUserSuccessful() throws Exception {
         User user = new User();
         user.setId(1L);
         user.setPassword("Test User");
@@ -419,7 +445,7 @@ class UserControllerTest {
     }
 
     @Test
-    void getUser_unsuccessful_unauthorized() throws Exception {
+    void getUserUnsuccessfulUnauthorized() throws Exception {
         given(userService.getUserById(Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to perform this action"));
 
 

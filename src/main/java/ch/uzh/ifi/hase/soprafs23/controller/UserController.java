@@ -60,7 +60,7 @@ public class UserController {
     @ResponseBody
     public void logoutUser(@RequestHeader("token") String token,
                            @PathVariable Long userId) {
-        User loggedOutUser = userService.logoutUser(token, userId);
+      userService.logoutUser(token, userId);
    }
 
     @PutMapping("/users/update/{id}")
@@ -70,7 +70,6 @@ public class UserController {
                                             @RequestHeader("token") String token,
                                             @RequestHeader(required = false, value = "password") String password,
                                             @PathVariable Long id){
-        System.out.println(password);
         User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutUpdateDTOtoEntity(userPutDTO);
         User updatedUser = userService.updateUser(userWithUpdateInformation, token, id, password);
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);
