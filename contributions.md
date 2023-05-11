@@ -171,3 +171,33 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 - [ ] sopra-fs23-group-34/server#92
 - [ ] special task
 
+## Week 7: 05.05.2023 - 11.05.2023
+
+### Nico
+- [ ] sopra-fs23-group-34/client#47
+- [ ] sopra-fs23-group-34/client#51
+### Elias
+
+### André
+
+### Nataell
+- [ ] sopra-fs23-group-34/server#93
+- [ ] sopra-fs23-group-34/client#53
+- [ ] sopra-fs23-group-34/client#54
+
+### Maurice
+
+## Week 8: 12.05.2023 - 18.05.2023
+
+### Nico
+- [ ] sopra-fs23-group-34/client#52
+
+### Elias
+
+### André
+
+### Nataell
+- [ ] sopra-fs23-group-34/client#55
+- [ ] sopra-fs23-group-34/client#56
+
+### Maurice
