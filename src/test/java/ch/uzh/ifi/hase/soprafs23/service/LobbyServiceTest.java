@@ -35,7 +35,6 @@ public class LobbyServiceTest {
         @InjectMocks
         private LobbyService lobbyService;
 
-
         @Mock
         private LobbyStorage lobbyStorage;
 
@@ -45,8 +44,8 @@ public class LobbyServiceTest {
         @Mock
         private CodeGenerator codeGenerator;
 
-    @Mock
-    private SimpMessagingTemplate simpMessagingTemplate;
+        @Mock
+        private SimpMessagingTemplate simpMessagingTemplate;
 
         @Mock
         private GameConfig gameConfig;
@@ -55,14 +54,10 @@ public class LobbyServiceTest {
         private Lobby testLobby;
 
 
-    @Mock
-    UserService userService;
-
 
         @BeforeEach
         public void setup() {
             MockitoAnnotations.openMocks(this);
-
             testLobby = new Lobby("1", simpMessagingTemplate, foodService);
         }
 
