@@ -70,6 +70,7 @@ public class UserController {
                                             @RequestHeader("token") String token,
                                             @RequestHeader(required = false, value = "password") String password,
                                             @PathVariable Long id){
+        System.out.println(password);
         User userWithUpdateInformation = DTOMapper.INSTANCE.convertUserPutUpdateDTOtoEntity(userPutDTO);
         User updatedUser = userService.updateUser(userWithUpdateInformation, token, id, password);
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(updatedUser);

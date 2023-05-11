@@ -19,6 +19,7 @@ class PlayerTest {
         player = new Player("Bob", 2L, false);
         assertFalse(player.isHost());
     }
+
     @Test
     void testGetPoints() {
         Player player = new Player("Alice", 1L, false);

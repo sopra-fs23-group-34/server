@@ -2,6 +2,8 @@ package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.model.Food;
+import ch.uzh.ifi.hase.soprafs23.model.Scores;
 import ch.uzh.ifi.hase.soprafs23.repository.UserRepository;
 import ch.uzh.ifi.hase.soprafs23.storage.UserStorage;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +15,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 class UserServiceTest {
@@ -94,7 +98,7 @@ class UserServiceTest {
         // is thrown
         assertThrows(ResponseStatusException.class, () -> userService.createUser(user));
     }
-  /*
+
   @Test
     void createUser_unauthorizedName_throwsException() {
       User user = new User();
@@ -106,7 +110,7 @@ class UserServiceTest {
         // then -> attempt to create second user with same user -> check that an error
         // is thrown
         assertThrows(ResponseStatusException.class, () -> userService.createUser(user));
-    }*/
+    }
 
   @Test
   void createUser_duplicateInputs_throwsException() {
@@ -134,7 +138,8 @@ class UserServiceTest {
         assertNotNull(createdUser.getEmail());
         assertNotNull(createdUser.getPassword());
         assertNotNull(createdUser.getUsername());
-    }/*
+    }
+    /*
     @Test
     public void logoutGuestUser() {
         // when -> any object is being save in the userRepository -> return the dummy
@@ -191,7 +196,7 @@ class UserServiceTest {
     @Test
     void testLogoutUserSuccess() {
         User loginUser = new User();
-        loginUser.setUsername("testUser");
+        loginUser.setUsername("testLoginUser");
         loginUser.setPassword("testPassword");
         loginUser.setId(1L);
 
@@ -203,7 +208,6 @@ class UserServiceTest {
 
         when(userRepository.findByUsername(loginUser.getUsername())).thenReturn(userDatabase);
         when(userRepository.findById(loginUser.getId())).thenReturn(Optional.of(userDatabase));
-
 
         User loggedInUser = userService.loginUser(loginUser);
         assertEquals(UserStatus.ONLINE, loggedInUser.getStatus());
@@ -237,52 +241,5 @@ class UserServiceTest {
 
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
-    /*
-    @Test
-    void testUpdateUserInvalidPassword() {
-        User loginUser = new User();
-        loginUser.setUsername("testUser");
-        loginUser.setPassword("testPassword");
-        loginUser.setToken("testToken");
-        loginUser.setId(1L);
-
-        User userUpdateInformation = new User();
-        loginUser.setUsername("userTest");
-        loginUser.setPassword("newPassword");
-
-
-        when(userRepository.findById(1L)).thenReturn(loginUser);
-
-        userService.updateUser(userUpdateInformation,"testToken",1L,"testPassword");
-    }
-*/
-    /*
-    @Test
-    void testUpdateScores() {
-        User loginUser = new User();
-        loginUser.setUsername("testUser");
-        loginUser.setPassword("testPassword");
-        loginUser.setToken("testToken");
-        loginUser.setId(1L);
-        loginUser.setId(1L);
-
-        HashMap playerGuesses = new HashMap<>();
-        playerGuesses.put("carbs", 100);
-        HashMap nutritionValues = new HashMap<>();
-
-        Food food = new Food("banana",nutritionValues,"myImage");
-
-        Scores scores = new Scores();
-        scores.updateRoundScore(playerGuesses,"testUser",food);
-
-        //when(userRepository.findByUsername(loginUser.getUsername())).thenReturn(userDatabase);
-        //when(userRepository.findById(loginUser.getId())).thenReturn(Optional.of(userDatabase));
-
-
-        userService.updateScores(scores);
-        System.out.println(userService.getTotalScores(testUser.getId(),testUser.getToken()));
-
-    }
-*/
 
 }

@@ -13,8 +13,11 @@ class LeaderBoardTest {
         Long totalScore = 5678L;
         String username = "username";
         LeaderBoard leaderBoard = new LeaderBoard(userId, totalScore);
+        leaderBoard.setUsername(username);
         assertEquals(userId, leaderBoard.getUserId());
         assertEquals(totalScore, leaderBoard.getTotalScore());
+        assertEquals(username, leaderBoard.getUsername());
     }
+
 }
 
