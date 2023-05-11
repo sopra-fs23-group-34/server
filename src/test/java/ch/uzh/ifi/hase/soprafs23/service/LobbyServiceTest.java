@@ -17,9 +17,12 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 public class LobbyServiceTest {
@@ -89,5 +92,30 @@ public class LobbyServiceTest {
         when(lobbyStorage.getLobby("11")).thenReturn(lobby);
         List<Player> playerList = lobbyService.leaveLobby("11", 2L);
         assertEquals(1, playerList.size());
+    }
+
+    @Test
+    void startGame(){
+        Lobby lobby = new Lobby("11", simpMessagingTemplate, foodService);
+        lobby.addPlayer(new Player("testUser1", 1L, false));
+        lobby.addPlayer(new Player("testUser2", 2L, true));
+        when(lobbyStorage.getLobby("11")).thenReturn(lobby);
+    }
+
+    @Test
+    void setPlayerGuesses() {
+        Lobby lobby = new Lobby("11", simpMessagingTemplate, foodService);
+        lobby.addPlayer(new Player("testUser1", 1L, false));
+        lobby.addPlayer(new Player("testUser2", 2L, true));
+        when(lobbyStorage.getLobby("11")).thenReturn(lobby);
+        Map<String, Double> guesses = new HashMap<>();
+        guesses.put("calories", 10.0);
+        guesses.put("carbs", 20.0);
+        guesses.put("fat", 30.0);
+        lobbyService.setPlayerGuesses("11", 1L, guesses);
+        Map<Long, Player> playerList = lobby.getPlayers();
+        assertEquals(10.0, playerList.get(1L).getGuesses().get("calories"));
+        assertEquals(20.0, playerList.get(1L).getGuesses().get("carbs"));
+        assertEquals(30.0, playerList.get(1L).getGuesses().get("fat"));
     }
 }
