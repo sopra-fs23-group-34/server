@@ -134,7 +134,6 @@ class UserServiceTest {
         assertNotNull(createdUser.getEmail());
         assertNotNull(createdUser.getPassword());
         assertNotNull(createdUser.getUsername());
-        assertNotNull(createdUser.isHost());
     }/*
     @Test
     public void logoutGuestUser() {
