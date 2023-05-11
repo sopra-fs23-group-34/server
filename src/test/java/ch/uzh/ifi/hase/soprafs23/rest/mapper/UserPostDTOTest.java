@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserPostDTOTest {
+class UserPostDTOTest {
 
     @Test
-    public void getters() {
+    void getters() {
         String username = "TestUsername";
         String password = "TestPassword";
         String email = "email";

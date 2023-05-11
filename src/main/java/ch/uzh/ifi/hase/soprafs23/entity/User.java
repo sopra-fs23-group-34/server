@@ -48,13 +48,13 @@ public class User implements Serializable, LobbyPlayer{
     private String bio;
 
     @Column(nullable = false)
-    private Date creationDate;
+    private Date creation_date;
 
     @Column
     private boolean host;
 
     @Column
-    private boolean isGuestUser;
+    private boolean is_guest_user;
 
     
 }

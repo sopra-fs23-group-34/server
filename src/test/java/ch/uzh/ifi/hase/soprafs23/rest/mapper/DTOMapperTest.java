@@ -17,9 +17,9 @@ import static org.testng.Assert.assertNull;
  * Tests if the mapping between the internal and the external/API representation
  * works.
  */
-public class DTOMapperTest {
+class DTOMapperTest {
   @Test
-  public void testCreateUser_fromUserPostDTO_toUser_success() {
+  void testCreateUser_fromUserPostDTO_toUser_success() {
     // create UserPostDTO
     UserPostDTO userPostDTO = new UserPostDTO();
     userPostDTO.setUsername("username");
@@ -32,7 +32,7 @@ public class DTOMapperTest {
   }
 
   @Test
-  public void testGetUser_fromUser_toUserGetDTO_success() {
+  void testGetUser_fromUser_toUserGetDTO_success() {
     // create User
     User user = new User();
     user.setUsername("firstname@lastname");
@@ -50,7 +50,7 @@ public class DTOMapperTest {
 
 
     @Test
-    public void testConvertUserPutUpdateDTOtoEntity() {
+    void testConvertUserPutUpdateDTOtoEntity() {
 
         UserPutDTO userPutDTO = new UserPutDTO();
         userPutDTO.setBio("new bio");
@@ -72,7 +72,7 @@ public class DTOMapperTest {
     }
 
     @Test
-    public void testConvertUserPutUpdateDTOtoEntity_NullInput() {
+    void testConvertUserPutUpdateDTOtoEntity_NullInput() {
 
         UserPutDTO userPutDTO = null;
 
@@ -81,7 +81,7 @@ public class DTOMapperTest {
         assertNull(user);
     }
     @Test
-    public void testConvertPlayerScoreToPlayerScoreGetDTO() {
+    void testConvertPlayerScoreToPlayerScoreGetDTO() {
 
         PlayerScore playerScore = new PlayerScore();
         playerScore.setScore(100);
@@ -97,7 +97,7 @@ public class DTOMapperTest {
     }
 
     @Test
-    public void testConvertPlayerScoreToPlayerScoreGetDTO_NullInput() {
+    void testConvertPlayerScoreToPlayerScoreGetDTO_NullInput() {
 
         PlayerScore playerScore = null;
 
@@ -107,7 +107,7 @@ public class DTOMapperTest {
     }
 
     @Test
-    public void testConvertPlayerToPlayerGetDTO() {
+    void testConvertPlayerToPlayerGetDTO() {
 
         Player player = new Player("name",2L,false);
 
@@ -118,7 +118,7 @@ public class DTOMapperTest {
     }
 
     @Test
-    public void testConvertPlayerToPlayerGetDTO_NullInput() {
+    void testConvertPlayerToPlayerGetDTO_NullInput() {
 
         Player player = null;
 
@@ -127,7 +127,7 @@ public class DTOMapperTest {
         assertNull(playerGetDTO);
     }
     @Test
-    public void testConvertUserToUserGetRankDTO() {
+    void testConvertUserToUserGetRankDTO() {
 
         User user = new User();
         user.setUsername("john_doe");
@@ -139,7 +139,7 @@ public class DTOMapperTest {
     }
 
     @Test
-    public void testConvertUserToUserGetRankDTO_NullInput() {
+    void testConvertUserToUserGetRankDTO_NullInput() {
 
         User user = null;
 
@@ -149,7 +149,7 @@ public class DTOMapperTest {
     }
 
     @Test
-    public void testConvertUserInputDTOToGameConfig_NullInput() {
+    void testConvertUserInputDTOToGameConfig_NullInput() {
 
         UserInputDTO userInputDto = null;
 

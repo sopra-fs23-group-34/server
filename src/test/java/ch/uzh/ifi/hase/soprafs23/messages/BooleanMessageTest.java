@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BooleanMessageTest {
+class BooleanMessageTest {
 
     @Test
-    public void testGetContent() {
+    void testGetContent() {
         BooleanMessage message = new BooleanMessage("test_topic", true);
         assertTrue(message.getContent());
 
@@ -18,7 +18,7 @@ public class BooleanMessageTest {
     }
 
     @Test
-    public void testGetTopic() {
+    void testGetTopic() {
         BooleanMessage message = new BooleanMessage("test_topic", true);
         assertEquals("test_topic", message.getTopic());
     }

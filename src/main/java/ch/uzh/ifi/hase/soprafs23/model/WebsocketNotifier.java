@@ -49,11 +49,5 @@ public class WebsocketNotifier implements Notifier {
         BooleanMessage msg = new BooleanMessage("FinalScoreStart", true);
         simpMessagingTemplate.convertAndSend(WebsocketConfig.LOBBIES  + gameCode, msg);
     }
-/*
-    public void error(String msg, String topic, Long user_id){
-        StringMessage errorMessage = new StringMessage(topic , msg, food.getImage());
-        int intUser_id = user_id.intValue();
-        simpMessagingTemplate.convertAndSend(WebsocketConfig.ERRORDESTINATION + intUser_id, errorMessage);
-    }*/
 
 }

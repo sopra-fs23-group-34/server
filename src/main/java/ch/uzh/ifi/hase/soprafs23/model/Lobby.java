@@ -47,13 +47,12 @@ public class Lobby {
         }
     }
 
-    public void removePlayer(long user_id) {
-        players.remove(user_id);
+    public void removePlayer(long userId) {
+        players.remove(userId);
     }
 
     public Scores playGame(GameConfig config) throws InterruptedException, IOException {
         Game game = new Game(players, config, notifier, foodService);
-        System.out.println(this.roundTimer);
         this.gameStarted = true;
         return game.run();
     }

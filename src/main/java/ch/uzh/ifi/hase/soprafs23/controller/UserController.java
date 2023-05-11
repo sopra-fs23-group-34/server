@@ -60,7 +60,7 @@ public class UserController {
     @ResponseBody
     public void logoutUser(@RequestHeader("token") String token,
                            @PathVariable Long userId) {
-        User loggedOutUser = userService.logoutUser(token, userId);
+      userService.logoutUser(token, userId);
    }
 
     @PutMapping("/users/update/{id}")
@@ -89,8 +89,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<LeaderBoard> getGlobalRanking(@RequestHeader("token") String token, @RequestHeader("id") Long id) {
-        List<LeaderBoard> scores = userService.getTotalScores(id, token);
-       return scores;
+        return userService.getTotalScores(id, token);
     }
 
     @GetMapping("/users/statistics/{userId}")
@@ -98,8 +97,7 @@ public class UserController {
     @ResponseBody
     public PlayerStatistics getStatistics( @PathVariable Long userId, @RequestHeader("token") String token, @RequestHeader("id") Long id) {
        // you can only check your own scores, otherwise the authentication has to be handled differently
-        PlayerStatistics playerStatistics = userService.getStatistics(userId, token, id);
-        return playerStatistics;
+        return userService.getStatistics(userId, token, id);
     }
 
     @PostMapping("/users/login/guestUser")
@@ -117,15 +115,5 @@ public class UserController {
     public void logoutGuestUser(@RequestHeader("token") String token,
                                  @PathVariable Long userId) {
       userService.logoutGuestUser(token, userId);
-    }
-
-    @PostMapping("/users/test")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public String[] test() {
-      String a = (System.getenv("API_KEY1"));
-      String b = (System.getenv("API_KEY2"));
-      String c = (System.getenv("API_KEY3"));
-        return new String[]{a, b, c};
     }
 }

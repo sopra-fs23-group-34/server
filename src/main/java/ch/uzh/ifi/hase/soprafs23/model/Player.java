@@ -14,9 +14,9 @@ public class Player {
     private final Long player_id;
     private final boolean host;
 
-    public Player(String username, Long player_id, boolean host) {
+    public Player(String username, Long playerId, boolean host) {
         this.username = username;
-        this.player_id = player_id;
+        this.player_id = playerId;
         this.host = host;
     }
 

@@ -5,10 +5,10 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-public class FoodMessageTest {
+class FoodMessageTest {
 
     @Test
-    public void testGetContent() {
+    void testGetContent() {
         // Create a new FoodMessage object with sample data
         FoodMessage message = new FoodMessage("food", "Pizza", "https://example.com/pizza.jpg");
 
@@ -20,7 +20,7 @@ public class FoodMessageTest {
         assertEquals("https://example.com/pizza.jpg", content.get("imageLink"));
     }
     @Test
-    public void testGetTopic() {
+    void testGetTopic() {
         FoodMessage message = new FoodMessage("food", "Pizza", "https://example.com/pizza.jpg");
         assertEquals("food", message.getTopic());
     }

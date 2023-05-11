@@ -8,10 +8,10 @@ import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
-public class RoundTest {
+class RoundTest {
 
     @Test
-    public void testGetFood() throws IOException {
+    void testGetFood() throws IOException {
         Notifier notifier = mock(Notifier.class);
         FoodService foodService = mock(FoodService.class);
         String name = "Apple";
@@ -23,7 +23,7 @@ public class RoundTest {
     }
 
     @Test
-    public void testRun() throws InterruptedException {
+    void testRun() throws InterruptedException {
         Notifier notifier = mock(Notifier.class);
         FoodService foodService = mock(FoodService.class);
         String name = "Apple";

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PlayerTest {
+class PlayerTest {
     @Test
     void testGetUsername() {
         Player player = new Player("Alice", 1L, false);
@@ -19,6 +19,7 @@ public class PlayerTest {
         player = new Player("Bob", 2L, false);
         assertFalse(player.isHost());
     }
+
     @Test
     void testGetPoints() {
         Player player = new Player("Alice", 1L, false);

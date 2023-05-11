@@ -51,8 +51,8 @@ public class UserService {
     public User createUser(User newUser) {
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.ONLINE);
-        newUser.setCreationDate(new Date());
-        newUser.setGuestUser(false);
+        newUser.setCreation_date(new Date());
+        newUser.set_guest_user(false);
         checkForGuestUser(newUser);
         checkIfUserExists(newUser);
         newUser = userRepository.save(newUser);
@@ -65,12 +65,12 @@ public class UserService {
         User newGuestUser = new User();
         newGuestUser.setUsername(username);
         newGuestUser.setPassword(username + "password");
-        newGuestUser.setCreationDate(new Date());
+        newGuestUser.setCreation_date(new Date());
         newGuestUser.setEmail(username + "@email.com");
         newGuestUser.setToken(UUID.randomUUID().toString());
         newGuestUser.setStatus(UserStatus.ONLINE);
         newGuestUser.setBio("Hi I am a Guest User");
-        newGuestUser.setGuestUser(true);
+        newGuestUser.set_guest_user(true);
         newGuestUser = userRepository.save(newGuestUser);
         userRepository.flush();
         log.debug("Created Information for guestUser: {}", newGuestUser);
@@ -110,9 +110,8 @@ public class UserService {
 
     public User getUserById(Long id) {
         Optional<User> OptionalUser = userRepository.findById(id);
-        User user = OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+        return OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("user with userid " + id + " was not found")));
-        return user;
     }
 
     public User loginGuestUser() {
@@ -143,27 +142,14 @@ public class UserService {
     }
 
     public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser, String oldPassword) {
+        authenticateUser(token, idCurrentUser);
         User user = userRepository.findById(idCurrentUser);
-        if(!oldPassword.equals(user.getPassword())){
+        if (user.is_guest_user()) {
             throw new ResponseStatusException(HttpStatus.valueOf(404),
-                    "Wrong old Password");
+                    "Profiles of guest users can't be changed!");
         }
 
-        // make sure, that no information is null
-        if (userWithUpdateInformation.getPassword() == null) {
-            userWithUpdateInformation.setPassword(user.getPassword());
-        }
-        if (userWithUpdateInformation.getEmail() == null) {
-            userWithUpdateInformation.setEmail(user.getEmail());
-        }
-        if (userWithUpdateInformation.getUsername() == null) {
-            userWithUpdateInformation.setUsername(user.getUsername());
-        }
-        if (userWithUpdateInformation.getBio() == null) {
-            userWithUpdateInformation.setBio(user.getBio());
-        }
-        // check if user is authorized to change its data
-        authenticateUser(token, idCurrentUser);
+        // check if username is already used
         User userSameName = userRepository.findByUsername(userWithUpdateInformation.getUsername());
         if (userSameName != null) {
             if (!user.getId().equals(userSameName.getId())) {
@@ -171,6 +157,8 @@ public class UserService {
                         "You can't pick the same username as somebody else!");
             }
         }
+
+        // check if email is already used
         User userSameEmail = userRepository.findByEmail(userWithUpdateInformation.getEmail());
         if (userSameEmail != null) {
             if (!user.getId().equals(userSameEmail.getId())) {
@@ -178,10 +166,25 @@ public class UserService {
                         "You can't pick the same mail as somebody else!");
             }
         }
-        user.setUsername(userWithUpdateInformation.getUsername());
-        user.setEmail(userWithUpdateInformation.getEmail());
-        user.setBio(userWithUpdateInformation.getBio());
-        user.setPassword(userWithUpdateInformation.getPassword());
+
+        if (oldPassword == null) {
+            if (userWithUpdateInformation.getUsername() == null || userWithUpdateInformation.getEmail() == null) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Username and Email can't be empty Strings!");
+            }
+            user.setUsername(userWithUpdateInformation.getUsername());
+            user.setEmail(userWithUpdateInformation.getEmail());
+            user.setBio(userWithUpdateInformation.getBio());
+        } else { // password change
+            if (userWithUpdateInformation.getPassword() == null) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Password can't be empty Strings!");
+            }
+            if(!oldPassword.equals(user.getPassword())){
+                throw new ResponseStatusException(HttpStatus.valueOf(404),
+                        "Wrong old Password");
+            }
+            user.setPassword(userWithUpdateInformation.getPassword());
+        }
+
         userRepository.save(user);
         userRepository.flush();
         return user;
@@ -192,10 +195,10 @@ public class UserService {
         if (scores.getPlacement().keySet().size() > 1) {
         for (String userName : scores.getPlacement().keySet()){
             User user = userRepository.findByUsername(userName);
-            if (!user.isGuestUser()) {
-                Long user_id = user.getId();
+            if (!user.is_guest_user()) {
+                Long userId = user.getId();
                 PlayerScore playerScore = new PlayerScore();
-                playerScore.setPlayer_id(user_id);
+                playerScore.setPlayer_id(userId);
                 int maxScore = scores.getPlacement().values().stream().max(Double::compare).orElseThrow(
                         () -> new NoSuchElementException("No maximum value found in the placement scores."));
                 boolean winner = scores.getPlacement().get(userName) == maxScore;
@@ -212,8 +215,8 @@ public class UserService {
         authenticateUser(token,id);
         List<LeaderBoard> playerScores = playerScoreRepository.getGlobalLeaderboard();
         for (LeaderBoard playerScore : playerScores){
-            Long player_id = playerScore.getUser_id();
-            playerScore.setUsername(getUserById(player_id).getUsername());
+            Long playerId = playerScore.getUserId();
+            playerScore.setUsername(getUserById(playerId).getUsername());
         }
         return playerScores;
     }
@@ -231,8 +234,8 @@ public class UserService {
     private void checkForGuestUser(User userToBeCreated) {
         List<String> usernames = guestUserStorage.getUsernamesString();
         String username = userToBeCreated.getUsername();
-        for (int i = 0; i < usernames.size(); i++) {
-            if (userToBeCreated.getUsername().startsWith(usernames.get(i))) {
+        for (String s : usernames) {
+            if (userToBeCreated.getUsername().startsWith(s)) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT,
                         "add User failed because username is reserved for guests");
             }
