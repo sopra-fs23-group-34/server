@@ -1,6 +1,8 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs23.entity.LeaderBoard;
+import ch.uzh.ifi.hase.soprafs23.entity.PlayerStatistics;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
@@ -17,12 +19,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -179,6 +183,40 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
     }
 
+    @Test
+    void loginGuestUser_successful() throws Exception {
+        // given
+        User guestUser = new User();
+        guestUser.setId(1L);
+        guestUser.setPassword("TestGuestUser");
+        guestUser.setUsername("testGuestUsername");
+        guestUser.setEmail("test@guest.ch");
+        guestUser.setToken("1");
+        guestUser.setStatus(UserStatus.ONLINE);
+        guestUser.setCreation_date(new Date());
+
+        UserPostDTO userPostDTO = new UserPostDTO();
+        userPostDTO.setPassword("TestGuestUser");
+        userPostDTO.setUsername("testGuestUsername");
+        userPostDTO.setEmail("test@guest.ch");
+
+        given(userService.loginGuestUser()).willReturn(guestUser);
+
+        // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder postRequest = post("/users/login/guestUser")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPostDTO));
+
+        // then
+        mockMvc.perform(postRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(guestUser.getId().intValue())))
+                .andExpect(jsonPath("$.token", is(guestUser.getToken())))
+                .andExpect(jsonPath("$.username", is(guestUser.getUsername())))
+                .andExpect(jsonPath("$.email", is(guestUser.getEmail())))
+                .andExpect(jsonPath("$.status", is(guestUser.getStatus().toString())));
+    }
+
   @Test
   void loginUser_unsuccessful_invalidUsername() throws Exception {
         UserPostDTO userPostDTO = new UserPostDTO();
@@ -241,6 +279,46 @@ class UserControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    @Test
+    void getGlobalRanking() throws Exception {
+      List<LeaderBoard> globalRanking = new ArrayList<>();
+      globalRanking.add(new LeaderBoard(1L, 10L));
+      globalRanking.add(new LeaderBoard(2L, 20L));
+
+      given(userService.getTotalScores(Mockito.any(), Mockito.any())).willReturn(globalRanking);
+
+      MockHttpServletRequestBuilder getRequest = get("/users/ranking")
+              .header("token", "11")
+              .header("id", "1")
+              .contentType(MediaType.APPLICATION_JSON);
+
+      mockMvc.perform(getRequest)
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void getPlayerStatistics() throws Exception {
+      Long id = 1L;
+      long gamesPlayed = 2L;
+      int highScore = 1000;
+      long gamesWon = 2L;
+      double winRatio = 1.0;
+
+      PlayerStatistics ps = new PlayerStatistics(id, gamesPlayed, highScore, gamesWon, winRatio);
+      given(userService.getStatistics(Mockito.any(), Mockito.any(), Mockito.any())).willReturn(ps);
+
+      MockHttpServletRequestBuilder getRequest = get("/users/statistics/1")
+                .header("token", "11")
+                .header("id", "1")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(getRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userId", is(ps.getUserId().intValue())))
+                .andExpect(jsonPath("$.highScore", is(ps.getHighScore())))
+                .andExpect(jsonPath("$.winRatio", is(ps.getWinRatio())));
+    }
+
   @Test
   void logout_unsuccessful_invalidToken() throws Exception {
         given(userService.logoutUser(Mockito.any(), Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to perform this action"));
@@ -255,6 +333,20 @@ class UserControllerTest {
                 .andExpect(status().isUnauthorized())
                 .andExpect(status().reason("You are not authorized to perform this action"));
     }
+    @Test
+    void logoutGuest_successful() throws Exception {
+
+       // when/then -> do the request + validate the result
+        MockHttpServletRequestBuilder postRequest = post("/users/logout/guestUser/1")
+                .header("token", "11")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        // then
+        mockMvc.perform(postRequest)
+                .andExpect(status().isNoContent());
+    }
+
+
 
 /*
 
