@@ -30,10 +30,9 @@ public class LobbyService {
     private void checkIfLobbyExists(String id) {
         Lobby lob = lobbyStorage.getLobby(id);
         if (lob == null) {
-            throw new ResponseStatusException(HttpStatus.valueOf(401), "Lobby does not exist");
+            throw new ResponseStatusException(HttpStatus.valueOf(404), "Lobby does not exist");
         }
     }
-
 
     public String createLobby() {
         String gameCode = codeGenerator.nextCode();
@@ -46,7 +45,6 @@ public class LobbyService {
         List<Player> lobbyPlayers = new ArrayList<>(lobby.getPlayers().values());
         return lobbyPlayers;
     }
-
 
     public boolean joinLobby(String gameCode, Long user_id) {
         checkIfLobbyExists(gameCode);
@@ -97,6 +95,7 @@ public class LobbyService {
             lobbyStorage.removeLobby(gameCode);
         }).start();
     }
+
 
     public void setPlayerGuesses(String gameCode, long player_id, Map<String, Double> guesses) {
         Lobby lobby = lobbyStorage.getLobby(gameCode);
