@@ -190,7 +190,7 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 ## Week 8: 12.05.2023 - 18.05.2023
 
 ### Nico
-
+- [ ] sopra-fs23-group-34/client#57
 
 ### Elias
 
