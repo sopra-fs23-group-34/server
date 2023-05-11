@@ -1,19 +1,83 @@
 package ch.uzh.ifi.hase.soprafs23.service;
 
+import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
+import ch.uzh.ifi.hase.soprafs23.entity.User;
+import ch.uzh.ifi.hase.soprafs23.model.CodeGenerator;
+import ch.uzh.ifi.hase.soprafs23.model.Lobby;
+import ch.uzh.ifi.hase.soprafs23.model.Player;
+import ch.uzh.ifi.hase.soprafs23.storage.LobbyStorage;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 public class LobbyServiceTest {
-    @Mock
+    @InjectMocks
     private LobbyService lobbyService;
+
+    @Mock
+    private LobbyStorage lobbyStorage;
+
+    @Mock
+    private FoodService foodService;
+
+    @Mock
+    private CodeGenerator codeGenerator;
+
+    @Mock
+    SimpMessagingTemplate simpMessagingTemplate;
+
+    @Mock
+    UserService userService;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void test_nullLobby() {
         //assertThrows(ResponseStatusException.class, () -> lobbyService.);
+    }
+
+    @Test
+    void checkIfLobbyExistsSuccessful() {
+        //MessageChannel channel = Mockito.mock(MessageChannel.class);
+        //lobbyStorage.addLobby("11", new Lobby("11", new SimpMessagingTemplate(channel), foodService));
+        when(codeGenerator.nextCode()).thenReturn("123456");
+        String code = lobbyService.createLobby();
+        assertEquals("123456", code);
+    }
+
+    @Test
+    void updatePlayer() {
+        Lobby lobby = new Lobby("11", simpMessagingTemplate, foodService);
+        lobby.addPlayer(new Player("test", 1L, true));
+        when(lobbyStorage.getLobby("123456")).thenReturn(lobby);
+        List<Player> playerList = lobbyService.updatePlayerList("123456");
+        assertEquals("test", playerList.get(0).getUsername());
+        assertEquals(1, playerList.size());
+    }
+
+    @Test
+    void joinLobbyHost() {
+        Lobby lobby = new Lobby("11", simpMessagingTemplate, foodService);
+        when(lobbyStorage.getLobby("11")).thenReturn(lobby);
+        User user = new User();
+        user.setUsername("testUser");
+        user.setId(1L);
+        when(userService.getUserById(1L)).thenReturn((user));
+        assertTrue(lobbyService.joinLobby("11", 1L));
     }
 }

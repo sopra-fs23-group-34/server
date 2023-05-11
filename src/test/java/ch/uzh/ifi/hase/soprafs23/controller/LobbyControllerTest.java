@@ -29,9 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class LobbyControllerTest {
     @Autowired
     private MockMvc mockMvc;
-/*
+
     @MockBean
-    private UserService userService;*/
+    private UserService userService;
 
     @MockBean
     private  LobbyService lobbyService;
@@ -72,7 +72,6 @@ class LobbyControllerTest {
         mockMvc.perform(postRequest)
                 .andExpect(status().isOk());
     }
-
 
     private String asJsonString(final Object object) {
         try {
