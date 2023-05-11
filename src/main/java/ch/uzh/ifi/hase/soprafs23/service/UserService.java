@@ -142,29 +142,14 @@ public class UserService {
     }
 
     public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser, String oldPassword) {
+        authenticateUser(token, idCurrentUser);
         User user = userRepository.findById(idCurrentUser);
-        System.out.println("old Password: "+ oldPassword);
-        System.out.println("user Password: "+user.getPassword());
-        if(!oldPassword.equals(user.getPassword())){
+        if (user.is_guest_user()) {
             throw new ResponseStatusException(HttpStatus.valueOf(404),
-                    "Wrong old Password");
+                    "Profiles of guest users can't be changed!");
         }
 
-        // make sure, that no information is null
-        if (userWithUpdateInformation.getPassword() == null) {
-            userWithUpdateInformation.setPassword(user.getPassword());
-        }
-        if (userWithUpdateInformation.getEmail() == null) {
-            userWithUpdateInformation.setEmail(user.getEmail());
-        }
-        if (userWithUpdateInformation.getUsername() == null) {
-            userWithUpdateInformation.setUsername(user.getUsername());
-        }
-        if (userWithUpdateInformation.getBio() == null) {
-            userWithUpdateInformation.setBio(user.getBio());
-        }
-        // check if user is authorized to change its data
-        authenticateUser(token, idCurrentUser);
+        // check if username is already used
         User userSameName = userRepository.findByUsername(userWithUpdateInformation.getUsername());
         if (userSameName != null) {
             if (!user.getId().equals(userSameName.getId())) {
@@ -172,6 +157,8 @@ public class UserService {
                         "You can't pick the same username as somebody else!");
             }
         }
+
+        // check if email is already used
         User userSameEmail = userRepository.findByEmail(userWithUpdateInformation.getEmail());
         if (userSameEmail != null) {
             if (!user.getId().equals(userSameEmail.getId())) {
@@ -179,10 +166,25 @@ public class UserService {
                         "You can't pick the same mail as somebody else!");
             }
         }
-        user.setUsername(userWithUpdateInformation.getUsername());
-        user.setEmail(userWithUpdateInformation.getEmail());
-        user.setBio(userWithUpdateInformation.getBio());
-        user.setPassword(userWithUpdateInformation.getPassword());
+
+        if (oldPassword == null) {
+            if (userWithUpdateInformation.getUsername() == null || userWithUpdateInformation.getEmail() == null) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Username and Email can't be empty Strings!");
+            }
+            user.setUsername(userWithUpdateInformation.getUsername());
+            user.setEmail(userWithUpdateInformation.getEmail());
+            user.setBio(userWithUpdateInformation.getBio());
+        } else { // password change
+            if (userWithUpdateInformation.getPassword() == null) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Password can't be empty Strings!");
+            }
+            if(!oldPassword.equals(user.getPassword())){
+                throw new ResponseStatusException(HttpStatus.valueOf(404),
+                        "Wrong old Password");
+            }
+            user.setPassword(userWithUpdateInformation.getPassword());
+        }
+
         userRepository.save(user);
         userRepository.flush();
         return user;
