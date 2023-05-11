@@ -55,10 +55,6 @@ public class LobbyServiceTest {
         private Lobby testLobby;
 
 
-    @Mock
-    UserService userService;
-
-
         @BeforeEach
         public void setup() {
             MockitoAnnotations.openMocks(this);
