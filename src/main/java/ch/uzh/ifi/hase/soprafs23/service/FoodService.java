@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs23.service;
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.model.Food;
 import ch.uzh.ifi.hase.soprafs23.repository.FoodsRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,16 +43,10 @@ public class FoodService {
     }
 
     public Food getFood(String foodName) throws IOException {
-        List<String[]> apiKeys = new ArrayList<>();
         if (apiKey == null) {
             throw new IOException("API Keys are null");
         }
-        String[] APIKeysArray = apiKey.split(",");
-        for (int i = 0; i < APIKeysArray.length/2; i++) {
-            apiKeys.add(new String[] {APIKeysArray[i*2], APIKeysArray[i*2+1], "0"});
-            apiKeys.add(new String[] {APIKeysArray[i*2], APIKeysArray[i*2+1], "1"});
-        }
-
+        List<String[]> apiKeys = extractApiKeys(apiKey);
         int maxTries = apiKeys.size();
         int tries = 0;
         String responseBody = "";
@@ -69,32 +64,21 @@ public class FoodService {
                 }
             }
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        Map map = objectMapper.readValue(responseBody, Map.class);
-        List<Map<String, Object>> foods = (List<Map<String, Object>>) map.get("foods");
-        Map<String, Object> food = foods.get(0);
-        Map<String, String> photo = (Map<String, String>) food.get("photo");
-        Number servingWeight = (Number) food.get("serving_weight_grams");
-        Number calories = (Number) food.get("nf_calories");
-        Number fat = (Number) food.get("nf_total_fat");
-        Number protein = (Number) food.get("nf_protein");
-        Number carbs = (Number) food.get("nf_total_carbohydrate");
-        double servingWeightDouble = servingWeight.doubleValue();
-        double caloriesDouble = calories.doubleValue();
-        double fatDouble = fat.doubleValue();
-        double proteinDouble = protein.doubleValue();
-        double carbsDouble = carbs.doubleValue();
-        String name = (String) food.get("foodName");
-        String imageLink = photo.get("highres");
-        Map<String, Double> nutritional_values = new HashMap<>();
-        nutritional_values.put("calories", (double) Math.round((caloriesDouble/servingWeightDouble * 100)));
-        nutritional_values.put("fat", (double) Math.round((fatDouble / servingWeightDouble * 100)));
-        nutritional_values.put("protein", (double) Math.round((proteinDouble / servingWeightDouble * 100)));
-        nutritional_values.put("carbs", (double) Math.round((carbsDouble / servingWeightDouble * 100)));
-        return new Food(name, nutritional_values, imageLink);
+        System.out.println(responseBody);
+        return extractNutritionalValues(responseBody);
         }
 
-        private String apiCall(String foodName, String appId, String appKey, String remoteUser) {
+        public List<String[]> extractApiKeys(String apiKeys) {
+            List<String[]> extractedApiKeys = new ArrayList<>();
+            String[] APIKeysArray = apiKeys.split(",");
+            for (int i = 0; i < APIKeysArray.length/2; i++) {
+                extractedApiKeys.add(new String[] {APIKeysArray[i*2], APIKeysArray[i*2+1], "0"});
+                extractedApiKeys.add(new String[] {APIKeysArray[i*2], APIKeysArray[i*2+1], "1"});
+            }
+            return extractedApiKeys;
+        }
+
+        public String apiCall(String foodName, String appId, String appKey, String remoteUser) {
             String apiUrl = "https://trackapi.nutritionix.com/v2/natural/nutrients";
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
@@ -107,5 +91,31 @@ public class FoodService {
             HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(body, headers);
             ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, requestEntity, String.class);
             return response.getBody();
+        }
+
+        public Food extractNutritionalValues(String apiResponse) throws JsonProcessingException {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map map = objectMapper.readValue(apiResponse, Map.class);
+            List<Map<String, Object>> foods = (List<Map<String, Object>>) map.get("foods");
+            Map<String, Object> food = foods.get(0);
+            Map<String, String> photo = (Map<String, String>) food.get("photo");
+            Number servingWeight = (Number) food.get("serving_weight_grams");
+            Number calories = (Number) food.get("nf_calories");
+            Number fat = (Number) food.get("nf_total_fat");
+            Number protein = (Number) food.get("nf_protein");
+            Number carbs = (Number) food.get("nf_total_carbohydrate");
+            double servingWeightDouble = servingWeight.doubleValue();
+            double caloriesDouble = calories.doubleValue();
+            double fatDouble = fat.doubleValue();
+            double proteinDouble = protein.doubleValue();
+            double carbsDouble = carbs.doubleValue();
+            String name = (String) food.get("foodName");
+            String imageLink = photo.get("highres");
+            Map<String, Double> nutritional_values = new HashMap<>();
+            nutritional_values.put("calories", (double) Math.round((caloriesDouble/servingWeightDouble * 100)));
+            nutritional_values.put("fat", (double) Math.round((fatDouble / servingWeightDouble * 100)));
+            nutritional_values.put("protein", (double) Math.round((proteinDouble / servingWeightDouble * 100)));
+            nutritional_values.put("carbs", (double) Math.round((carbsDouble / servingWeightDouble * 100)));
+            return new Food(name, nutritional_values, imageLink);
         }
 }
