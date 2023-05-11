@@ -80,4 +80,15 @@ public class LobbyServiceTest {
         when(userService.getUserById(1L)).thenReturn((user));
         assertTrue(lobbyService.joinLobby("11", 1L));
     }
+
+    @Test
+    void leaveLobbyHostLeft() {
+        Lobby lobby = new Lobby("11", simpMessagingTemplate, foodService);
+        lobby.addPlayer(new Player("testUser1", 1L, false));
+        lobby.addPlayer(new Player("testUser2", 2L, true));
+        when(lobbyStorage.getLobby("11")).thenReturn(lobby);
+        List<Player> playerList = lobbyService.leaveLobby("11", 2L);
+        assertEquals(1, playerList.size());
+
+    }
 }
