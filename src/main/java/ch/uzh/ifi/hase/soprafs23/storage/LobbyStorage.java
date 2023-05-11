@@ -10,7 +10,7 @@ import java.util.Map;
 @Component
 public class LobbyStorage implements Serializable {
     private transient Map<String, Lobby> lobbies;
-    private LobbyStorage() {
+    LobbyStorage() {
         lobbies = new HashMap<>();
     }
     public Lobby getLobby(String lobbyCode) {
