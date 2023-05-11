@@ -89,6 +89,5 @@ public class LobbyServiceTest {
         when(lobbyStorage.getLobby("11")).thenReturn(lobby);
         List<Player> playerList = lobbyService.leaveLobby("11", 2L);
         assertEquals(1, playerList.size());
-
     }
 }
