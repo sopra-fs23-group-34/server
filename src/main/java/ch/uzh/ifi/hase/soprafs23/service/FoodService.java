@@ -60,11 +60,10 @@ public class FoodService {
             } catch (Exception e) {
                 tries++;
                 if (tries >= maxTries) {
-                    throw new RuntimeException("no more API calls available for today");
+                    throw new IOException("no more API calls available for today");
                 }
             }
         }
-        System.out.println(responseBody);
         return extractNutritionalValues(responseBody);
         }
 

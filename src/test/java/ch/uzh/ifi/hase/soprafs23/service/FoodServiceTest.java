@@ -38,7 +38,7 @@ class FoodServiceTest {
     }
 
     @Test
-    void getRandomFoods() throws IOException {
+    void getRandomFoodsFruitsCategory() throws IOException {
         List<String> f = new ArrayList<>();
         f.add("Apple");
         f.add("Banana");
@@ -48,7 +48,24 @@ class FoodServiceTest {
         when(foodService.getRandomFoods(5, FoodCategory.FRUITS)).thenReturn(f);
         List<String> foods = foodService.getRandomFoods(5, FoodCategory.FRUITS);
         assertEquals( 5, foods.size());
+        assertEquals( "Banana", foods.get(1));
     }
+
+    @Test
+    void getRandomFoodsAllCategory() throws IOException {
+        List<String> f = new ArrayList<>();
+        f.add("Carrots");
+        f.add("Spinach");
+        f.add("Yogurt");
+        f.add("Grapes");
+        f.add("Honey");
+        f.add("Steak");
+        when(foodService.getRandomFoods(6, FoodCategory.ALL)).thenReturn(f);
+        List<String> foods = foodService.getRandomFoods(6, FoodCategory.ALL);
+        assertEquals( 6, foods.size());
+        assertEquals( "Honey", foods.get(4));
+    }
+
 
     @Test
     void extractApiKeysTest()  {
