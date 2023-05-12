@@ -64,7 +64,11 @@ public class FoodService {
                 }
             }
         }
-        return extractNutritionalValues(responseBody);
+        Food food = extractNutritionalValues(responseBody);
+        if (food.getName() == null) {
+            food.setName(foodName);
+        }
+        return food;
         }
 
         public List<String[]> extractApiKeys(String apiKeys) {
@@ -108,7 +112,10 @@ public class FoodService {
             double fatDouble = fat.doubleValue();
             double proteinDouble = protein.doubleValue();
             double carbsDouble = carbs.doubleValue();
-            String name = (String) food.get("foodName");
+            String name = (String) food.get("food_name");
+            if (name == null) {
+                name = (String) food.get("foodName");
+            }
             String imageLink = photo.get("highres");
             Map<String, Double> nutritional_values = new HashMap<>();
             nutritional_values.put("calories", (double) Math.round((caloriesDouble/servingWeightDouble * 100)));
