@@ -180,6 +180,8 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 ### Elias
 - [ ] sopra-fs23-group-34/server#96
 ### André
+- [ ] sopra-fs23-group-34/client#46
+- [ ] sopra-fs23-group-34/client#42
 
 ### Nataell
 - [ ] sopra-fs23-group-34/server#93
