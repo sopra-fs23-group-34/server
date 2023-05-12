@@ -49,8 +49,10 @@ public class UserService {
     }
 
     public User createUser(User newUser) {
-        checkForGuestUser(newUser);
         checkIfUserExists(newUser);
+        checkForGuestUser(newUser);
+        checkUsername(newUser.getUsername());
+        checkPassword(newUser.getPassword());
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.ONLINE);
         newUser.setCreation_date(new Date());
@@ -59,6 +61,24 @@ public class UserService {
         userRepository.flush();
         log.debug("Created Information for User: {}", newUser);
         return newUser;
+    }
+
+    private void checkPassword(String password) {
+        if (password.startsWith(" ")) {
+            throw new ResponseStatusException(HttpStatus.valueOf(404), "Password can't start with space");
+        }
+        if (password.length() < 2) {
+            throw new ResponseStatusException(HttpStatus.valueOf(404), "Password must be at least 2 characters");
+        }
+    }
+
+    private void checkUsername(String username) {
+        if (username.startsWith(" ")) {
+            throw new ResponseStatusException(HttpStatus.valueOf(404), "Username can't start with space");
+        }
+        if (username.length() < 2) {
+            throw new ResponseStatusException(HttpStatus.valueOf(404), "Username must be at least 2 characters");
+        }
     }
 
     private User createGuestUser(String username) {
@@ -181,6 +201,7 @@ public class UserService {
                 throw new ResponseStatusException(HttpStatus.valueOf(404),
                         "Wrong old Password");
             }
+            checkPassword(userWithUpdateInformation.getPassword());
             user.setPassword(userWithUpdateInformation.getPassword());
         }
 
@@ -231,6 +252,9 @@ public class UserService {
     }
 
     private void checkForGuestUser(User userToBeCreated) {
+        if (userToBeCreated.getUsername().length() < 5) {
+            return;
+        }
         List<String> usernames = guestUserStorage.getUsernamesString();
         String username = userToBeCreated.getUsername();
         for (String s : usernames) {

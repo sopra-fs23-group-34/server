@@ -99,6 +99,73 @@ class UserServiceTest {
       assertThrows(ResponseStatusException.class, () -> userService.createUser(user));
   }
 
+    @Test
+    void createUser_UsernameStartsWithEmptySpace_throwsException() {
+        User user = new User();
+        user.setPassword("somePassword");
+        user.setEmail("testMail");
+        user.setUsername(" someUsername");
+
+        assertThatThrownBy(() -> userService.createUser(user))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Username can't start with space");
+    }
+
+    @Test
+    void createUser_UsernameToShort_throwsException() {
+        User user = new User();
+        user.setEmail("testMail");
+        user.setUsername("t");
+        user.setPassword("testPassword");
+
+        assertThatThrownBy(() -> userService.createUser(user))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Username must be at least 2 characters");
+    }
+
+    @Test
+    void createUser_UsernameIs2Characters_successful() {
+        User user = new User();
+        user.setEmail("testMail");
+        user.setUsername("tt");
+        user.setPassword("test");
+        userService.createUser(user);
+    }
+
+    @Test
+    void createUser_PasswordStartsWithEmptySpace_throwsException() {
+        User user = new User();
+        user.setPassword(" somePassword");
+        user.setEmail("testMail");
+        user.setUsername("anotherUsername");
+
+        assertThatThrownBy(() -> userService.createUser(user))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Password can't start with space");
+    }
+
+    @Test
+    void createUser_PasswordToShort_throwsException() {
+        User user = new User();
+        user.setEmail("testMail");
+        user.setUsername("anotherUsername");
+        user.setPassword("t");
+
+        assertThatThrownBy(() -> userService.createUser(user))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Password must be at least 2 characters");
+    }
+
+    @Test
+    void createUser_PasswordIs2Characters_successful() {
+        User user = new User();
+        user.setEmail("testMail");
+        user.setUsername("anotherUsername");
+        user.setPassword("tt");
+
+        userService.createUser(user);
+    }
+
   @Test
     void createUser_unauthorizedName_throwsException() {
       User user = new User();
@@ -492,6 +559,47 @@ class UserServiceTest {
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining("Wrong old Password");
     }
+    @Test
+    void updateUserOnlyPasswordNewPasswordStartsWithSpace() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername("testUser");
+        userWithUpdateInfo.setPassword(" newPW");
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setPassword("testPassword");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), "testPassword"))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Password can't start with space");
+  }
+
+    @Test
+    void updateUserOnlyPasswordNewPasswordTooShort() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername("testUser");
+        userWithUpdateInfo.setPassword("t");
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setPassword("testPassword");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), "testPassword"))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Password must be at least 2 characters");
+    }
 
     @Test
     void updateScores() {
@@ -578,6 +686,7 @@ class UserServiceTest {
     void createUserErrorUsernameForGuestUserReserved() {
       User newUser = new User();
       newUser.setUsername("FreddieMer-curry123456");
+      newUser.setPassword("testPassword");
       List<String> reservedUsernamesStrings = new ArrayList<>();
       reservedUsernamesStrings.add("FreddieMer-curry");
       when(guestUserStorage.getUsernamesString()).thenReturn(reservedUsernamesStrings);
@@ -588,6 +697,7 @@ class UserServiceTest {
     @Test
     void createUserErrorUsernameForGuestUserReserved2() {
         User newUser = new User();
+        newUser.setPassword("testPassword");
         newUser.setUsername("Guest123456");
         assertThatThrownBy(() -> userService.createUser(newUser))
                 .isInstanceOf(ResponseStatusException.class)
