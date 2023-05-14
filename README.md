@@ -87,7 +87,14 @@ To configure a debugger for SpringBoot's Tomcat servlet (i.e. the process you st
 ## Testing
 Have a look here: https://www.baeldung.com/spring-boot-testing
 ## High-level components
+### model
+Game logic is in the model compoent. Its responsibility is to organize the game flow of the whole application.
+### controller
+We have several controler classes. Together they have the responsibility to organize the communication between the front and backend. They are split according to their parts, that they are organizing. As an example the class UserController controlls the rest communication of the user* endpoint of our application 
+### services
+In our project we have three different service classes. They provide functionality to their corresponding entitys. As an example the UserService provides amongst other functionalitys the possibility to create, login, logout, update or authenticate a user.
 ## Illustrations
+
 ## Roadmap
 For future additions we have some ideas, what one could implement. The following mentionings are not sorted by any means. But are more ment as inspiration for you.
 Firstly there would be the possibility to implement a new game mode. The first additional game mode could be a higher lower implementation of a game. Before starting the game you would choose your food category, like "Fruits" as well as the nutrition value, you would compare the food items. Lets assume one would choose "Fruits" and "carbs". Then you would get as first item an apple. Then a picture of the second item would appear. Lets assume, it is a pineapple. No you hae to decide, if an pineapple has more or less carbs then an apple. If you guessed correctly, you get a positive feedback and an nex picture of an food item. If you guessed incorrectly, there will be an end of game screen and you can restart. 
