@@ -64,8 +64,8 @@ public class UserService {
     }
 
     private void checkPassword(String password) {
-        if (password.startsWith(" ")) {
-            throw new ResponseStatusException(HttpStatus.valueOf(404), "Password can't start with space");
+        if (password.contains(" ")) {
+            throw new ResponseStatusException(HttpStatus.valueOf(404), "Password can't contain space");
         }
         if (password.length() < 2) {
             throw new ResponseStatusException(HttpStatus.valueOf(404), "Password must be at least 2 characters");
@@ -187,14 +187,18 @@ public class UserService {
         }
 
         if (oldPassword == null) {
-            if (userWithUpdateInformation.getUsername() == null || userWithUpdateInformation.getEmail() == null) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Username and Email can't be empty Strings!");
+            if (!(userWithUpdateInformation.getUsername()==null) && !(userWithUpdateInformation.getUsername().equals(""))) {
+                checkUsername(userWithUpdateInformation.getUsername());
+                user.setUsername(userWithUpdateInformation.getUsername());
             }
-            user.setUsername(userWithUpdateInformation.getUsername());
-            user.setEmail(userWithUpdateInformation.getEmail());
-            user.setBio(userWithUpdateInformation.getBio());
+            if (!(userWithUpdateInformation.getEmail()==null) && !(userWithUpdateInformation.getEmail().equals(""))) {
+                user.setEmail(userWithUpdateInformation.getEmail());
+            }
+            if (!(userWithUpdateInformation.getBio()==null) && !(userWithUpdateInformation.getBio().equals(""))) {
+                user.setBio(userWithUpdateInformation.getBio());
+            }
         } else { // password change
-            if (userWithUpdateInformation.getPassword() == null) {
+            if (userWithUpdateInformation.getPassword().equals("")) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "Password can't be empty Strings!");
             }
             if(!oldPassword.equals(user.getPassword())){

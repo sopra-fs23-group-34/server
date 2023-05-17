@@ -22,7 +22,6 @@ import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 class UserServiceTest {
@@ -141,7 +140,19 @@ class UserServiceTest {
 
         assertThatThrownBy(() -> userService.createUser(user))
                 .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining("Password can't start with space");
+                .hasMessageContaining("Password can't contain space");
+    }
+
+    @Test
+    void createUser_PasswordContainsSpace_throwsException() {
+        User user = new User();
+        user.setPassword("some Password");
+        user.setEmail("testMail");
+        user.setUsername("anotherUsername");
+
+        assertThatThrownBy(() -> userService.createUser(user))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Password can't contain space");
     }
 
     @Test
@@ -412,10 +423,11 @@ class UserServiceTest {
     }
 
     @Test
-    void updateUserUsernameEmptyString() {
+    void updateUserUsernameEmptyString_noError() {
         User userWithUpdateInfo = new User();
-        userWithUpdateInfo.setUsername(null);
+        userWithUpdateInfo.setUsername("");
         userWithUpdateInfo.setEmail("email");
+        userWithUpdateInfo.setBio("bio");
         userWithUpdateInfo.setId(1L);
         userWithUpdateInfo.setToken("11");
         userWithUpdateInfo.set_guest_user(false);
@@ -423,21 +435,22 @@ class UserServiceTest {
         User userDatabase = new User();
         userDatabase.setUsername("testUser");
         userDatabase.setEmail("email");
+        userDatabase.setBio("bio");
         userDatabase.setToken("11");
         userDatabase.setId(1L);
         userDatabase.set_guest_user(false);
 
         when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
-        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null))
-                .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining("Username and Email can't be empty Strings!");
+        assertEquals(userWithUpdateInfo.getId(), userDatabase.getId());
+
     }
 
     @Test
-    void updateUserEmailEmptyString() {
+    void updateUserEmailEmptyString_noError() {
         User userWithUpdateInfo = new User();
         userWithUpdateInfo.setUsername("testUser");
         userWithUpdateInfo.setEmail(null);
+        userWithUpdateInfo.setBio("bio");
         userWithUpdateInfo.setId(1L);
         userWithUpdateInfo.setToken("11");
         userWithUpdateInfo.set_guest_user(false);
@@ -445,20 +458,20 @@ class UserServiceTest {
         User userDatabase = new User();
         userDatabase.setUsername("testUser");
         userDatabase.setEmail("email");
+        userDatabase.setBio("bio");
         userDatabase.setToken("11");
         userDatabase.setId(1L);
         userDatabase.set_guest_user(false);
 
         when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
-        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null))
-                .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining("Username and Email can't be empty Strings!");
+        assertEquals(userWithUpdateInfo.getId(), userDatabase.getId());
     }
     @Test
-    void updateUserUsernameAndEmailEmptyString() {
+    void updateUserUsernameAndEmailEmptyString_noError() {
         User userWithUpdateInfo = new User();
         userWithUpdateInfo.setUsername(null);
         userWithUpdateInfo.setEmail(null);
+        userWithUpdateInfo.setBio("bio");
         userWithUpdateInfo.setId(1L);
         userWithUpdateInfo.setToken("11");
         userWithUpdateInfo.set_guest_user(false);
@@ -466,17 +479,16 @@ class UserServiceTest {
         User userDatabase = new User();
         userDatabase.setUsername("testUser");
         userDatabase.setEmail("email");
+        userDatabase.setBio("bio");
         userDatabase.setToken("11");
         userDatabase.setId(1L);
         userDatabase.set_guest_user(false);
 
         when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
-        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null))
-                .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining("Username and Email can't be empty Strings!");
+        assertEquals(userWithUpdateInfo.getId(), userDatabase.getId());
     }
     @Test
-    void updateUserUsernameAndEmailAndBioSuccessful() {
+    void updateUserUsernameAndEmailAndBio_Successful() {
         User userWithUpdateInfo = new User();
         userWithUpdateInfo.setUsername("newUsername");
         userWithUpdateInfo.setEmail("newMail");
@@ -517,11 +529,11 @@ class UserServiceTest {
     }
 
     @Test
-    void updateUserOnlyPasswordEmptyString() {
+    void updateUserOnlyPasswordEmptyString_error() {
         User userWithUpdateInfo = new User();
         userWithUpdateInfo.setUsername("testUser");
         userWithUpdateInfo.setEmail("email");
-        userWithUpdateInfo.setPassword(null);
+        userWithUpdateInfo.setPassword("");
         userWithUpdateInfo.setId(1L);
         userWithUpdateInfo.setToken("11");
         userWithUpdateInfo.set_guest_user(false);
@@ -540,7 +552,7 @@ class UserServiceTest {
     }
 
     @Test
-    void updateUserOnlyPasswordErrorWrongOldPassword() {
+    void updateUserOnlyPasswordWrongOldPassword_error() {
         User userWithUpdateInfo = new User();
         userWithUpdateInfo.setUsername("testUser");
         userWithUpdateInfo.setPassword("newPW");
@@ -560,7 +572,7 @@ class UserServiceTest {
                 .hasMessageContaining("Wrong old Password");
     }
     @Test
-    void updateUserOnlyPasswordNewPasswordStartsWithSpace() {
+    void updateUserOnlyPasswordNewPasswordStartsWithSpace_error() {
         User userWithUpdateInfo = new User();
         userWithUpdateInfo.setUsername("testUser");
         userWithUpdateInfo.setPassword(" newPW");
@@ -577,11 +589,32 @@ class UserServiceTest {
         when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
         assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), "testPassword"))
                 .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining("Password can't start with space");
+                .hasMessageContaining("Password can't contain space");
   }
 
     @Test
-    void updateUserOnlyPasswordNewPasswordTooShort() {
+    void updateUserOnlyPasswordNewPasswordContainsSpace_error() {
+        User userWithUpdateInfo = new User();
+        userWithUpdateInfo.setUsername("testUser");
+        userWithUpdateInfo.setPassword("new PW");
+        userWithUpdateInfo.setId(1L);
+        userWithUpdateInfo.setToken("11");
+        userWithUpdateInfo.set_guest_user(false);
+
+        User userDatabase = new User();
+        userDatabase.setUsername("testUser");
+        userDatabase.setPassword("testPassword");
+        userDatabase.setToken("11");
+        userDatabase.setId(1L);
+        userDatabase.set_guest_user(false);
+        when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
+        assertThatThrownBy(() -> userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), "testPassword"))
+                .isInstanceOf(ResponseStatusException.class)
+                .hasMessageContaining("Password can't contain space");
+    }
+
+    @Test
+    void updateUserOnlyPasswordNewPasswordTooShort_error() {
         User userWithUpdateInfo = new User();
         userWithUpdateInfo.setUsername("testUser");
         userWithUpdateInfo.setPassword("t");
@@ -674,10 +707,9 @@ class UserServiceTest {
         user.setId(1L);
         user.setToken("11");
         user.setUsername("testUser");
-        PlayerStatistics playerStatistics = new PlayerStatistics(1L, 10L, 500, 5L, 0.5);
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         when(playerScoreRepository.getPlayerStatistics(user.getId())).thenReturn(null);
-        assertThatThrownBy(() -> userService.getStatistics(user.getId(), user.getToken(), user.getId()).getUserId())
+        assertThatThrownBy(() -> userService.getStatistics(user.getId(), user.getToken(), user.getId()))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining("Player not found");
     }
