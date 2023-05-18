@@ -64,6 +64,9 @@ public class Scores {
         return players_points;
     }
 
+    public void resetRoundScores(){
+        this.roundScoresAllPlayer.clear();
+    }
 
 }
 

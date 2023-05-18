@@ -6,6 +6,7 @@ import ch.uzh.ifi.hase.soprafs23.service.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,11 +43,15 @@ public class Game {
             Food food = gameRound.getFood(foods.get(currentRound));
             gameRound.run(food, roundTime);
             for (Player player: players.values()){
-                scores.updateRoundScore(player.getGuesses(),
-                        player.getUsername(),
-                        food);
+                if (player.getGuesses() != null) {
+                    scores.updateRoundScore(player.getGuesses(),
+                            player.getUsername(),
+                            food);
+                }
+                player.setGuesses(null);
             }
             notifier.publishRoundScores(scores.getRoundScore());
+            scores.resetRoundScores();
             notifier.publishGameScores(scores.getPlacement());
         }
         else{
