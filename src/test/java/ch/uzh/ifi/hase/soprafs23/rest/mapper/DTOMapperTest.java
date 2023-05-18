@@ -88,7 +88,7 @@ class DTOMapperTest {
 
         assertNotNull(playerScoreGetDTO);
         assertEquals(String.valueOf(playerScore.getScore()), playerScoreGetDTO.getScore());
-        assertEquals(playerScore.getPlayer_id(), playerScoreGetDTO.getUser_id());
+        assertEquals(playerScore.getPlayer_id(), playerScoreGetDTO.getUserId());
         assertEquals(playerScore.getId().intValue(), playerScoreGetDTO.getId());
     }
 

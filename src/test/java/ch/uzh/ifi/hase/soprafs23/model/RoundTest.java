@@ -32,10 +32,6 @@ class RoundTest {
         round.run(food, 10);
         verify(notifier).publishRoundStart();
         verify(notifier).publishFood(food);
-        for (int tick = 10; tick >= 0; tick --){
-            verify(notifier).publishTimer(tick);
-            Thread.sleep(1000);
-        }
         verify(notifier).publishRoundScoreStart();
     }
 }

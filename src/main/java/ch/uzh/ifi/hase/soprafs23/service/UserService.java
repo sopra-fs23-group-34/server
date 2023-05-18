@@ -128,8 +128,8 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        Optional<User> OptionalUser = userRepository.findById(id);
-        return OptionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+        Optional<User> optionalUser = userRepository.findById(id);
+        return optionalUser.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 String.format("user with userid " + id + " was not found")));
     }
 
@@ -172,20 +172,18 @@ public class UserService {
 
         // check if username is already used by someone else
         User userSameName = userRepository.findByUsername(userWithUpdateInformation.getUsername());
-        if (userSameName != null) {
-            if (!user.getId().equals(userSameName.getId())) {
+        if (userSameName != null && (!user.getId().equals(userSameName.getId()))) {
                 throw new ResponseStatusException(HttpStatus.valueOf(404),
                         "You can't pick the same username as somebody else!");
-            }
+
         }
 
         // check if email is already used by someone else
         User userSameEmail = userRepository.findByEmail(userWithUpdateInformation.getEmail());
-        if (userSameEmail != null) {
-            if (!user.getId().equals(userSameEmail.getId())) {
+        if (userSameEmail != null && (!user.getId().equals(userSameEmail.getId()))) {
                 throw new ResponseStatusException(HttpStatus.valueOf(404),
                         "You can't pick the same mail as somebody else!");
-            }
+
         }
 
         if (oldPassword == null) { // username, email or bio change

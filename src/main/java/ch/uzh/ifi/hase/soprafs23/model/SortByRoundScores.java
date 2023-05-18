@@ -7,10 +7,10 @@ public class SortByRoundScores {
     public static Map<String, Map<String, ArrayList<Map<String, Double>>>> sortByPointsAllScores(Map<String, Map<String, ArrayList<Map<String, Double>>>> unsortedMap) {
 
         List<Map.Entry<String, Map<String, ArrayList<Map<String, Double>>>>> list = new LinkedList<>(unsortedMap.entrySet());
-
+        String value = "points";
         list.sort((o1, o2) -> {
-            Double points1 = o1.getValue().get("points").get(0).get("points");
-            Double points2 = o2.getValue().get("points").get(0).get("points");
+            Double points1 = o1.getValue().get(value).get(0).get(value);
+            Double points2 = o2.getValue().get(value).get(0).get(value);
             return points2.compareTo(points1);
         });
 

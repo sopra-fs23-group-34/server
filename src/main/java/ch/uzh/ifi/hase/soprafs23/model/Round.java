@@ -14,8 +14,7 @@ public class Round {
     }
 
     public Food getFood(String name) throws IOException {
-        Food food = foodService.getFood(name);
-        return food;
+        return foodService.getFood(name);
     }
 
     public void run(Food food, int roundTime) throws InterruptedException {

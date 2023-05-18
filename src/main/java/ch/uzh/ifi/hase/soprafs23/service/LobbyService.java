@@ -45,9 +45,9 @@ public class LobbyService {
         return new ArrayList<>(lobby.getPlayers().values());
     }
 
-    public boolean joinLobby(String gameCode, Long user_id) {
+    public boolean joinLobby(String gameCode, Long userId) {
         checkIfLobbyExists(gameCode);
-        LobbyPlayer lobbyPlayer = userService.getUserById(user_id);
+        LobbyPlayer lobbyPlayer = userService.getUserById(userId);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         boolean isHost = lobby.getPlayers().isEmpty();
         Player player = new Player(lobbyPlayer.getUsername(), lobbyPlayer.getId(), isHost);
@@ -66,9 +66,9 @@ public class LobbyService {
         return new ArrayList<>(lobby.getPlayers().values());
     }
 
-    private void checkIfHost(String gameCode, Long user_id) {
+    private void checkIfHost(String gameCode, Long userId) {
         try {
-            Player player = lobbyStorage.getLobby(gameCode).getPlayers().get(user_id);
+            Player player = lobbyStorage.getLobby(gameCode).getPlayers().get(userId);
             if (!player.isHost()) {
                 throw new ResponseStatusException(HttpStatus.valueOf(401), "You are not authorized to start the game");
             }
@@ -76,28 +76,29 @@ public class LobbyService {
             throw new ResponseStatusException(HttpStatus.valueOf(401), "You are not authorized to start the game");
         }
     }
-    public void startGame(String gameCode, Long user_id, String token, GameConfig config) throws RuntimeException {
-        userService.authenticateUser(token, user_id);
-        checkIfHost(gameCode, user_id);
+    public void startGame(String gameCode, Long userId, String token, GameConfig config) throws RuntimeException {
+        userService.authenticateUser(token, userId);
+        checkIfHost(gameCode, userId);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
         lobby.checkIfGameStarted();
         lobby.setRoundTimer(config.getTimerLength());
         new Thread(() -> {
             try {
-                lobby.playGame(config, userService);
-
+                lobby.playGame(config, userService, lobbyStorage, gameCode);
             } catch (InterruptedException | IOException e) {
                 Thread.currentThread().interrupt();
                 throw new RuntimeException(e);
             }
-            lobbyStorage.removeLobby(gameCode);
         }).start();
+    }
+    public void deleteLobby(String gameCode){
+        lobbyStorage.removeLobby(gameCode);
     }
     public void updateRound(String gameCode, Long userId, String token) throws IOException, InterruptedException {
         userService.authenticateUser(token, userId);
         checkIfHost(gameCode, userId);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
-        lobby.nextRound();
+        lobby.nextRound(lobbyStorage, gameCode);
     }
 
 

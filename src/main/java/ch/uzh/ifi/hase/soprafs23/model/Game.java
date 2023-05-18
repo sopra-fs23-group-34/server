@@ -2,7 +2,9 @@ package ch.uzh.ifi.hase.soprafs23.model;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
+import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
+import ch.uzh.ifi.hase.soprafs23.storage.LobbyStorage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ public class Game {
         foods = foodService.getRandomFoods(roundLimit,foodCategory);
         this. userService = userService;
     }
-    public void publishRound() throws InterruptedException, IOException {
+    public void publishRound(LobbyStorage lobbyStorage, String gameCode) throws InterruptedException, IOException {
 
         if (currentRound<roundLimit){
             Round gameRound = new Round(notifier, foodService);
@@ -50,6 +52,7 @@ public class Game {
                 }
                 player.setGuesses(null);
             }
+
             notifier.publishRoundScores(scores.getRoundScore());
             scores.resetRoundScores();
             notifier.publishGameScores(scores.getPlacement());
@@ -58,11 +61,9 @@ public class Game {
             userService.updateScores(scores);
             notifier.publishFinalScoreStart();
             notifier.publishFinalScores(scores.getPlacement());
+            lobbyStorage.removeLobby(gameCode);
         }
         currentRound += 1;
-    }
-    public Scores getScores(){
-        return scores;
     }
 
 

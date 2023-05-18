@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import static org.mockito.Mockito.*;
 
-public class LobbyServiceTest {
+class LobbyServiceTest {
     @Mock
     private UserService userService;
 
@@ -57,26 +57,26 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void createLobbyTest() {
+    void createLobbyTest() {
         when(codeGenerator.nextCode()).thenReturn("1");
         String code = lobbyService.createLobby();
-        assertEquals(code, "1");
+        assertEquals("1", code);
     }
 
     @Test
-    public void updatePlayerListTest() {
+    void updatePlayerListTest() {
         when(lobbyStorage.getLobby(anyString())).thenReturn(testLobby);
         Lobby testLobby = lobbyStorage.getLobby("a");
         testLobby.addPlayer(new Player("a", 1L, true));
         List<Player> playerList = lobbyService.updatePlayerList("a");
-        assertEquals(playerList.size(), 1);
+        assertEquals(1,playerList.size() );
         testLobby.addPlayer(new Player("c", 2L, true));
         playerList = lobbyService.updatePlayerList("a");
-        assertEquals(playerList.size(), 2);
+        assertEquals(2, playerList.size());
     }
 
     @Test
-    public void joinLobbyTestSuccess() {
+    void joinLobbyTestSuccess() {
         when(lobbyStorage.getLobby(anyString())).thenReturn(testLobby);
         User testUser = new User();
         testUser.setId(1L);
@@ -91,7 +91,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void joinLobbyTestFail_error() {
+    void joinLobbyTestFail_error() {
         when(lobbyStorage.getLobby(anyString())).thenReturn(null);
         User testUser = new User();
         testUser.setId(1L);
@@ -104,7 +104,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void leaveLobbyHostTest() {
+    void leaveLobbyHostTest() {
         when(lobbyStorage.getLobby(anyString())).thenReturn(testLobby);
         testLobby.addPlayer(new Player("a", 1L, true));
         assertTrue(testLobby.getPlayers().containsKey(1L));
@@ -114,7 +114,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void leaveLobbyPlayerTest() {
+    void leaveLobbyPlayerTest() {
         when(lobbyStorage.getLobby(anyString())).thenReturn(testLobby);
         testLobby.addPlayer(new Player("a", 1L, true));
         testLobby.addPlayer(new Player("b", 2L, false));
@@ -125,14 +125,14 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void startGameTestSuccess() {
+    void startGameTestSuccess() {
         when(lobbyStorage.getLobby(anyString())).thenReturn(testLobby);
         testLobby.addPlayer(new Player("a", 1L, true));
         assertDoesNotThrow(() -> lobbyService.startGame("a", 1L, "a", gameConfig));
     }
 
     @Test
-    public void startGameNotHostTest_error() {
+    void startGameNotHostTest_error() {
         when(lobbyStorage.getLobby(anyString())).thenReturn(testLobby);
         testLobby.addPlayer(new Player("a", 1L, true));
         testLobby.addPlayer(new Player("a", 2L, false));
@@ -143,7 +143,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void startGameNotLobbyTest_error() {
+    void startGameNotLobbyTest_error() {
         when(lobbyStorage.getLobby(anyString())).thenReturn(null);
         ResponseStatusException exception =
                 org.junit.jupiter.api.Assertions.assertThrows(ResponseStatusException.class,
@@ -152,7 +152,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void startGameThreadErrorTest_error() throws ResponseStatusException, InterruptedException, IOException {
+    void startGameThreadErrorTest_error() throws ResponseStatusException, InterruptedException, IOException {
         Lobby testLobby = Mockito.mock(Lobby.class);
         UserService userService1 = Mockito.mock(UserService.class);
         when(lobbyStorage.getLobby(anyString())).thenReturn(testLobby);
@@ -167,7 +167,7 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void setPlayerGuessesSucess(){
+    void setPlayerGuessesSucess(){
         String gameCode = "a";
         long playerId = 1L;
         Map<String, Double> guesses = new HashMap<>();

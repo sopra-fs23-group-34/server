@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class PlayerScoreGetDTO {
     private int id;
-    private Long user_id;
+    private Long userId;
     private String score;
     private Boolean winner;
 }

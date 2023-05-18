@@ -51,7 +51,7 @@ public interface DTOMapper {
 
     @Mapping(source = "winner", target = "winner")
     @Mapping(source = "score", target = "score")
-    @Mapping(source = "player_id", target = "user_id")
+    @Mapping(source = "player_id", target = "userId")
 PlayerScoreGetDTO convertPlayerScoreToPlayerScoreGetDTO(PlayerScore playerScore);
 
   @Mapping(source = "username", target = "username")
