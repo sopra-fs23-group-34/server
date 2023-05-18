@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
+import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -23,6 +24,7 @@ public class Lobby {
     @Getter
     @Setter
     private int scoreTimer;
+    private Game game;
 
     @Getter
     private final Map<Long, Player> players;
@@ -51,9 +53,16 @@ public class Lobby {
         players.remove(userId);
     }
 
-    public Scores playGame(GameConfig config) throws InterruptedException, IOException {
-        Game game = new Game(players, config, notifier, foodService);
+    public void playGame(GameConfig config, UserService userService) throws InterruptedException, IOException {
+        this.game = new Game(players, config, notifier, foodService, userService);
         this.gameStarted = true;
-        return game.run();
+        game.publishRound();
+        Thread.sleep(20000);
+    }
+    public void nextRound() throws IOException, InterruptedException {
+        game.publishRound();
+    }
+    public Scores getScores(){
+        return game.getScores();
     }
 }

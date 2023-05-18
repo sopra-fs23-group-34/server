@@ -84,14 +84,20 @@ public class LobbyService {
         lobby.setRoundTimer(config.getTimerLength());
         new Thread(() -> {
             try {
-                Scores scores = lobby.playGame(config);
-                userService.updateScores(scores);
+                lobby.playGame(config, userService);
+
             } catch (InterruptedException | IOException e) {
                 Thread.currentThread().interrupt();
                 throw new RuntimeException(e);
             }
             lobbyStorage.removeLobby(gameCode);
         }).start();
+    }
+    public void updateRound(String gameCode, Long userId, String token) throws IOException, InterruptedException {
+        userService.authenticateUser(token, userId);
+        checkIfHost(gameCode, userId);
+        Lobby lobby = lobbyStorage.getLobby(gameCode);
+        lobby.nextRound();
     }
 
 

@@ -1,6 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
+import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,11 +33,12 @@ class GameTest {
 
         // Mock FoodService and Notifier
         FoodService foodService = mock(FoodService.class);
+        UserService userService = mock(UserService.class);
         Notifier notifier = mock(Notifier.class);
 
         // Create a Game object and run it
-        Game game = new Game(players, config, notifier, foodService);
-        Game game1 = new Game(players, config,notifier, foodService);
+        Game game = new Game(players, config, notifier, foodService, userService);
+        Game game1 = new Game(players, config,notifier, foodService, userService);
         assertEquals(game.getClass(), game1.getClass());
 
     }
