@@ -4,7 +4,6 @@ import ch.uzh.ifi.hase.soprafs23.config.WebsocketConfig;
 import ch.uzh.ifi.hase.soprafs23.messages.*;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-
 import java.util.ArrayList;
 import java.util.Map;
 

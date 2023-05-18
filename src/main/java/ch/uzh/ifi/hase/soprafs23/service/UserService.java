@@ -198,13 +198,18 @@ public class UserService {
                 user.setBio(userWithUpdateInformation.getBio());
             }
         } else { // password change
-            if (userWithUpdateInformation.getPassword().equals("")) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Password can't be empty Strings!");
-            }
             if(!oldPassword.equals(user.getPassword())){
                 throw new ResponseStatusException(HttpStatus.valueOf(404),
                         "Wrong old Password");
             }
+            if(oldPassword.equals(userWithUpdateInformation.getPassword())){
+                throw new ResponseStatusException(HttpStatus.valueOf(404),
+                        "New Password can't be same as old");
+            }
+            if (userWithUpdateInformation.getPassword().equals("")) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Password can't be empty Strings!");
+            }
+
             checkPassword(userWithUpdateInformation.getPassword());
             user.setPassword(userWithUpdateInformation.getPassword());
         }

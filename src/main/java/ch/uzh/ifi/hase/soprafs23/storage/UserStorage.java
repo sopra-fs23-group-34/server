@@ -1,7 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.storage;
+
 import org.springframework.stereotype.Component;
 import java.security.SecureRandom;
-
 import java.io.Serializable;
 import java.util.*;
 

@@ -6,7 +6,6 @@ import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.model.GameConfig;
 import ch.uzh.ifi.hase.soprafs23.model.Player;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
-
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 

@@ -1,4 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.service;
+
 import ch.uzh.ifi.hase.soprafs23.config.WebsocketConfig;
 import ch.uzh.ifi.hase.soprafs23.entity.LobbyPlayer;
 import ch.uzh.ifi.hase.soprafs23.messages.StringMessage;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;

@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.util.Map;
 
-
-
 @AllArgsConstructor
 public class MapMessage implements Message{
     @Getter

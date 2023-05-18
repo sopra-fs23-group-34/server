@@ -1,8 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.messages;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
 
 class FoodMessageTest {

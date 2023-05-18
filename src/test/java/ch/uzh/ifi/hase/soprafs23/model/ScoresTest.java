@@ -109,22 +109,4 @@ class ScoresTest {
         Assertions.assertTrue(roundScore.get("player3").containsKey("carbs"));
         Assertions.assertEquals( 119.0,roundScore.get("player3").get("points").get(0).get("points"));
     }
-    /*
-    @Test
-    public void testGetPlacement() {
-        Map<String, Double> playerGuesses = new HashMap<>();
-        playerGuesses.put("calories", 100.0);
-        playerGuesses.put("fat", 20.0);
-        playerGuesses.put("protein", 10.0);
-        playerGuesses.put("carbs", 30.0);
-        String username = "player1";
-        Food food = new Food("chicken", 200, 10, 40, 5);
-        scores.updateRoundScore(playerGuesses, username, food);
-
-        Map<String, Integer> placement = scores.getPlacement();
-
-        Assertions.assertEquals(1, placement.size());
-        Assertions.assertTrue(placement.containsKey("player1"));
-        Assertions.assertEquals(200, placement.get("player1"));
-    }*/
 }

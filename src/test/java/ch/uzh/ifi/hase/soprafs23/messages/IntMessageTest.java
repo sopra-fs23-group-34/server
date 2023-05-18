@@ -1,10 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.messages;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 class IntMessageTest {
 

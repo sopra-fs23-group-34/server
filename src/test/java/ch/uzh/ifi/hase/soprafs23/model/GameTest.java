@@ -2,14 +2,9 @@ package ch.uzh.ifi.hase.soprafs23.model;
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
-
-
-
 import java.util.HashMap;
-
 import java.util.Map;
 
 class GameTest {

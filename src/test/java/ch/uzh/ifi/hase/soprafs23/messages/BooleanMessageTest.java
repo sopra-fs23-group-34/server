@@ -1,9 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.messages;
 
-
 import org.junit.jupiter.api.Test;
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class BooleanMessageTest {

@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.entity.PlayerStatistics;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
 public class PlayerStatisticsTest {
