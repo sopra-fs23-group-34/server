@@ -1,4 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.model;
+
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import lombok.*;

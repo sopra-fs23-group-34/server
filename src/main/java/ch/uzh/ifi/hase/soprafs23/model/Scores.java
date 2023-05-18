@@ -1,6 +1,6 @@
 package ch.uzh.ifi.hase.soprafs23.model;
-import java.util.*;
 
+import java.util.*;
 import static java.lang.Math.max;
 
 public class Scores {

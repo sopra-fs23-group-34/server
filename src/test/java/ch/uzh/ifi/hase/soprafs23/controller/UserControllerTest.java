@@ -19,18 +19,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -111,7 +106,7 @@ class UserControllerTest {
     }
 
   @Test
-  void createUserUnsuccessfulEmailAlreadyUsed() throws Exception {
+  void createUserUnsuccessfulEmailAlreadyUsed_error() throws Exception {
 
     UserPostDTO userPostDTO = new UserPostDTO();
     userPostDTO.setPassword("Test User");
@@ -132,7 +127,7 @@ class UserControllerTest {
     }
 
   @Test
-  void createUserUnsuccessfulUsernameAlreadyUsed() throws Exception {
+  void createUserUnsuccessfulUsernameAlreadyUsed_error() throws Exception {
 
     UserPostDTO userPostDTO = new UserPostDTO();
     userPostDTO.setPassword("Test User");
@@ -222,7 +217,7 @@ class UserControllerTest {
     }
 
   @Test
-  void loginUserUnsuccessfulInvalidUsername() throws Exception {
+  void loginUserUnsuccessfulInvalidUsername_error() throws Exception {
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
         userPostDTO.setUsername("testUsernameInvalid");
@@ -241,7 +236,7 @@ class UserControllerTest {
     }
 
   @Test
-  void loginUserUnsuccessfulInvalidPassword() throws Exception {
+  void loginUserUnsuccessfulInvalidPassword_error() throws Exception {
         UserPostDTO userPostDTO = new UserPostDTO();
         userPostDTO.setPassword("Test User");
         userPostDTO.setUsername("testUsernameInvalid");
@@ -324,7 +319,7 @@ class UserControllerTest {
     }
 
   @Test
-  void logoutUnsuccessfulInvalidToken() throws Exception {
+  void logoutUnsuccessfulInvalidToken_error() throws Exception {
         given(userService.logoutUser(Mockito.any(), Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to perform this action"));
 
         // when/then -> do the request + validate the result
@@ -382,7 +377,7 @@ class UserControllerTest {
     }
 
     @Test
-    void updateUserUnsuccessfulInvalidToken() throws Exception {
+    void updateUserSuccessful() throws Exception {
         User user = new User();
         user.setId(1L);
         user.setPassword("newPassword");
@@ -445,7 +440,7 @@ class UserControllerTest {
     }
 
     @Test
-    void getUserUnsuccessfulUnauthorized() throws Exception {
+    void getUserUnsuccessfulUnauthorized_error() throws Exception {
         given(userService.getUserById(Mockito.any())).willThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not authorized to perform this action"));
 
 

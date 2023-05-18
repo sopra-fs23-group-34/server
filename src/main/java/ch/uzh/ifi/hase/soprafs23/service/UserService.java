@@ -163,12 +163,14 @@ public class UserService {
     public User updateUser(User userWithUpdateInformation, String token, long idCurrentUser, String oldPassword) {
         authenticateUser(token, idCurrentUser);
         User user = getUserById(idCurrentUser);
+
+        // profiles of guestUsers can't be updated
         if (user.is_guest_user()) {
             throw new ResponseStatusException(HttpStatus.valueOf(404),
                     "Profiles of guest users can't be changed!");
         }
 
-        // check if username is already used
+        // check if username is already used by someone else
         User userSameName = userRepository.findByUsername(userWithUpdateInformation.getUsername());
         if (userSameName != null) {
             if (!user.getId().equals(userSameName.getId())) {
@@ -177,7 +179,7 @@ public class UserService {
             }
         }
 
-        // check if email is already used
+        // check if email is already used by someone else
         User userSameEmail = userRepository.findByEmail(userWithUpdateInformation.getEmail());
         if (userSameEmail != null) {
             if (!user.getId().equals(userSameEmail.getId())) {
@@ -186,7 +188,7 @@ public class UserService {
             }
         }
 
-        if (oldPassword == null) {
+        if (oldPassword == null) { // username, email or bio change
             if (!(userWithUpdateInformation.getUsername()==null) && !(userWithUpdateInformation.getUsername().equals(""))) {
                 checkUsername(userWithUpdateInformation.getUsername());
                 user.setUsername(userWithUpdateInformation.getUsername());
@@ -198,13 +200,18 @@ public class UserService {
                 user.setBio(userWithUpdateInformation.getBio());
             }
         } else { // password change
-            if (userWithUpdateInformation.getPassword().equals("")) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Password can't be empty Strings!");
-            }
             if(!oldPassword.equals(user.getPassword())){
                 throw new ResponseStatusException(HttpStatus.valueOf(404),
                         "Wrong old Password");
             }
+            if(oldPassword.equals(userWithUpdateInformation.getPassword())){
+                throw new ResponseStatusException(HttpStatus.valueOf(404),
+                        "New Password can't be same as old");
+            }
+            if (userWithUpdateInformation.getPassword().equals("")) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Password can't be empty Strings!");
+            }
+
             checkPassword(userWithUpdateInformation.getPassword());
             user.setPassword(userWithUpdateInformation.getPassword());
         }

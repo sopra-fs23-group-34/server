@@ -2,27 +2,13 @@ package ch.uzh.ifi.hase.soprafs23.service;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.model.Food;
-import ch.uzh.ifi.hase.soprafs23.model.Scores;
 import ch.uzh.ifi.hase.soprafs23.repository.FoodsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import java.lang.reflect.Method;
-import static org.junit.Assert.*;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
 import java.io.IOException;
 import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.mockito.Mockito.*;
-import static org.mockito.Answers.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willReturn;
-import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
 class FoodServiceTest {
@@ -38,7 +24,7 @@ class FoodServiceTest {
     }
 
     @Test
-    void getRandomFoodsFruitsCategory() throws IOException {
+    void getRandomFoodsFruitsCategory() {
         List<String> f = new ArrayList<>();
         f.add("Apple");
         f.add("Banana");
@@ -52,7 +38,7 @@ class FoodServiceTest {
     }
 
     @Test
-    void getRandomFoodsAllCategory() throws IOException {
+    void getRandomFoodsAllCategory() {
         List<String> f = new ArrayList<>();
         f.add("Carrots");
         f.add("Spinach");
@@ -68,7 +54,7 @@ class FoodServiceTest {
 
 
     @Test
-    void extractApiKeysTest()  {
+    void extractApiKeysTest() {
         String apiKeysString = "abc,def,ghi,jkl";
         List<String[]> extractedApiKeys = foodService.extractApiKeys(apiKeysString);
         assertEquals(Arrays.toString(new String[]{"abc", "def", "0"}), Arrays.toString(extractedApiKeys.get(0)));

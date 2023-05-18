@@ -7,7 +7,6 @@ import ch.uzh.ifi.hase.soprafs23.model.GameConfig;
 import ch.uzh.ifi.hase.soprafs23.model.Player;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.*;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
@@ -51,7 +50,6 @@ class DTOMapperTest {
 
     @Test
     void testConvertUserPutUpdateDTOtoEntity() {
-
         UserPutDTO userPutDTO = new UserPutDTO();
         userPutDTO.setBio("new bio");
         userPutDTO.setEmail("new email");
@@ -73,7 +71,6 @@ class DTOMapperTest {
 
     @Test
     void testConvertUserPutUpdateDTOtoEntity_NullInput() {
-
         UserPutDTO userPutDTO = null;
 
         User user = DTOMapper.INSTANCE.convertUserPutUpdateDTOtoEntity(userPutDTO);
@@ -82,7 +79,6 @@ class DTOMapperTest {
     }
     @Test
     void testConvertPlayerScoreToPlayerScoreGetDTO() {
-
         PlayerScore playerScore = new PlayerScore();
         playerScore.setScore(100);
         playerScore.setPlayer_id(1L);
@@ -98,7 +94,6 @@ class DTOMapperTest {
 
     @Test
     void testConvertPlayerScoreToPlayerScoreGetDTO_NullInput() {
-
         PlayerScore playerScore = null;
 
         PlayerScoreGetDTO playerScoreGetDTO = DTOMapper.INSTANCE.convertPlayerScoreToPlayerScoreGetDTO(playerScore);
@@ -108,7 +103,6 @@ class DTOMapperTest {
 
     @Test
     void testConvertPlayerToPlayerGetDTO() {
-
         Player player = new Player("name",2L,false);
 
         PlayerGetDTO playerGetDTO = DTOMapper.INSTANCE.convertPlayerToPlayerGetDTO(player);
@@ -119,7 +113,6 @@ class DTOMapperTest {
 
     @Test
     void testConvertPlayerToPlayerGetDTO_NullInput() {
-
         Player player = null;
 
         PlayerGetDTO playerGetDTO = DTOMapper.INSTANCE.convertPlayerToPlayerGetDTO(player);
@@ -128,7 +121,6 @@ class DTOMapperTest {
     }
     @Test
     void testConvertUserToUserGetRankDTO() {
-
         User user = new User();
         user.setUsername("john_doe");
 
@@ -140,7 +132,6 @@ class DTOMapperTest {
 
     @Test
     void testConvertUserToUserGetRankDTO_NullInput() {
-
         User user = null;
 
         UserGetRankDTO userGetRankDTO = DTOMapper.INSTANCE.convertUserToUserGetRankDTO(user);
@@ -150,7 +141,6 @@ class DTOMapperTest {
 
     @Test
     void testConvertUserInputDTOToGameConfig_NullInput() {
-
         UserInputDTO userInputDto = null;
 
         GameConfig gameConfig = DTOMapper.INSTANCE.convertUserInputDTOToGameConfig(userInputDto);
