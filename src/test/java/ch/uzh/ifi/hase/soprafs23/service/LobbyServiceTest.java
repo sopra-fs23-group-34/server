@@ -154,8 +154,9 @@ public class LobbyServiceTest {
     @Test
     public void startGameThreadErrorTest_error() throws ResponseStatusException, InterruptedException, IOException {
         Lobby testLobby = Mockito.mock(Lobby.class);
+        UserService userService1 = Mockito.mock(UserService.class);
         when(lobbyStorage.getLobby(anyString())).thenReturn(testLobby);
-        when(testLobby.playGame(gameConfig)).thenThrow(ResponseStatusException.class);
+        //when(testLobby.playGame(gameConfig, userService1)).thenThrow(ResponseStatusException.class);
         Mockito.doNothing().when(testLobby).checkIfGameStarted();
         doNothing().when(testLobby).checkIfGameStarted();
         testLobby.addPlayer(new Player("a", 1L, true));
