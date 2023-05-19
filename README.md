@@ -96,13 +96,9 @@ In our project we have three different service classes. They provide functionali
 
 ## Roadmap
 For future additions we have some ideas, what one could implement. The following mentions are not sorted by any means. But are more meant as inspiration for you.   
-
 Firstly, there would be the possibility to implement a new game mode. The first additional game mode could be a higher lower implementation of a game. Before starting the game, you would choose your food category, like "Fruits" as well as the nutrition value, you would compare the food items. Let’s assume one would choose "Fruits" and "carbs". Then you would get as first item an apple. A picture of the second item would appear. Let’s assume, it is a pineapple. Now you must decide, if a pineapple has more or less carbs then an apple. If you guessed correctly, you get positive feedback and the next picture of a food item. If you guessed incorrectly, there will be an end of game screen and you can restart.   
-
 Another new game mode would be, that you get four pictures of different food Items and additionally the correct nutrition values of one of them. Then you must guess to which food item the displayed nutrition values belong to. If you guessed correctly, you would get new pictures and nutrition values. If not, it is game over.   
-
 Another feature for the original game would be a possibility at the end of a game to see all the different questions and answers again, so that one can internalize the different nutrition values of the food items.
-
 
 ## Authors
 - [Nico Manzoni](https://www.github.com/nizonic) - *frontend*
