@@ -225,7 +225,8 @@ Started work on polishing Lobby screen, as well as a rough Leaderboard page.
 - [ ] sopra-fs23-group-34/client#68
 
 ### Elias
-
+- [ ] sopra-fs23-group-34/server
+- [ ] sopra-fs23-group-34/server#68
 
 ### André
 
