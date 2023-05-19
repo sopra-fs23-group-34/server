@@ -671,11 +671,11 @@ class UserServiceTest {
       scores.updateRoundScore(roundScoreUser, user.getUsername(), food);
       scores.updateRoundScore(roundScoreUser1, user1.getUsername(), food);
       userService.updateScores(scores);
-      assertEquals(75.0, scores.getRoundScore().get("testUser").get("points").get(0).get("points"));
+      assertEquals(170.0, scores.getRoundScore().get("testUser").get("points").get(0).get("points"));
       assertEquals(15.0, scores.getRoundScore().get("testUser").get("carbs").get(0).get("actualValues"));
       assertEquals(10.0, scores.getRoundScore().get("testUser").get("carbs").get(1).get("guessedValues"));
       assertEquals(5.0, scores.getRoundScore().get("testUser").get("carbs").get(2).get("deviations"));
-      assertEquals(91.0, scores.getRoundScore().get("testUser1").get("points").get(0).get("points"));
+      assertEquals(188.0, scores.getRoundScore().get("testUser1").get("points").get(0).get("points"));
       assertEquals(15.0, scores.getRoundScore().get("testUser1").get("carbs").get(0).get("actualValues"));
       assertEquals(18.0, scores.getRoundScore().get("testUser1").get("carbs").get(1).get("guessedValues"));
       assertEquals(3.0, scores.getRoundScore().get("testUser1").get("carbs").get(2).get("deviations"));

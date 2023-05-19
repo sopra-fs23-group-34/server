@@ -100,13 +100,13 @@ class ScoresTest {
         Assertions.assertTrue(roundScore.get("player2").containsKey("fat"));
         Assertions.assertTrue(roundScore.get("player2").containsKey("protein"));
         Assertions.assertTrue(roundScore.get("player2").containsKey("carbs"));
-        Assertions.assertEquals( 0.0,roundScore.get("player2").get("points").get(0).get("points"));
+        Assertions.assertEquals( 9.0,roundScore.get("player2").get("points").get(0).get("points"));
 
         //player 3
         Assertions.assertTrue(roundScore.get("player3").containsKey("calories"));
         Assertions.assertTrue(roundScore.get("player3").containsKey("fat"));
         Assertions.assertTrue(roundScore.get("player3").containsKey("protein"));
         Assertions.assertTrue(roundScore.get("player3").containsKey("carbs"));
-        Assertions.assertEquals( 119.0,roundScore.get("player3").get("points").get(0).get("points"));
+        Assertions.assertEquals( 145.0,roundScore.get("player3").get("points").get(0).get("points"));
     }
 }

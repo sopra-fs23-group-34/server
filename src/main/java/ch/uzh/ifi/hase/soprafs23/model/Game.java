@@ -38,7 +38,7 @@ public class Game {
         foods = foodService.getRandomFoods(roundLimit,foodCategory);
         this. userService = userService;
     }
-    public void publishRound(LobbyStorage lobbyStorage, String gameCode) throws InterruptedException, IOException {
+    public void publishRound() throws InterruptedException, IOException {
 
         if (currentRound<roundLimit){
             Round gameRound = new Round(notifier, foodService);
@@ -56,6 +56,7 @@ public class Game {
             notifier.publishGameScores(scores.getPlacement());
         }
         else{
+
             userService.updateScores(scores);
             notifier.publishFinalScoreStart();
             notifier.publishFinalScores(scores.getPlacement());

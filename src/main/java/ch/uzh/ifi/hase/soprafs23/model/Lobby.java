@@ -1,9 +1,7 @@
 package ch.uzh.ifi.hase.soprafs23.model;
 
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
-import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
-import ch.uzh.ifi.hase.soprafs23.storage.LobbyStorage;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -56,14 +54,14 @@ public class Lobby {
         players.remove(userId);
     }
 
-    public void playGame(GameConfig config, UserService userService, LobbyStorage lobbyStorage, String gameCode) throws InterruptedException, IOException {
+    public void playGame(GameConfig config, UserService userService) throws InterruptedException, IOException {
         this.game = new Game(players, config, notifier, foodService, userService);
         this.gameStarted = true;
-        game.publishRound(lobbyStorage, gameCode);
+        game.publishRound();
         Thread.currentThread().interrupt();
     }
-    public void nextRound(LobbyStorage lobbyStorage, String gameCode) throws IOException, InterruptedException {
-        game.publishRound(lobbyStorage, gameCode);
+    public void nextRound() throws IOException, InterruptedException {
+        game.publishRound();
 
     }
 }
