@@ -14,9 +14,9 @@ class PlayerScoreGetDTOTest {
         long userID = 1L;
         playerScoreGetDTO.setScore("1");
         playerScoreGetDTO.setId(1);
-        playerScoreGetDTO.setUser_id(1L);
+        playerScoreGetDTO.setUserId(1L);
         assertEquals(playerScoreGetDTO.getScore(), score);
         assertEquals(playerScoreGetDTO.getId(), id);
-        assertEquals(playerScoreGetDTO.getUser_id(), userID);
+        assertEquals(playerScoreGetDTO.getUserId(), userID);
     }
 }

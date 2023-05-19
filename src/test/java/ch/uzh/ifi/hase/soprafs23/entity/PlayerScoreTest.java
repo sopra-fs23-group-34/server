@@ -3,7 +3,7 @@ package ch.uzh.ifi.hase.soprafs23.entity;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PlayerScoreTest {
+class PlayerScoreTest {
     @Test
     void testConstructorAndGetters() {
         Long playerId = 1234L;

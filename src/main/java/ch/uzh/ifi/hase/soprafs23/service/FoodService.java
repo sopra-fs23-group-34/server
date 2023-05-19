@@ -24,7 +24,7 @@ import java.util.Map;
 @Transactional
 public class FoodService {
 
-    private final String apiKey = System.getenv("API_KEYS");
+    private final String apiKey = "9dd751e9,7470f45a98ccc467dc3c043b1f997cf4,376a71b1,46ef2c8c088e63f038d5b2e0d43cf066";
 
     private final FoodsRepository foodsRepository;
 

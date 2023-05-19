@@ -35,7 +35,7 @@ public class LobbyController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void startGame(@PathVariable("lobbyCode") String gameCode, @RequestHeader("id") long id,
-                          @RequestHeader("token") String token, @RequestBody UserInputDTO userInputDto) throws InterruptedException {
+                          @RequestHeader("token") String token, @RequestBody UserInputDTO userInputDto) {
         GameConfig gc = DTOMapper.INSTANCE.convertUserInputDTOToGameConfig(userInputDto);
         lobbyService.startGame(gameCode, id, token, gc);
     }
@@ -45,4 +45,5 @@ public class LobbyController {
     public void roundScoreToGuess(@PathVariable("lobbyCode") String gameCode, @RequestHeader("id") long id, @RequestHeader("token") String token) throws IOException, InterruptedException {
         lobbyService.updateRound(gameCode,id,token);
     }
+
 }

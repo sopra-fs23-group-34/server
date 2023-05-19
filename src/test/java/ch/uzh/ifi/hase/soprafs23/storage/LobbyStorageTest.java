@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LobbyStorageTest {
+class LobbyStorageTest {
     private LobbyStorage lobbyStorage;
 
     private Lobby lobby;

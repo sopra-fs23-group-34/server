@@ -2,9 +2,13 @@ package ch.uzh.ifi.hase.soprafs23.model;
 
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
+import ch.uzh.ifi.hase.soprafs23.service.LobbyService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
+import ch.uzh.ifi.hase.soprafs23.storage.LobbyStorage;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,16 +38,19 @@ public class Game {
         foods = foodService.getRandomFoods(roundLimit,foodCategory);
         this. userService = userService;
     }
-    public void publishRound() throws InterruptedException, IOException {
+    public void publishRound(LobbyStorage lobbyStorage, String gameCode) throws InterruptedException, IOException {
 
         if (currentRound<roundLimit){
             Round gameRound = new Round(notifier, foodService);
             Food food = gameRound.getFood(foods.get(currentRound));
             gameRound.run(food, roundTime);
             for (Player player: players.values()){
-                scores.updateRoundScore(player.getGuesses(),
-                        player.getUsername(),
-                        food);
+                if (player.getGuesses() != null) {
+                    scores.updateRoundScore(player.getGuesses(),
+                            player.getUsername(),
+                            food);
+                }
+                player.setGuesses(null);
             }
             notifier.publishRoundScores(scores.getRoundScore());
             notifier.publishGameScores(scores.getPlacement());

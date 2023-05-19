@@ -6,14 +6,12 @@ import static java.lang.Math.max;
 public class Scores {
     private final Map<String,ArrayList<Map<String,Double>>> roundScore;
     private Map<String,Map<String,ArrayList<Map<String,Double>>>> roundScoresAllPlayer;
-    private Map<String, Integer> players_points;
-    private final SortByRoundScores sortByRoundScores;
+    private Map<String, Integer> playersPoints;
 
     public Scores() {
-        this.players_points = new HashMap<>();
+        this.playersPoints = new HashMap<>();
         this.roundScore = new HashMap<>();
         this.roundScoresAllPlayer = new HashMap<>();
-        this.sortByRoundScores = new SortByRoundScores();
     }
 
     public void updateRoundScore(Map<String,Double> playerGuesses, String username, Food food){
@@ -40,8 +38,8 @@ public class Scores {
         roundPointsTotalMap.put("points",(double) playerPoints);
         roundPointsTotal.add(roundPointsTotalMap);
         roundScore.put("points",roundPointsTotal);
-        players_points.putIfAbsent(username, 0);
-        players_points.put(username, players_points.get(username) + playerPoints);
+        playersPoints.putIfAbsent(username, 0);
+        playersPoints.put(username, playersPoints.get(username) + playerPoints);
         //deep copy the roundScore map
         Map<String,ArrayList<Map<String,Double>>> copyRoundScore = new HashMap<>();
         for(String o : roundScore.keySet()){
@@ -60,10 +58,13 @@ public class Scores {
     }
 
     public Map<String,Integer> getPlacement(){
-        players_points = SortByRoundScores.sortPlayerPoints(players_points);
-        return players_points;
+        playersPoints = SortByRoundScores.sortPlayerPoints(playersPoints);
+        return playersPoints;
     }
 
+    public void resetRoundScores(){
+        this.roundScoresAllPlayer.clear();
+    }
 
 }
 
