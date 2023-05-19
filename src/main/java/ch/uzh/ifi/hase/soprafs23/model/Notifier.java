@@ -13,7 +13,7 @@ public interface Notifier {
     void publishFood(Food food);
 
     void publishTimer(int timer);
-    void publishRoundStart();
+    void publishRoundStart(int roundNumber);
     void publishFinalScoreStart();
     void publishRoundScoreStart();
 

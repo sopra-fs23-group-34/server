@@ -17,8 +17,8 @@ public class Round {
         return foodService.getFood(name);
     }
 
-    public void run(Food food, int roundTime) throws InterruptedException {
-        notifier.publishRoundStart();
+    public void run(Food food, int roundTime, int roundNumber) throws InterruptedException {
+        notifier.publishRoundStart(roundNumber);
         Thread.sleep(10);
         notifier.publishFood(food);
         for (int tick = roundTime; tick >= 0; tick --){

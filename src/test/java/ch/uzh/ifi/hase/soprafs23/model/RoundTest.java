@@ -29,8 +29,8 @@ class RoundTest {
         String name = "Apple";
         Food food = new Food(name, null, null);
         Round round = new Round(notifier, foodService);
-        round.run(food, 10);
-        verify(notifier).publishRoundStart();
+        round.run(food, 10,1);
+        verify(notifier).publishRoundStart(1);
         verify(notifier).publishFood(food);
         verify(notifier).publishRoundScoreStart();
     }
