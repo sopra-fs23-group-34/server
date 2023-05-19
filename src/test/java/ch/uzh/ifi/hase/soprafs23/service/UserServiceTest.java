@@ -47,7 +47,7 @@ class UserServiceTest {
     testUser.setId(1L);
     testUser.setUsername("testUsername");
     testUser.setPassword("testPassword");
-    testUser.setEmail("testMail");
+    testUser.setEmail("test@Mail.ch");
 
     when(userRepository.save(Mockito.any())).thenReturn(testUser);
 
@@ -77,13 +77,13 @@ class UserServiceTest {
   @Test
   void createUser_duplicateMail_throwsException() {
     User user = new User();
-    user.setEmail("testMail");
+    user.setEmail("test@Mail.ch");
     user.setUsername("anotherUsername");
     user.setPassword("somePassword");
     userService.createUser(testUser);
 
     User userDatabase = new User();
-    userDatabase.setEmail("testMail");
+    userDatabase.setEmail("test@Mail.ch");
     userDatabase.setUsername("Username");
     userDatabase.setPassword("Password");
 
@@ -96,7 +96,7 @@ class UserServiceTest {
   void createUser_UsernameStartsWithEmptySpace_throwsException() {
     User user = new User();
     user.setPassword("somePassword");
-    user.setEmail("testMail");
+    user.setEmail("test@Mail.ch");
     user.setUsername(" someUsername");
 
     assertThatThrownBy(() -> userService.createUser(user))
@@ -107,7 +107,7 @@ class UserServiceTest {
   @Test
   void createUser_UsernameToShort_throwsException() {
       User user = new User();
-      user.setEmail("testMail");
+      user.setEmail("test@Mail.ch");
       user.setUsername("t");
       user.setPassword("testPassword");
 
@@ -119,7 +119,7 @@ class UserServiceTest {
   @Test
   void createUser_UsernameIs2Characters_successful() {
       User user = new User();
-      user.setEmail("testMail");
+      user.setEmail("test@Mail.ch");
       user.setUsername("tt");
       user.setPassword("test");
       userService.createUser(user);
@@ -129,7 +129,7 @@ class UserServiceTest {
   void createUser_PasswordStartsWithEmptySpace_throwsException() {
       User user = new User();
       user.setPassword(" somePassword");
-      user.setEmail("testMail");
+      user.setEmail("test@Mail.ch");
       user.setUsername("anotherUsername");
 
       assertThatThrownBy(() -> userService.createUser(user))
@@ -141,7 +141,7 @@ class UserServiceTest {
   void createUser_PasswordContainsSpace_throwsException() {
       User user = new User();
       user.setPassword("some Password");
-      user.setEmail("testMail");
+      user.setEmail("test@Mail.ch");
       user.setUsername("anotherUsername");
 
       assertThatThrownBy(() -> userService.createUser(user))
@@ -152,7 +152,7 @@ class UserServiceTest {
   @Test
   void createUser_PasswordToShort_throwsException() {
       User user = new User();
-      user.setEmail("testMail");
+      user.setEmail("test@Mail.ch");
       user.setUsername("anotherUsername");
       user.setPassword("t");
 
@@ -164,7 +164,7 @@ class UserServiceTest {
   @Test
   void createUser_PasswordIs2Characters_successful() {
       User user = new User();
-      user.setEmail("testMail");
+      user.setEmail("test@Mail.ch");
       user.setUsername("anotherUsername");
       user.setPassword("tt");
 
@@ -366,14 +366,14 @@ class UserServiceTest {
   void updateUserUsernameNotFree() {
       User userWithUpdateInfo = new User();
       userWithUpdateInfo.setUsername("testUser");
-      userWithUpdateInfo.setEmail("email");
+      userWithUpdateInfo.setEmail("test@Mail.ch");
       userWithUpdateInfo.setId(1L);
       userWithUpdateInfo.setToken("11");
       userWithUpdateInfo.set_guest_user(false);
 
       User userDatabase = new User();
       userDatabase.setUsername("testUser");
-      userDatabase.setEmail("email");
+      userDatabase.setEmail("test@Mail.ch");
       userDatabase.setToken("11");
       userDatabase.setId(1L);
       userDatabase.set_guest_user(false);
@@ -393,14 +393,14 @@ class UserServiceTest {
   void updateUserEmailNotFree() {
     User userWithUpdateInfo = new User();
     userWithUpdateInfo.setUsername("testUser");
-    userWithUpdateInfo.setEmail("email");
+    userWithUpdateInfo.setEmail("test@Mail.ch");
     userWithUpdateInfo.setId(1L);
     userWithUpdateInfo.setToken("11");
     userWithUpdateInfo.set_guest_user(false);
 
     User userDatabase = new User();
     userDatabase.setUsername("testUser");
-    userDatabase.setEmail("email");
+    userDatabase.setEmail("test@Mail.ch");
     userDatabase.setToken("11");
     userDatabase.setId(1L);
     userDatabase.set_guest_user(false);
@@ -419,7 +419,7 @@ class UserServiceTest {
   void updateUserUsernameEmptyString_noError() {
     User userWithUpdateInfo = new User();
     userWithUpdateInfo.setUsername("");
-    userWithUpdateInfo.setEmail("email");
+    userWithUpdateInfo.setEmail("test@Mail.ch");
     userWithUpdateInfo.setBio("bio");
     userWithUpdateInfo.setId(1L);
     userWithUpdateInfo.setToken("11");
@@ -427,7 +427,7 @@ class UserServiceTest {
 
     User userDatabase = new User();
     userDatabase.setUsername("testUser");
-    userDatabase.setEmail("email");
+    userDatabase.setEmail("test@Mail.ch");
     userDatabase.setBio("bio");
     userDatabase.setToken("11");
     userDatabase.setId(1L);
@@ -449,7 +449,7 @@ class UserServiceTest {
 
     User userDatabase = new User();
     userDatabase.setUsername("testUser");
-    userDatabase.setEmail("email");
+    userDatabase.setEmail("test@Mail.ch");
     userDatabase.setBio("bio");
     userDatabase.setToken("11");
     userDatabase.setId(1L);
@@ -470,7 +470,7 @@ class UserServiceTest {
 
     User userDatabase = new User();
     userDatabase.setUsername("testUser");
-    userDatabase.setEmail("email");
+    userDatabase.setEmail("test@Mail.ch");
     userDatabase.setBio("bio");
     userDatabase.setToken("11");
     userDatabase.setId(1L);
@@ -483,7 +483,7 @@ class UserServiceTest {
   void updateUserUsernameAndEmailAndBio_Successful() {
     User userWithUpdateInfo = new User();
     userWithUpdateInfo.setUsername("newUsername");
-    userWithUpdateInfo.setEmail("newMail");
+    userWithUpdateInfo.setEmail("test@Mail.ch");
     userWithUpdateInfo.setBio("newBio");
     userWithUpdateInfo.setId(1L);
     userWithUpdateInfo.setToken("11");
@@ -491,7 +491,7 @@ class UserServiceTest {
 
     User userDatabase = new User();
     userDatabase.setUsername("testUser");
-    userDatabase.setEmail("email");
+    userDatabase.setEmail("test@Mail.ch");
     userDatabase.setBio("bio");
     userDatabase.setToken("11");
     userDatabase.setId(1L);
@@ -524,7 +524,7 @@ class UserServiceTest {
   void updateUserOnlyPasswordEmptyString_error() {
     User userWithUpdateInfo = new User();
     userWithUpdateInfo.setUsername("testUser");
-    userWithUpdateInfo.setEmail("email");
+    userWithUpdateInfo.setEmail("test@Mail.ch");
     userWithUpdateInfo.setPassword("");
     userWithUpdateInfo.setId(1L);
     userWithUpdateInfo.setToken("11");
@@ -532,7 +532,7 @@ class UserServiceTest {
 
     User userDatabase = new User();
     userDatabase.setUsername("testUser");
-    userDatabase.setEmail("email");
+    userDatabase.setEmail("test@Mail.ch");
     userDatabase.setPassword("testPassword");
     userDatabase.setToken("11");
     userDatabase.setId(1L);

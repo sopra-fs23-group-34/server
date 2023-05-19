@@ -52,6 +52,7 @@ public class UserService {
         checkIfUserExists(newUser);
         checkForGuestUser(newUser);
         checkUsername(newUser.getUsername());
+        checkEmail(newUser.getEmail());
         checkPassword(newUser.getPassword());
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.ONLINE);
@@ -78,6 +79,12 @@ public class UserService {
         }
         if (username.length() < 2) {
             throw new ResponseStatusException(HttpStatus.valueOf(404), "Username must be at least 2 characters");
+        }
+    }
+
+    private void checkEmail(String email) {
+        if (!email.contains("@") || email.contains(" ") || !email.contains(".")) {
+            throw new ResponseStatusException(HttpStatus.valueOf(404), "Email not valid");
         }
     }
 
@@ -192,6 +199,7 @@ public class UserService {
                 user.setUsername(userWithUpdateInformation.getUsername());
             }
             if (!(userWithUpdateInformation.getEmail()==null) && !(userWithUpdateInformation.getEmail().equals(""))) {
+                checkEmail(userWithUpdateInformation.getEmail());
                 user.setEmail(userWithUpdateInformation.getEmail());
             }
             if (!(userWithUpdateInformation.getBio()==null) && !(userWithUpdateInformation.getBio().equals(""))) {
