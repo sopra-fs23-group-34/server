@@ -93,7 +93,6 @@ Game logic is in the model compoent. Its responsibility is to organize the game 
 We have several controler classes. Together they have the responsibility to organize the communication between the front and backend. They are split according to their parts, that they are organizing. As an example the class UserController controlls the rest communication of the user* endpoint of our application 
 ### services
 In our project we have three different service classes. They provide functionality to their corresponding entitys. As an example the UserService provides amongst other functionalitys the possibility to create, login, logout, update or authenticate a user.
-## Illustrations
 
 ## Roadmap
 For future additions we have some ideas, what one could implement. The following mentionings are not sorted by any means. But are more meant as inspiration for you.
