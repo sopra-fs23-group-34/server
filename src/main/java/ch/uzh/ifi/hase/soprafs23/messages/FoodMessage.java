@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.HashMap;
 
 @AllArgsConstructor
-public class FoodMessage implements Message{
+public class FoodMessage implements Message {
     @Getter
     private String topic;
     private HashMap<String, String> food = new HashMap<>();
