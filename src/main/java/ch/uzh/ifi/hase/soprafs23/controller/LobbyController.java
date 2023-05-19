@@ -1,5 +1,4 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
-import ch.uzh.ifi.hase.soprafs23.model.Game;
 import ch.uzh.ifi.hase.soprafs23.model.GameConfig;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserInputDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;

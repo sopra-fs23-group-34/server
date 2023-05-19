@@ -21,9 +21,9 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/ws").setAllowedOriginPatterns("http://localhost:3000", "https://sopra-fs23-group-34-client.oa.r.appspot.com").withSockJS();
     }
 
-    public final static String APPLICATIONDESTINATION = "/app";
-    public final static String SIMPLEBROKERDESTINATION = "/topic";
-    public final static String LOBBIES = SIMPLEBROKERDESTINATION + "/lobbies/";
-    public final static String LOBBYSDESTINATION = LOBBIES + "{gameCode}";
-    public final static String ERRORDESTINATION = SIMPLEBROKERDESTINATION + "/error/"  ;
+    public static final String APPLICATIONDESTINATION = "/app";
+    public static final String SIMPLEBROKERDESTINATION = "/topic";
+    public static final String LOBBIES = SIMPLEBROKERDESTINATION + "/lobbies/";
+    public static final String LOBBYSDESTINATION = LOBBIES + "{gameCode}";
+    public static final String ERRORDESTINATION = SIMPLEBROKERDESTINATION + "/error/"  ;
 }

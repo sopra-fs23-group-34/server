@@ -3,7 +3,6 @@ package ch.uzh.ifi.hase.soprafs23.model;
 import ch.uzh.ifi.hase.soprafs23.constant.FoodCategory;
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
