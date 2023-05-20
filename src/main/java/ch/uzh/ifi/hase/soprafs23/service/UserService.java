@@ -229,22 +229,22 @@ public class UserService {
 
 
     public void updateScores(Scores scores){
-        if (scores.getPlacement().keySet().size() > 1) {
         for (String userName : scores.getPlacement().keySet()){
             User user = userRepository.findByUsername(userName);
             if (!user.is_guest_user()) {
                 Long userId = user.getId();
                 PlayerScore playerScore = new PlayerScore();
                 playerScore.setPlayer_id(userId);
-                int maxScore = scores.getPlacement().values().stream().max(Double::compare).orElseThrow(
-                        () -> new NoSuchElementException("No maximum value found in the placement scores."));
-                boolean winner = scores.getPlacement().get(userName) == maxScore;
-                playerScore.setWinner(winner);
+                if (scores.getPlacement().keySet().size() > 1) {
+                    int maxScore = scores.getPlacement().values().stream().max(Double::compare).orElseThrow(
+                            () -> new NoSuchElementException("No maximum value found in the placement scores."));
+                    boolean winner = scores.getPlacement().get(userName) == maxScore;
+                    playerScore.setWinner(winner);
+                }
                 playerScore.setScore(scores.getPlacement().get(userName));
                 playerScoreRepository.save(playerScore);
             }
             userRepository.flush();
-        }
         }
     }
 
