@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 class RoundTest {
 
@@ -29,8 +31,11 @@ class RoundTest {
         String name = "Apple";
         Food food = new Food(name, null, null);
         Round round = new Round(notifier, foodService);
-        round.run(food, 10,1);
-        verify(notifier).publishRoundStart(1);
+        round.run(food, 10,1, 3);
+        Map<String, Integer> roundCount = new HashMap<>();
+        roundCount.put("currentRound", 1);
+        roundCount.put("maxRounds", 3);
+        verify(notifier).publishRoundStart();
         verify(notifier).publishFood(food);
         verify(notifier).publishRoundScoreStart();
     }

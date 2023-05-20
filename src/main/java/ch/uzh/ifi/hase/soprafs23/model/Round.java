@@ -2,6 +2,8 @@ package ch.uzh.ifi.hase.soprafs23.model;
 
 import ch.uzh.ifi.hase.soprafs23.service.FoodService;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Round {
 
@@ -17,8 +19,13 @@ public class Round {
         return foodService.getFood(name);
     }
 
-    public void run(Food food, int roundTime, int roundNumber) throws InterruptedException {
-        notifier.publishRoundStart(roundNumber);
+    public void run(Food food, int roundTime, int currentRound, int maxRounds) throws InterruptedException {
+        Map<String, Integer> round = new HashMap<>();
+        // we add + 1 because in the backend we count from 0
+        round.put("currentRound", currentRound + 1);
+        round.put("maxRounds", maxRounds);
+        notifier.publishRoundStart();
+        notifier.publishRoundCounter(round);
         Thread.sleep(10);
         notifier.publishFood(food);
         for (int tick = roundTime; tick >= 0; tick --){
@@ -26,6 +33,7 @@ public class Round {
             Thread.sleep(1000);
         }
         notifier.publishRoundScoreStart();
+        notifier.publishRoundCounter(round);
     }
 }
 

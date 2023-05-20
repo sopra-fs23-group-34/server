@@ -13,9 +13,9 @@ public interface Notifier {
     void publishFood(Food food);
 
     void publishTimer(int timer);
-    void publishRoundStart(int roundNumber);
+    void publishRoundStart();
     void publishFinalScoreStart();
     void publishRoundScoreStart();
-
+    void publishRoundCounter(Map<String, Integer> round);
 
 }

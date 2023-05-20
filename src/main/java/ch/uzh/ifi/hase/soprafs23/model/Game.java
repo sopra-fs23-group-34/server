@@ -43,7 +43,7 @@ public class Game {
         if (currentRound<roundLimit){
             Round gameRound = new Round(notifier, foodService);
             Food food = gameRound.getFood(foods.get(currentRound));
-            gameRound.run(food, roundTime, roundLimit);
+            gameRound.run(food, roundTime, currentRound ,roundLimit);
             for (Player player: players.values()){
                 if (player.getGuesses() != null) {
                     scores.updateRoundScore(player.getGuesses(),

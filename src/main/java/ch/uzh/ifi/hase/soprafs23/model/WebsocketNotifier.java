@@ -34,8 +34,8 @@ public class WebsocketNotifier implements Notifier {
         IntMessage timerCounter = new IntMessage("Timer",timer);
         simpMessagingTemplate.convertAndSend(WebsocketConfig.LOBBIES  + gameCode, timerCounter);
     }
-    public void publishRoundStart(int round){
-        IntMessage msg = new IntMessage("RoundStart", round);
+    public void publishRoundStart(){
+        BooleanMessage msg = new BooleanMessage("RoundStart", true);
         simpMessagingTemplate.convertAndSend(WebsocketConfig.LOBBIES  + gameCode, msg);
     }
 
@@ -49,4 +49,9 @@ public class WebsocketNotifier implements Notifier {
         simpMessagingTemplate.convertAndSend(WebsocketConfig.LOBBIES  + gameCode, msg);
     }
 
+    @Override
+    public void publishRoundCounter(Map<String, Integer> round) {
+        MapMessage msg = new MapMessage("RoundCounter", round);
+        simpMessagingTemplate.convertAndSend(WebsocketConfig.LOBBIES + gameCode, msg);
+    }
 }
