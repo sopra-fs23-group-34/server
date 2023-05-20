@@ -703,11 +703,12 @@ class UserServiceTest {
       user.setId(1L);
       user.setToken("11");
       user.setUsername("testUser");
-      PlayerStatistics playerStatistics = new PlayerStatistics(1L, 10L, 500, 5L, 0.5);
+      PlayerStatistics playerStatistics = new PlayerStatistics(1L, 10L,10L, 500, 5L, 0.5);
       when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
       when(playerScoreRepository.getPlayerStatistics(user.getId())).thenReturn(playerStatistics);
       assertEquals(1, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getUserId());
-      assertEquals(10, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getGamesPlayed());
+      assertEquals(10, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getMultiplayerGamesPlayed());
+      assertEquals(10, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getSingleplayerGamesPlayed());
       assertEquals(5, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getGamesWon());
       assertEquals(0.5, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getWinRatio());
       assertEquals(500, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getHighScore());

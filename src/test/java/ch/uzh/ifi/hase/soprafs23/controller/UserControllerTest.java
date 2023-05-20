@@ -298,12 +298,13 @@ class UserControllerTest {
     @Test
     void getPlayerStatistics() throws Exception {
       Long id = 1L;
-      long gamesPlayed = 2L;
+      long SPgamesPlayer = 2L;
+      long MPgamesPlayed = 2L;
       int highScore = 1000;
       long gamesWon = 2L;
       double winRatio = 1.0;
 
-      PlayerStatistics ps = new PlayerStatistics(id, gamesPlayed, highScore, gamesWon, winRatio);
+      PlayerStatistics ps = new PlayerStatistics(id, SPgamesPlayer, MPgamesPlayed, highScore, gamesWon, winRatio);
       given(userService.getStatistics(Mockito.any(), Mockito.any(), Mockito.any())).willReturn(ps);
 
       MockHttpServletRequestBuilder getRequest = get("/users/statistics/1")
