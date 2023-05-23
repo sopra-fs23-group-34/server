@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs23.model;
 
 import java.util.*;
 import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class Scores {
     private final Map<String,ArrayList<Map<String,Double>>> roundScore;
@@ -16,10 +17,11 @@ public class Scores {
 
     public void updateRoundScore(Map<String,Double> playerGuesses, String username, Food food){
         int playerPoints = 0;
+        int totalDeviation = 0;
         for ( String playerGuessFoodKey : playerGuesses.keySet()){
             int absoluteDeviation = (int)Math.abs(playerGuesses.get(playerGuessFoodKey) - food.getNutritionValues().get(playerGuessFoodKey));
             playerPoints += max(100-(absoluteDeviation*absoluteDeviation),0);
-
+            totalDeviation += absoluteDeviation;
             ArrayList<Map<String,Double>> roundFoodScore = new ArrayList<>();
             Map<String,Double> realValues = new HashMap<>();
             realValues.put("actualValues", food.getNutritionValues().get(playerGuessFoodKey));
@@ -33,6 +35,7 @@ public class Scores {
             roundFoodScore.add(deviation);
             roundScore.put(playerGuessFoodKey,roundFoodScore);
         }
+        playerPoints = min(400,(max(playerPoints, playerPoints+100-totalDeviation)));
         ArrayList<Map<String,Double>> roundPointsTotal = new ArrayList<>();
         Map<String,Double> roundPointsTotalMap = new HashMap<>();
         roundPointsTotalMap.put("points",(double) playerPoints);

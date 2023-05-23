@@ -1,6 +1,6 @@
 # The big diabetes Game
 ## Introduction
-Food is a important part of our daily live, but most people have no idea what the nutrition values of the food on their plate are. Additionally, there are some people with diabetis or some other illness, where it is crucial to know how many carbs you are eating, to dose your medication correctly. With this web application we wanted to create a possibility for interested people to learn something about the nutrition values of food in a playful way.
+Food is a important part of our daily live, but most people have no idea what the nutrition values of the food on their plate are. Additionally, there are some people with diabetes or some other illness, where it is crucial to know how many carbs you are eating, to dose your medication correctly. With this web application we wanted to create a possibility for interested people to learn something about the nutrition values of food in a playful way.
 
 ## Getting started with Spring Boot
 -   Documentation: https://docs.spring.io/spring-boot/docs/current/reference/html/index.html
@@ -88,19 +88,17 @@ To configure a debugger for SpringBoot's Tomcat servlet (i.e. the process you st
 Have a look here: https://www.baeldung.com/spring-boot-testing
 ## High-level components
 ### model
-Game logic is in the model compoent. Its responsibility is to organize the game flow of the whole application.
+Game logic is in the model component. Its responsibility is to organize the game flow of the whole application.
 ### controller
-We have several controler classes. Together they have the responsibility to organize the communication between the front and backend. They are split according to their parts, that they are organizing. As an example the class UserController controlls the rest communication of the user* endpoint of our application 
+We have several controller classes. Together they have the responsibility to organize the communication between the front and backend. They are split according to their parts, that they are organizing. As an example, the class UserController controls the rest communication of the user* endpoint of our application.   
 ### services
-In our project we have three different service classes. They provide functionality to their corresponding entitys. As an example the UserService provides amongst other functionalitys the possibility to create, login, logout, update or authenticate a user.
-## Illustrations
+In our project we have three different service classes. They provide functionality to their corresponding entities. As an example, the UserService provides amongst other functionalities the possibility to create, login, logout, update or authenticate a user.
 
 ## Roadmap
-For future additions we have some ideas, what one could implement. The following mentionings are not sorted by any means. But are more meant as inspiration for you.
-Firstly, there would be the possibility to implement a new game mode. The first additional game mode could be a higher lower implementation of a game. Before starting the game you would choose your food category, like "Fruits" as well as the nutrition value, you would compare the food items. Lets assume one would choose "Fruits" and "carbs". Then you would get as first item an apple. Then a picture of the second item would appear. Lets assume, it is a pineapple. Now you have to decide, if a pineapple has more or less carbs then an apple. If you guessed correctly, you get a positive feedback and the next picture of a food item. If you guessed incorrectly, there will be an end of game screen and you can restart.    
-Another new game mode would be, that you get four pictures of different food Items and additionally the correct nutrition values of one of them. Then you have to guess to which food item the displayed nutrition values belong to. If you guessed correctly, you will get new pictures and nutrition values. If not, it is game over.
-Another feature for the original game would be a possibility at the end of a game to see all the different questions and answers again, so that one can internalise the different nutrition values of the food items.    
-Inspection mode, to be able to go through the different food items after the game to internalise the different values.
+For future additions we have some ideas, what one could implement. The following mentions are not sorted by any means. But are more meant as inspiration for you.   
+Firstly, there would be the possibility to implement a new game mode. The first additional game mode could be a higher lower implementation of a game. Before starting the game, you would choose your food category, like "Fruits" as well as the nutrition value, you would compare the food items. Let’s assume one would choose "Fruits" and "carbs". Then you would get as first item an apple. A picture of the second item would appear. Let’s assume, it is a pineapple. Now you must decide, if a pineapple has more or less carbs then an apple. If you guessed correctly, you get positive feedback and the next picture of a food item. If you guessed incorrectly, there will be an end of game screen and you can restart.   
+Another new game mode would be, that you get four pictures of different food Items and additionally the correct nutrition values of one of them. Then you must guess to which food item the displayed nutrition values belong to. If you guessed correctly, you would get new pictures and nutrition values. If not, it is game over.   
+Another feature for the original game would be a possibility at the end of a game to see all the different questions and answers again, so that one can internalize the different nutrition values of the food items.
 
 ## Authors
 - [Nico Manzoni](https://www.github.com/nizonic) - *frontend*
@@ -110,5 +108,4 @@ Inspection mode, to be able to go through the different food items after the gam
 - [Elias Suter](https://www.github.com/Bye-B) - *backend*
 
 ## License
-[MIT]
-(https://choosealicense.com/)
+This project is licensed under [Apache 2.0](LICENSE).

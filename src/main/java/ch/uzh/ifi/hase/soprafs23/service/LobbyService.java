@@ -84,7 +84,7 @@ public class LobbyService {
         lobby.setRoundTimer(config.getTimerLength());
         new Thread(() -> {
             try {
-                lobby.playGame(config, userService, lobbyStorage, gameCode);
+                lobby.playGame(config, userService);
             } catch (InterruptedException | IOException e) {
                 Thread.currentThread().interrupt();
                 throw new RuntimeException(e);
@@ -98,7 +98,7 @@ public class LobbyService {
         userService.authenticateUser(token, userId);
         checkIfHost(gameCode, userId);
         Lobby lobby = lobbyStorage.getLobby(gameCode);
-        lobby.nextRound(lobbyStorage, gameCode);
+        lobby.nextRound();
     }
 
 

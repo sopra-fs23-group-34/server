@@ -685,11 +685,11 @@ class UserServiceTest {
       scores.updateRoundScore(roundScoreUser, user.getUsername(), food);
       scores.updateRoundScore(roundScoreUser1, user1.getUsername(), food);
       userService.updateScores(scores);
-      assertEquals(75.0, scores.getRoundScore().get("testUser").get("points").get(0).get("points"));
+      assertEquals(170.0, scores.getRoundScore().get("testUser").get("points").get(0).get("points"));
       assertEquals(15.0, scores.getRoundScore().get("testUser").get("carbs").get(0).get("actualValues"));
       assertEquals(10.0, scores.getRoundScore().get("testUser").get("carbs").get(1).get("guessedValues"));
       assertEquals(5.0, scores.getRoundScore().get("testUser").get("carbs").get(2).get("deviations"));
-      assertEquals(91.0, scores.getRoundScore().get("testUser1").get("points").get(0).get("points"));
+      assertEquals(188.0, scores.getRoundScore().get("testUser1").get("points").get(0).get("points"));
       assertEquals(15.0, scores.getRoundScore().get("testUser1").get("carbs").get(0).get("actualValues"));
       assertEquals(18.0, scores.getRoundScore().get("testUser1").get("carbs").get(1).get("guessedValues"));
       assertEquals(3.0, scores.getRoundScore().get("testUser1").get("carbs").get(2).get("deviations"));
@@ -717,11 +717,12 @@ class UserServiceTest {
       user.setId(1L);
       user.setToken("11");
       user.setUsername("testUser");
-      PlayerStatistics playerStatistics = new PlayerStatistics(1L, 10L, 500, 5L, 0.5);
+      PlayerStatistics playerStatistics = new PlayerStatistics(1L, 10L,10L, 500, 5L, 0.5);
       when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
       when(playerScoreRepository.getPlayerStatistics(user.getId())).thenReturn(playerStatistics);
       assertEquals(1, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getUserId());
-      assertEquals(10, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getGamesPlayed());
+      assertEquals(10, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getMultiplayerGamesPlayed());
+      assertEquals(10, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getSingleplayerGamesPlayed());
       assertEquals(5, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getGamesWon());
       assertEquals(0.5, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getWinRatio());
       assertEquals(500, userService.getStatistics(user.getId(), user.getToken(), user.getId()).getHighScore());

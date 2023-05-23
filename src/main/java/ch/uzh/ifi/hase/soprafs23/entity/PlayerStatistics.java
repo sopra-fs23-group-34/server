@@ -7,13 +7,15 @@ import lombok.Setter;
 @Setter
 public class PlayerStatistics {
     private Long userId;
-    private long gamesPlayed;
+    private long multiplayerGamesPlayed;
+    private long singleplayerGamesPlayed;
     private int highScore;
     private long gamesWon;
     private double winRatio;
-    public PlayerStatistics(Long userId, Long gamesPlayed, int highScore, long gamesWon, double winRatio){
+    public PlayerStatistics(Long userId,Long singleplayerGamesPlayed, Long multiplayerGamesPlayed, int highScore, long gamesWon, double winRatio){
         this.userId = userId;
-        this.gamesPlayed = gamesPlayed;
+        this.singleplayerGamesPlayed = singleplayerGamesPlayed;
+        this.multiplayerGamesPlayed = multiplayerGamesPlayed;
         this.highScore = highScore;
         this.winRatio = winRatio;
         this.gamesWon = gamesWon;
