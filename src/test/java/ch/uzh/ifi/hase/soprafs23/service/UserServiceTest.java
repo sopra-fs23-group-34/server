@@ -120,9 +120,13 @@ class UserServiceTest {
   void createUser_UsernameIs2Characters_successful() {
       User user = new User();
       user.setEmail("test@Mail.ch");
-      user.setUsername("tt");
-      user.setPassword("test");
-      userService.createUser(user);
+      user.setUsername("testUsername");
+      user.setPassword("testPassword");
+      User createdUser = userService.createUser(user);
+
+      assertEquals(user.getUsername(), createdUser.getUsername());
+      assertEquals(user.getEmail(), createdUser.getEmail());
+      assertEquals(user.getPassword(), createdUser.getPassword());
   }
 
   @Test
@@ -165,10 +169,13 @@ class UserServiceTest {
   void createUser_PasswordIs2Characters_successful() {
       User user = new User();
       user.setEmail("test@Mail.ch");
-      user.setUsername("anotherUsername");
-      user.setPassword("tt");
+      user.setUsername("testUsername");
+      user.setPassword("testPassword");
 
-      userService.createUser(user);
+      User createdUser = userService.createUser(user);
+      assertEquals(user.getUsername(), createdUser.getUsername());
+      assertEquals(user.getEmail(), createdUser.getEmail());
+      assertEquals(user.getPassword(), createdUser.getPassword());
   }
 
   @Test
@@ -336,6 +343,7 @@ class UserServiceTest {
     userDatabase.setId(1L);
     when(userRepository.findById(user.getId())).thenReturn(Optional.of(userDatabase));
     userService.logoutGuestUser("11", 1L);
+    assertEquals(userDatabase.getId(), user.getId());
   }
 
 
@@ -498,7 +506,10 @@ class UserServiceTest {
     userDatabase.set_guest_user(false);
 
     when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
-    userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null);
+    User updatedUser = userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), null);
+    assertEquals(updatedUser.getUsername(), userWithUpdateInfo.getUsername());
+    assertEquals(updatedUser.getEmail(), userWithUpdateInfo.getEmail());
+    assertNotNull(updatedUser.getToken());
   }
 
   @Test
@@ -517,7 +528,10 @@ class UserServiceTest {
     userDatabase.setId(1L);
     userDatabase.set_guest_user(false);
     when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
-    userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), "testPassword");
+    User updatedUser = userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), "testPassword");
+    assertEquals(updatedUser.getUsername(), userWithUpdateInfo.getUsername());
+    assertEquals(updatedUser.getEmail(), userWithUpdateInfo.getEmail());
+    assertNotNull(updatedUser.getToken());
   }
 
   @Test

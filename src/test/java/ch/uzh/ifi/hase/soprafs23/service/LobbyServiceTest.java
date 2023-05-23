@@ -54,6 +54,7 @@ class LobbyServiceTest {
     public void setup() {
         MockitoAnnotations.openMocks(this);
         testLobby = new Lobby("1", simpMessagingTemplate, foodService);
+        assertEquals(0, testLobby.getPlayers().size());
     }
 
     @Test
@@ -167,7 +168,7 @@ class LobbyServiceTest {
     }
 
     @Test
-    void setPlayerGuessesSucess(){
+    void setPlayerGuessesSuccess(){
         String gameCode = "a";
         long playerId = 1L;
         Map<String, Double> guesses = new HashMap<>();
@@ -184,7 +185,6 @@ class LobbyServiceTest {
 
     @Test
     void checkIfLobbyExistsSuccessful() {
-
         when(codeGenerator.nextCode()).thenReturn("123456");
         String code = lobbyService.createLobby();
         assertEquals("123456", code);
@@ -227,6 +227,8 @@ class LobbyServiceTest {
         lobby.addPlayer(new Player("testUser1", 1L, false));
         lobby.addPlayer(new Player("testUser2", 2L, true));
         when(lobbyStorage.getLobby("11")).thenReturn(lobby);
+        Lobby l = lobbyStorage.getLobby("11");
+        assertEquals(2, l.getPlayers().size());
     }
 }
 
