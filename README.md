@@ -6,6 +6,17 @@
   <br>
 </h1>
 
+<p align="center">
+ <a href="https://github.com/sopra-fs23-group-34/server/actions">
+  <img src="https://github.com/sopra-fs23-group-34/server/workflows/Deploy%20Project%20to%20App%20Engine/badge.svg" alt="Deployment Status">
+ </a>
+ <a href="https://sonarcloud.io/project/overview?id=sopra-fs23-group-34_server">
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=sopra-fs23-group-34_server&metric=coverage" alt="Test Coverage">
+ <a href="https://sonarcloud.io/project/overview?id=sopra-fs23-group-34_server">
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=sopra-fs23-group-34_client&metric=alert_status" alt="">
+ </a>
+</p>
+
 ## Introduction
 Food is a important part of our daily live, but most people have no idea what the nutrition values of the food on their plate are. Additionally, there are some people with diabetes or some other illness, where it is crucial to know how many carbs you are eating, to dose your medication correctly. With this web application we wanted to create a possibility for interested people to learn something about the nutrition values of food in a playful way.
 
