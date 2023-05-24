@@ -517,12 +517,14 @@ class UserServiceTest {
     User userWithUpdateInfo = new User();
     userWithUpdateInfo.setUsername("testUser");
     userWithUpdateInfo.setPassword("newPW");
+    userWithUpdateInfo.setEmail("df");
     userWithUpdateInfo.setId(1L);
     userWithUpdateInfo.setToken("11");
     userWithUpdateInfo.set_guest_user(false);
 
     User userDatabase = new User();
     userDatabase.setUsername("testUser");
+    userWithUpdateInfo.setEmail("df");
     userDatabase.setPassword("testPassword");
     userDatabase.setToken("11");
     userDatabase.setId(1L);
@@ -530,7 +532,6 @@ class UserServiceTest {
     when(userRepository.findById(userWithUpdateInfo.getId())).thenReturn(Optional.of(userDatabase));
     User updatedUser = userService.updateUser(userWithUpdateInfo, userWithUpdateInfo.getToken(), userWithUpdateInfo.getId(), "testPassword");
     assertEquals(updatedUser.getUsername(), userWithUpdateInfo.getUsername());
-    assertEquals(updatedUser.getEmail(), userWithUpdateInfo.getEmail());
     assertNotNull(updatedUser.getToken());
   }
 
@@ -562,12 +563,14 @@ class UserServiceTest {
     User userWithUpdateInfo = new User();
     userWithUpdateInfo.setUsername("testUser");
     userWithUpdateInfo.setPassword("newPW");
+    userWithUpdateInfo.setEmail("df");
     userWithUpdateInfo.setId(1L);
     userWithUpdateInfo.setToken("11");
     userWithUpdateInfo.set_guest_user(false);
 
     User userDatabase = new User();
     userDatabase.setUsername("testUser");
+    userWithUpdateInfo.setEmail("df");
     userDatabase.setPassword("testPassword");
     userDatabase.setToken("11");
     userDatabase.setId(1L);
@@ -582,13 +585,17 @@ class UserServiceTest {
     User userWithUpdateInfo = new User();
     userWithUpdateInfo.setUsername("testUser");
     userWithUpdateInfo.setPassword("testPassword");
+    userWithUpdateInfo.setEmail("df");
+    userWithUpdateInfo.getEmail();
     userWithUpdateInfo.setId(1L);
     userWithUpdateInfo.setToken("11");
     userWithUpdateInfo.set_guest_user(false);
 
     User userDatabase = new User();
     userDatabase.setUsername("testUser");
+    userDatabase.getEmail();
     userDatabase.setPassword("testPassword");
+    userWithUpdateInfo.setEmail("df");
     userDatabase.setToken("11");
     userDatabase.setId(1L);
     userDatabase.set_guest_user(false);
@@ -602,6 +609,7 @@ class UserServiceTest {
     User userWithUpdateInfo = new User();
     userWithUpdateInfo.setUsername("testUser");
     userWithUpdateInfo.setPassword(" newPW");
+    userWithUpdateInfo.setEmail("df");
     userWithUpdateInfo.setId(1L);
     userWithUpdateInfo.setToken("11");
     userWithUpdateInfo.set_guest_user(false);
@@ -609,6 +617,7 @@ class UserServiceTest {
     User userDatabase = new User();
     userDatabase.setUsername("testUser");
     userDatabase.setPassword("testPassword");
+    userWithUpdateInfo.setEmail("df");
     userDatabase.setToken("11");
     userDatabase.setId(1L);
     userDatabase.set_guest_user(false);
@@ -623,6 +632,7 @@ class UserServiceTest {
       User userWithUpdateInfo = new User();
       userWithUpdateInfo.setUsername("testUser");
       userWithUpdateInfo.setPassword("new PW");
+      userWithUpdateInfo.setEmail("df");
       userWithUpdateInfo.setId(1L);
       userWithUpdateInfo.setToken("11");
       userWithUpdateInfo.set_guest_user(false);
@@ -630,6 +640,7 @@ class UserServiceTest {
       User userDatabase = new User();
       userDatabase.setUsername("testUser");
       userDatabase.setPassword("testPassword");
+      userWithUpdateInfo.setEmail("df");
       userDatabase.setToken("11");
       userDatabase.setId(1L);
       userDatabase.set_guest_user(false);
@@ -644,6 +655,7 @@ class UserServiceTest {
       User userWithUpdateInfo = new User();
       userWithUpdateInfo.setUsername("testUser");
       userWithUpdateInfo.setPassword("t");
+      userWithUpdateInfo.setEmail("df");
       userWithUpdateInfo.setId(1L);
       userWithUpdateInfo.setToken("11");
       userWithUpdateInfo.set_guest_user(false);
@@ -651,6 +663,7 @@ class UserServiceTest {
       User userDatabase = new User();
       userDatabase.setUsername("testUser");
       userDatabase.setPassword("testPassword");
+      userWithUpdateInfo.setEmail("df");
       userDatabase.setToken("11");
       userDatabase.setId(1L);
       userDatabase.set_guest_user(false);

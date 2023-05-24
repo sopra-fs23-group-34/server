@@ -187,11 +187,14 @@ public class UserService {
 
         // check if email is already used by someone else
         User userSameEmail = userRepository.findByEmail(userWithUpdateInformation.getEmail());
-        if (userSameEmail != null && userSameEmail.equals("") && (!user.getId().equals(userSameEmail.getId()))) {
+        if(!userWithUpdateInformation.getEmail().equals("")){
+            if (userSameEmail != null  && (!user.getId().equals(userSameEmail.getId()))) {
                 throw new ResponseStatusException(HttpStatus.valueOf(404),
                         "You can't pick the same mail as somebody else!");
 
+            }
         }
+
 
         if (oldPassword == null) { // username, email or bio change
             if (!(userWithUpdateInformation.getUsername()==null) && !(userWithUpdateInformation.getUsername().equals(""))) {
