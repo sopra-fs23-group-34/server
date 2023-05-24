@@ -1,4 +1,11 @@
-# The big diabetes Game
+<h1 align="center">
+  <br>
+  <a href="https://github.com/sopra-fs23-group-34"><img src="src/resources/TitleGif.gif" alt="The Big Diabetes Game!" width="100%"></a>
+  <br>
+  The Big Diabetes Game Server
+  <br>
+</h1>
+
 ## Introduction
 Food is a important part of our daily live, but most people have no idea what the nutrition values of the food on their plate are. Additionally, there are some people with diabetes or some other illness, where it is crucial to know how many carbs you are eating, to dose your medication correctly. With this web application we wanted to create a possibility for interested people to learn something about the nutrition values of food in a playful way.
 
