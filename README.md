@@ -20,6 +20,15 @@
 ## Introduction
 Food is a important part of our daily live, but most people have no idea what the nutrition values of the food on their plate are. Additionally, there are some people with diabetes or some other illness, where it is crucial to know how many carbs you are eating, to dose your medication correctly. With this web application we wanted to create a possibility for interested people to learn something about the nutrition values of food in a playful way.
 
+## High-level components
+    
+### model
+Game logic is in the [model](/src/main/java/ch/uzh/ifi/hase/soprafs23/model) component. Its responsibility is to organize the game flow of the whole application.
+### controller
+We have several [controller](/src/main/java/ch/uzh/ifi/hase/soprafs23/controller) classes. Together they have the responsibility to organize the communication between the front- and backend. They are split according to their parts, that they are organizing. As an example, the class [UserController](/src/main/java/ch/uzh/ifi/hase/soprafs23/controller/UserController.java) controls the rest communication of the user* endpoint of our application.   
+### services
+In our project we have three different [service](/src/main/java/ch/uzh/ifi/hase/soprafs23/service) classes. They provide functionality to their corresponding entities. As an example, the [UserService](/src/main/java/ch/uzh/ifi/hase/soprafs23/service/UserService.java) provides amongst other functionalities the possibility to create, login, logout, update or authenticate a user.
+
 ## Getting started with Spring Boot
 -   Documentation: https://docs.spring.io/spring-boot/docs/current/reference/html/index.html
 -   Guides: http://spring.io/guides
@@ -104,14 +113,7 @@ To configure a debugger for SpringBoot's Tomcat servlet (i.e. the process you st
 
 ## Testing
 Have a look here: https://www.baeldung.com/spring-boot-testing
-## High-level components
-### model
-Game logic is in the model component. Its responsibility is to organize the game flow of the whole application.
-### controller
-We have several controller classes. Together they have the responsibility to organize the communication between the front and backend. They are split according to their parts, that they are organizing. As an example, the class UserController controls the rest communication of the user* endpoint of our application.   
-### services
-In our project we have three different service classes. They provide functionality to their corresponding entities. As an example, the UserService provides amongst other functionalities the possibility to create, login, logout, update or authenticate a user.
-
+    
 ## Roadmap
 For future additions we have some ideas, what one could implement. The following mentions are not sorted by any means. But are more meant as inspiration for you.   
 Firstly, there would be the possibility to implement a new game mode. The first additional game mode could be a higher lower implementation of a game. Before starting the game, you would choose your food category, like "Fruits" as well as the nutrition value, you would compare the food items. Let’s assume one would choose "Fruits" and "carbs". Then you would get as first item an apple. A picture of the second item would appear. Let’s assume, it is a pineapple. Now you must decide, if a pineapple has more or less carbs then an apple. If you guessed correctly, you get positive feedback and the next picture of a food item. If you guessed incorrectly, there will be an end of game screen and you can restart.   
