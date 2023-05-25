@@ -18,18 +18,19 @@
 </p>
 
 ## Introduction
-Food is a important part of our daily live, but most people have no idea what the nutrition values of the food on their plate are. Additionally, there are some people with diabetes or some other illness, where it is crucial to know how many carbs you are eating, to dose your medication correctly. With this web application we wanted to create a possibility for interested people to learn something about the nutrition values of food in a playful way.
+Food is an important part of our daily lives, but most people have no idea what the nutritional values of the foods on their plate are. Additionally, there are some people living with diabetes or some other illness, where it is crucial to know how many carbs you are eating to dose your medication correctly. With this web application we wanted to create a possibility for interested people to learn something about the nutritional values of everyday food in a playful way.
+    
 ## Technologies
 -   Java
 -   Spring Boot
 -   Lombok
--   junit
--   mockito
+-   JUnit
+-   Mockito
 -   gradle
 -   REST
 -   Websockets
--   mysql database
--   nutritionix (api for food items)
+-   MySQL database
+-   [Nutritionix Nutrition API](https://www.nutritionix.com/)
     
 ## High-level components
     
