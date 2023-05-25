@@ -66,6 +66,4 @@ public class Game {
     public Scores getScores(){
         return scores;
     }
-
-
 }
