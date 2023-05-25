@@ -25,6 +25,7 @@ public class Round {
         round.put("currentRound", currentRound + 1);
         round.put("maxRounds", maxRounds);
         notifier.publishRoundStart();
+        Thread.sleep(10);
         notifier.publishRoundCounter(round);
         Thread.sleep(10);
         notifier.publishFood(food);
@@ -33,6 +34,7 @@ public class Round {
             Thread.sleep(1000);
         }
         notifier.publishRoundScoreStart();
+        Thread.sleep(10);
         notifier.publishRoundCounter(round);
     }
 }
