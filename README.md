@@ -19,7 +19,9 @@
 
 ## Introduction
 Food is a important part of our daily live, but most people have no idea what the nutrition values of the food on their plate are. Additionally, there are some people with diabetes or some other illness, where it is crucial to know how many carbs you are eating, to dose your medication correctly. With this web application we wanted to create a possibility for interested people to learn something about the nutrition values of food in a playful way.
-
+## Technologies
+The Server is written in Java using Spring Boot. For a lot of the boiler-plate code we used project Lombok. To communicate between the front- and backend, REST and a Websocked were used. Once a user is inside a Lobby, a Websocket connection is established and the communication during the game is via the websocket, this reduces the latency.
+    
 ## High-level components
     
 ### model
