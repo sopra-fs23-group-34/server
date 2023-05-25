@@ -36,7 +36,7 @@ Food is a important part of our daily live, but most people have no idea what th
 ### model
 Game logic is in the [model](/src/main/java/ch/uzh/ifi/hase/soprafs23/model) component. Its responsibility is to organize the game flow of the whole application.
 ### controller
-We have several [controller](/src/main/java/ch/uzh/ifi/hase/soprafs23/controller) classes. Together they have the responsibility to organize the communication between the front- and backend. They are split according to their parts, that they are organizing. As an example, the class [UserController](/src/main/java/ch/uzh/ifi/hase/soprafs23/controller/UserController.java) controls the rest communication of the user* endpoint of our application.   
+We have several [controller](/src/main/java/ch/uzh/ifi/hase/soprafs23/controller) classes. Together they have the responsibility to organize the communication between the front- and backend. They are split according to their parts, that they are organizing. As an example, the class [UserController](/src/main/java/ch/uzh/ifi/hase/soprafs23/controller/UserController.java) controls the rest communication of the user/* endpoint of our application.   
 ### services
 In our project we have three different [service](/src/main/java/ch/uzh/ifi/hase/soprafs23/service) classes. They provide functionality to their corresponding entities. As an example, the [UserService](/src/main/java/ch/uzh/ifi/hase/soprafs23/service/UserService.java) provides amongst other functionalities the possibility to create, login, logout, update or authenticate a user.
 
